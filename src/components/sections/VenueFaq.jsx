@@ -1,5 +1,6 @@
 import Icon from '../ui/Icon'
 import Section from '../ui/Section'
+import SectionBackdrop from '../ui/SectionBackdrop'
 import {
   Accordion,
   AccordionContent,
@@ -54,6 +55,7 @@ function VenueCard() {
 export default function VenueFaq() {
   return (
     <Section id="venue">
+      <SectionBackdrop variant="topo" />
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
         <VenueCard />
 

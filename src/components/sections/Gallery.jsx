@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import Section from '../ui/Section'
+import SectionBackdrop from '../ui/SectionBackdrop'
 import { gallery } from '../../data/gallery'
 
 function GalleryCard({ item, minH = 'min-h-[280px]', children }) {
@@ -30,6 +31,7 @@ const kickerColors = {
 export default function Gallery() {
   return (
     <Section id="gallery">
+      <SectionBackdrop variant="bokeh" />
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
         <div>
           <span className="text-xs font-mono font-medium tracking-wider text-brand-violet uppercase">

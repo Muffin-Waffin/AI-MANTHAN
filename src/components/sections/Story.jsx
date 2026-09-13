@@ -1,6 +1,7 @@
 import Icon from '../ui/Icon'
 import LogoRevealVideo from '../ui/LogoRevealVideo'
 import Section from '../ui/Section'
+import SectionBackdrop from '../ui/SectionBackdrop'
 import { story } from '../../data/site'
 
 const textTone = {
@@ -35,6 +36,7 @@ function PillarCard({ pillar }) {
 export default function Story() {
   return (
     <Section id="story">
+      <SectionBackdrop variant="churn" />
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,540px)] lg:items-center gap-8 lg:gap-10 mb-12">
         <div className="max-w-2xl">
           <span className="text-xs font-mono font-medium tracking-wider text-brand-violet uppercase">

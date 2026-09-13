@@ -1,18 +1,38 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import Lenis from 'lenis'
 
 /**
  * Site-wide smooth scrolling (lenis) — heavy inertial feel that makes
  * wheel scrolling glide (~4× the travel per flick vs raw browser steps).
  * Also drives section reveal transitions: every <section> fades/slides up
- * the first time it enters the viewport.
+ * the first time it enters the viewport, plus a top scroll-progress bar
+ * that fills as you move down the page.
  */
 export default function SmoothScroll() {
+  const barRef = useRef(null)
+
   useEffect(() => {
+    // Scroll-progress bar — independent of lenis/reduced-motion below, so
+    // it still works (without the inertial glide) when motion is reduced.
+    const updateProgress = () => {
+      const doc = document.documentElement
+      const max = doc.scrollHeight - doc.clientHeight
+      const pct = max > 0 ? (doc.scrollTop || window.scrollY) / max : 0
+      if (barRef.current) barRef.current.style.width = `${Math.min(1, Math.max(0, pct)) * 100}%`
+    }
+    updateProgress()
+    window.addEventListener('scroll', updateProgress, { passive: true })
+    window.addEventListener('resize', updateProgress)
+
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduced) return
+    if (reduced) {
+      return () => {
+        window.removeEventListener('scroll', updateProgress)
+        window.removeEventListener('resize', updateProgress)
+      }
+    }
 
     /* Auto-scroll kill switch: a stale #hash (or the browser's native
        scroll restoration) must never fling a fresh visitor to a section —
@@ -33,6 +53,7 @@ export default function SmoothScroll() {
       wheelMultiplier: 1.05,
       touchMultiplier: 1.6,
     })
+    lenis.on('scroll', updateProgress)
 
     let rafId
     const raf = (time) => {
@@ -71,6 +92,8 @@ export default function SmoothScroll() {
     sections.forEach((s) => io.observe(s))
 
     return () => {
+      window.removeEventListener('scroll', updateProgress)
+      window.removeEventListener('resize', updateProgress)
       document.removeEventListener('click', onClick)
       io.disconnect()
       cancelAnimationFrame(rafId)
@@ -78,5 +101,13 @@ export default function SmoothScroll() {
     }
   }, [])
 
-  return null
+  return (
+    <div className="fixed top-0 left-0 right-0 h-[3px] z-[90] pointer-events-none">
+      <div
+        ref={barRef}
+        className="h-full bg-gradient-to-r from-brand-violet via-brand-cyan to-brand-emerald shadow-[0_0_12px_rgba(56,189,248,0.6)] transition-[width] duration-150 ease-out"
+        style={{ width: '0%' }}
+      />
+    </div>
+  )
 }

@@ -5,6 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Icon from '../ui/Icon'
 import Section, { SectionHeaderRow } from '../ui/Section'
+import SectionBackdrop from '../ui/SectionBackdrop'
 import SectionHeading from '../ui/SectionHeading'
 import { peopleByGroup } from '../../data/facultyDirectory'
 
@@ -278,6 +279,7 @@ const groups = [
 export default function Mentors() {
   return (
     <Section id="faculty" className="group/section">
+      <SectionBackdrop variant="aurora" />
       <SectionHeaderRow
         heading={
           <SectionHeading
