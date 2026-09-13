@@ -1,6 +1,7 @@
 'use client'
 
 import { sponsors, partnerRows } from '../../data/site'
+import SectionBackdrop from '../ui/SectionBackdrop'
 
 /**
  * Sponsors & Partners — reference layout (screenshot + motion video):
@@ -74,7 +75,8 @@ function MarqueeRow({ items, direction, duration }) {
 
 export default function Partners() {
   return (
-    <section id="partners" className="py-20 border-t border-white/[0.06]">
+    <section id="partners" className="relative py-20 border-t border-white/[0.06]">
+      <SectionBackdrop variant="flow" />
       {/* Everything stays inside the site content container */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* ── SPONSORS ── */}

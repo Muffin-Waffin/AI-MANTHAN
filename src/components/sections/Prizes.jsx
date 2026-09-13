@@ -1,5 +1,6 @@
 import Icon from '../ui/Icon'
 import Section from '../ui/Section'
+import SectionBackdrop from '../ui/SectionBackdrop'
 import { prizes, cta } from '../../data/prizes'
 
 const accentText = {
@@ -81,6 +82,7 @@ function BountyCard({ bounty }) {
 export default function Prizes() {
   return (
     <Section id="prizes">
+      <SectionBackdrop variant="spotlight" />
       <div className="text-center max-w-2xl mx-auto mb-16">
         <span className="text-xs font-mono font-medium tracking-wider text-brand-violet uppercase">
           {prizes.eyebrow}

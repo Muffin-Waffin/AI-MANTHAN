@@ -1,5 +1,6 @@
 import Icon from '../ui/Icon'
 import Section from '../ui/Section'
+import SectionBackdrop from '../ui/SectionBackdrop'
 import { timeline } from '../../data/timeline'
 
 const statusColors = {
@@ -54,6 +55,7 @@ function PhaseCard({ phase }) {
 export default function Timeline() {
   return (
     <Section id="timeline">
+      <SectionBackdrop variant="ripple" />
       <div className="text-center max-w-2xl mx-auto mb-16">
         <span className="text-xs font-mono font-medium tracking-wider text-brand-violet uppercase">
           {timeline.eyebrow}

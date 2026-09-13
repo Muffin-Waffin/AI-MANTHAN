@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Icon from '../ui/Icon'
 import Section from '../ui/Section'
+import SectionBackdrop from '../ui/SectionBackdrop'
 import Badge from '../ui/Badge'
 import { trackFilters, tracks } from '../../data/tracks'
 
@@ -57,6 +58,7 @@ export default function Tracks() {
 
   return (
     <Section id="tracks">
+      <SectionBackdrop variant="circuit" />
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
         <div>
           <span className="text-xs font-mono font-medium tracking-wider text-brand-violet uppercase">

@@ -1,5 +1,6 @@
 import Icon from '../ui/Icon'
 import Section, { SectionHeaderRow } from '../ui/Section'
+import SectionBackdrop from '../ui/SectionBackdrop'
 import SectionHeading from '../ui/SectionHeading'
 import { team } from '../../data/people'
 
@@ -73,6 +74,7 @@ function TeamCard({ member }) {
 export default function Team() {
   return (
     <Section id="team">
+      <SectionBackdrop variant="pillars" />
       <SectionHeaderRow
         heading={<SectionHeading eyebrow={team.eyebrow} title={team.heading} body={team.body} />}
         aside={team.aside}
