@@ -1,0 +1,146 @@
+const img = (id) => `https://lh3.googleusercontent.com/aida-public/${id}`
+
+export const mentors = {
+  eyebrow: 'Evaluated by Builders',
+  heading: 'Jury & Industry Mentors',
+  body: 'Engineers, researchers, and venture partners who scrutinize code quality, system robustness, and product viabilities across midnight reviews.',
+  aside: 'Frontier AI • Systems • Web3',
+  members: [
+    {
+      name: 'Arjun Mehta',
+      role: 'Staff Systems Eng',
+      roleColor: 'cyan',
+      org: 'AWS Distributed Labs',
+      bio: 'Specializes in fault-tolerant asynchronous state engines, consensus protocols, and low-latency message streaming.',
+      tag: 'Distributed Systems',
+      img: img(
+        'AB6AXuBqGAOHpZzNMhSw-WzZA3mkMywyYUGfLCHX6Es7ZfrkWyVSh05VloBNUbqd__t2YLfh4gI92n52NXyRa9AGIEAYZzeMnrRL9pOb0sIhaKlVUqZ9eYTapnCQVIxiDXTwJdxkezfqb5WNAAL-0di148jHm93ZjzIUDj2h-XzWN7rWjHsisS2pdBk_c5g4ZALZtxeKa1qYtgFVS8KK1wIMP98ZoknqsZgobOkMpF6KLnfxhXZZ_pyRKpEB',
+      ),
+      href: 'https://linkedin.com',
+    },
+    {
+      name: 'Dr. Tara Deshmukh',
+      role: 'Research Scientist',
+      roleColor: 'violet',
+      org: 'Anthropic Labs',
+      bio: 'Pioneering interpretability algorithms, safety bounds in neural decoders, and autonomous LLM agent execution primitives.',
+      tag: 'Autonomous Agents',
+      img: img(
+        'AB6AXuDeAXHRhyLQa6L-XNfs-T2Dd6f-K7e24CjjGtSbxXd5hvkG4YZK1Oc5HN0YrUA-SePX3tdYOyXTUjOKM9BDTq-x1tkTfCFvEFqV1qJ1lQRaEGU8VeqCmYJrRlSvFPKJbGMEeoD948EdWFTdWkuXEyreP-c2r0mw4T_xN9-pli62jltvoR5xUUzNk0uDYD68F3n7x4NxDGbm_j1ZAzEAwPEYWO6zNPfUZ0fsO2aHdT5b9mprOlTAZGkb',
+      ),
+      href: 'https://linkedin.com',
+    },
+    {
+      name: 'Vikram Rao',
+      role: 'Co-founder & CTO',
+      roleColor: 'emerald',
+      org: 'Aegis Protocol (YC S23)',
+      bio: 'Built zero-knowledge rollup infrastructure verifying millions in daily transactions. Evaluates cryptographic integrity.',
+      tag: 'Applied ZK & Circom',
+      img: img(
+        'AB6AXuBqPpuGWibfX7cFGDGd3GPytcVAfpMAYGnT8WIsv0UYqJjRMSMRDZXPnuQmV2-wMrNeBKsNEjyhNa85T76vTSPupYFkdOONepyEhS98wggzQYX036IcrV2orivRe3z0ATL5e-yTGi4m8DmRMi-KJeq1tL5cEHlJ04ScDnuZmhMLDO_OzlkR5k-dzcToz-z4fwGFMy2368BrygnMv-nve9ncEAtRKFy5qKaNFpGGM59eMya5V6PQMi-E',
+      ),
+      href: 'https://linkedin.com',
+    },
+    {
+      name: 'Ananya Joshi',
+      role: 'Head of Product AI',
+      roleColor: 'pink',
+      org: 'CareMesh AI',
+      bio: 'Directs clinical informatics models, edge health compliance standards, and time-series diagnosis pipelines in India.',
+      tag: 'Clinical IoT / FHIR',
+      img: img(
+        'AB6AXuDihmperSDWY0wqFN8i8XXb7L5k2fvrCnwtJrgCEZvdIVMrQ_Xdhk5KLVMa6g8X6NPsuqD4AYtF-ECiJPjNGRdp4gLiHF9yFluISDoskAbWsXb-1mm7Hf-B1duUMnGyAg385f3mqOft94LlIwQ9JwSYjVOWJKjiB4ueGWA9nqRDaTzuqMZ0QxQLt9VTi2eXabwzMl0GmUWxFm2KRMplEF3U4PANfvGWkOZkRQLzMakvTFNXvJlpuorW',
+      ),
+      href: 'https://linkedin.com',
+    },
+  ],
+}
+
+export const faculty = {
+  eyebrow: 'Academic Stewardship',
+  heading: 'Faculty Advisory & Leadership',
+  body: 'Distinguished educators and researchers from Acropolis Institute of Technology & Research steering innovation, governance, and academic rigor.',
+  aside: 'Acropolis • AITR',
+  members: [
+    {
+      initials: 'AR',
+      role: 'Chief Patron',
+      roleColor: 'violet',
+      name: 'Cdr. (Dr.) Anil Rana',
+      title: 'Director, Acropolis Institute of Technology & Research',
+      bio: 'Championing cutting-edge research incubations, industry partnerships, and engineering excellence across the Acropolis Group of Institutions.',
+      bullets: ['Former Indian Navy Commander', 'Senior Member IEEE'],
+      footer: ['DIRECTORATE', 'ACROPOLIS INDORE'],
+    },
+    {
+      initials: 'SM',
+      role: 'Faculty Advisor, AI Manthan',
+      roleColor: 'cyan',
+      name: 'Dr. Srikanth Prabhu',
+      title: 'Professor, Dept. of CS & Engg.',
+      bio: 'Guiding technical judging rubrics, computational infrastructure, and research validation pipelines for collegiate hackathon finalists.',
+      bullets: ['Research: High-Performance Biometrics', '50+ Peer-Reviewed Publications'],
+      footer: ['DEPT. OF CSE', 'FACULTY CONVENER'],
+    },
+    {
+      initials: 'BV',
+      role: 'Staff Advisor, AI Manthan',
+      roleColor: 'emerald',
+      name: 'Dr. Balakrishna Maddodi',
+      title: 'Associate Professor, Acropolis Institute of Technology & Research',
+      bio: 'Overseeing institutional protocols, inter-collegiate logistics, national accreditation standards, and campus hospitality safety frameworks.',
+      bullets: ['Convenor: AI Manthan Technical Fest', 'Student Affairs & Welfare Directorate'],
+      footer: ['STUDENT WELFARE', "AI MANTHAN '26"],
+    },
+  ],
+}
+
+export const team = {
+  eyebrow: 'The Team Behind AI Manthan 2026',
+  heading: 'Core Organizing Committee',
+  body: 'Engineered with devotion by Acropolis, the developer collective at Acropolis Institute of Technology & Research, alongside AI Manthan Category Heads.',
+  aside: 'Built by Builders, for Builders',
+  members: [
+    {
+      initials: 'KS',
+      name: 'Kavya Sharma',
+      role: 'Lead Convener',
+      roleColor: 'violet',
+      bio: 'Oversees competition operations, national outreach, and partnership roadmaps across 100+ institutions.',
+      tag: 'Acropolis Lead',
+      gradient: 'from-brand-violet to-indigo-600',
+      hover: 'hover:border-brand-violet/40',
+    },
+    {
+      initials: 'RH',
+      name: 'Rohan Hegde',
+      role: 'Technical Architect',
+      roleColor: 'cyan',
+      bio: 'Spearheading arena sandbox networks, automated judging telemetry, and live scoring dashboard infrastructure.',
+      tag: 'Systems & Infra',
+      gradient: 'from-sky-500 to-blue-700',
+      hover: 'hover:border-brand-cyan/40',
+    },
+    {
+      initials: 'TN',
+      name: 'Tanvi Nair',
+      role: 'Head of Experience',
+      roleColor: 'emerald',
+      bio: 'Curating finalist travel coordination, catering regimes, 24/7 rest pods, and sensory comfort inside Acropolis Arena.',
+      tag: 'Hospitality & Ops',
+      gradient: 'from-emerald-500 to-teal-700',
+      hover: 'hover:border-emerald-500/40',
+    },
+    {
+      initials: 'AK',
+      name: 'Aditya Kamath',
+      role: 'Sponsorship & Grants',
+      roleColor: 'amber',
+      bio: 'Negotiates sponsor bounty grants, cloud GPU allocations, hardware dev-kit deliveries, and partner relations.',
+      tag: 'Bounties & VCs',
+      gradient: 'from-amber-500 to-orange-700',
+      hover: 'hover:border-amber-500/40',
+    },
+  ],
+}

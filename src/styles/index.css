@@ -1,0 +1,490 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@theme {
+  /* Fonts — exact match with code.html (+ Caveat for handwritten accents) */
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'Space Mono', monospace;
+  --font-script: 'Caveat', cursive;
+
+  /* Extended transition scale — 650ms = signature card-hover duration */
+  --transition-duration-650: 650ms;
+
+  /* Brand colors — exact match */
+  --color-brand-violet: #7c3aed;
+  --color-brand-violet-hover: #6d28d9;
+  --color-brand-cyan: #38bdf8;
+  --color-brand-emerald: #10b981;
+  --color-brand-amber: #f59e0b;
+
+  /* Obsidian surfaces — exact match */
+  --color-obsidian-950: #06070a;
+  --color-obsidian-900: #0a0c10;
+  --color-obsidian-850: #0e1017;
+  --color-obsidian-800: #141722;
+  --color-obsidian-700: #1e2230;
+  --color-obsidian-600: #2c3245;
+
+  /* shadcn token mapping (dark-only site) */
+  --color-background: var(--color-obsidian-950);
+  --color-foreground: #f4f4f5;
+  --color-muted: var(--color-obsidian-800);
+  --color-muted-foreground: #a1a1aa;
+  --color-border: #27272a;
+  --color-input: #27272a;
+  --color-ring: var(--color-brand-violet);
+  --color-primary: var(--color-brand-violet);
+  --color-primary-foreground: #ffffff;
+  --color-secondary: var(--color-obsidian-800);
+  --color-secondary-foreground: #f4f4f5;
+  --color-accent: var(--color-obsidian-800);
+  --color-accent-foreground: #f4f4f5;
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+  --color-popover: #0e1017f2;
+  --color-popover-foreground: #f4f4f5;
+  --color-card: #0e1017cc;
+  --color-card-foreground: #f4f4f5;
+  --radius-lg: 1rem;
+}
+
+@layer base {
+  html {
+    background-color: var(--surface-0);
+    color: var(--text-0);
+  }
+  body {
+    -webkit-font-smoothing: antialiased;
+  }
+  * {
+    @apply border-border outline-ring/50;
+  }
+}
+
+/* ─── Theme surface tokens (dark-only design system) ───────────── */
+:root {
+  --surface-0: #06070a;
+  --text-0: #f4f4f5;
+  --glass-bg: linear-gradient(135deg, rgba(20, 23, 34, 0.62), rgba(10, 12, 16, 0.52));
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-bg-strong: linear-gradient(135deg, rgba(14, 16, 23, 0.86), rgba(6, 7, 10, 0.78));
+  --glass-hover-bg: linear-gradient(135deg, rgba(30, 34, 48, 0.72), rgba(14, 16, 23, 0.6));
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #06070a;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+
+/* Hide scrollbar but keep scrollability (carousels) */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Background image utilities from the original tailwind.config */
+@utility bg-subtle-radial {
+  background-image: radial-gradient(
+    circle at 50% -20%,
+    rgba(124, 58, 237, 0.15),
+    transparent 70%
+  );
+}
+@utility bg-glow-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+}
+
+/* ─── Glassmorphism ───────────────────────────────────────────────
+   glass: standard frosted panel (cards, pills, inputs)
+   glass-strong: chrome surfaces (navbar, modal) — heavier blur+fill
+─────────────────────────────────────────────────────────────────── */
+@utility glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px) saturate(1.35);
+  -webkit-backdrop-filter: blur(14px) saturate(1.35);
+  border: 1px solid var(--glass-border);
+}
+@utility glass-strong {
+  background: var(--glass-bg-strong);
+  backdrop-filter: blur(22px) saturate(1.5);
+  -webkit-backdrop-filter: blur(22px) saturate(1.5);
+  border: 1px solid var(--glass-border);
+}
+@utility glass-hover {
+  transition:
+    border-color 650ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 650ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 650ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 650ms cubic-bezier(0.22, 1, 0.36, 1);
+  &:hover {
+    background: var(--glass-hover-bg);
+    border-color: rgba(139, 92, 246, 0.45);
+    box-shadow:
+      0 0 0 1px rgba(124, 58, 237, 0.18),
+      0 14px 42px -12px rgba(124, 58, 237, 0.32),
+      0 4px 16px -6px rgba(0, 0, 0, 0.35);
+    transform: translateY(-4px);
+  }
+}
+
+/* ─── Keyframes ────────────────────────────────────────────────── */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes shimmer-sweep {
+  from {
+    transform: translateX(-120%);
+  }
+  to {
+    transform: translateX(220%);
+  }
+}
+/* Seconds cell micro-tick — a quick glow pulse each second change,
+   subtle enough to feel alive without being noisy. */
+@keyframes sec-tick {
+  0% {
+    text-shadow: 0 0 14px rgba(56, 189, 248, 0.9);
+  }
+  100% {
+    text-shadow: 0 0 0 rgba(56, 189, 248, 0);
+  }
+}
+.animate-sec-tick {
+  animation: sec-tick 0.9s ease-out infinite;
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 18px -6px rgba(124, 58, 237, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 34px -6px rgba(124, 58, 237, 0.85);
+  }
+}
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+@utility animate-fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@utility animate-fade-in {
+  animation: fade-in 0.6s ease both;
+}
+@utility animate-pulse-glow {
+  animation: pulse-glow 2.8s ease-in-out infinite;
+}
+@utility animate-float-y {
+  animation: float-y 5s ease-in-out infinite;
+}
+
+/* Staggered entrance — set --stagger via inline style on children */
+@utility stagger-fade-up {
+  animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--stagger, 0) * 90ms);
+}
+
+/* Sheen strip used inside cards — self-clipping so the idle strip
+   (parked at translateX(-120%)) can never leak onto neighbour cards. */
+@utility sheen {
+  position: relative;
+  overflow: hidden;
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      105deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.09) 48%,
+      rgba(255, 255, 255, 0.16) 50%,
+      rgba(255, 255, 255, 0.09) 52%,
+      transparent 70%
+    );
+    transform: translateX(-120%);
+    pointer-events: none;
+  }
+  &:hover::after {
+    animation: shimmer-sweep 0.9s ease;
+  }
+}
+
+/* ─── Partners marquee ─────────────────────────────────────────── */
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@utility animate-marquee-left {
+  animation: marquee-left var(--marquee-duration, 32s) linear infinite;
+}
+@utility animate-marquee-right {
+  animation: marquee-right var(--marquee-duration, 32s) linear infinite;
+}
+
+/* Edge fade — items dissolve at the left/right edges instead of hard-cutting */
+@utility marquee-fade {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 12%,
+    black 88%,
+    transparent
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 12%,
+    black 88%,
+    transparent
+  );
+}
+
+/* Vertical fade for the hero-scoped video layer */
+@utility mask-fade-b {
+  mask-image: linear-gradient(to bottom, black 52%, transparent 96%);
+  -webkit-mask-image: linear-gradient(to bottom, black 52%, transparent 96%);
+}
+
+/* Headline gradient shimmer — slow travelling sheen on clipped text */
+@keyframes headline-shimmer {
+  from {
+    background-position: 0% center;
+  }
+  to {
+    background-position: -200% center;
+  }
+}
+.animate-headline {
+  background-size: 200% auto;
+  animation: headline-shimmer 7s ease-in-out infinite alternate;
+}
+
+/* Gentle scroll cue bob */
+@keyframes bounce-subtle {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.65;
+  }
+  50% {
+    transform: translateY(7px);
+    opacity: 1;
+  }
+}
+.animate-bounce-subtle {
+  animation: bounce-subtle 2.2s ease-in-out infinite;
+}
+
+/* Sponsors & Partners — brand tiles that follow the site theme.
+   Dark mode: raised dark glass panels. Light mode: white-ish paper
+   tiles. `brand-*` tone utilities below color the wordmarks. */
+@utility brand-tile {
+  background: var(--glass-bg-strong);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--text-0);
+}
+@utility brand-tile-hover {
+  transition:
+    transform 300ms ease,
+    border-color 300ms ease,
+    box-shadow 300ms ease;
+  &:hover {
+    transform: translateY(-4px) scale(1.02);
+    border-color: rgba(139, 92, 246, 0.45);
+    box-shadow: 0 14px 34px -12px rgba(124, 58, 237, 0.35);
+  }
+}
+
+/* Respect users who prefer reduced motion — kill all animation */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ─── Section reveal-on-scroll ─────────────────────────────────── */
+.reveal-init {
+  opacity: 0;
+  transform: translateY(44px) scale(0.985);
+}
+.reveal-in {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition:
+    opacity 800ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Stagger cascade: when a section reveals, its direct children (and one
+   nesting level deeper for cards inside wrappers) ripple in left→right.
+   Zero component changes needed — purely additive via CSS. */
+.reveal-init > * ,
+.reveal-init > * > .stagger-item {
+  opacity: 0;
+  transform: translateY(26px);
+}
+.reveal-in > *,
+.reveal-in > * > .stagger-item {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--stagger-child, 0) * 70ms);
+}
+.reveal-in > *:nth-child(1) { --stagger-child: 0; }
+.reveal-in > *:nth-child(2) { --stagger-child: 1; }
+.reveal-in > *:nth-child(3) { --stagger-child: 2; }
+.reveal-in > *:nth-child(4) { --stagger-child: 3; }
+.reveal-in > *:nth-child(5) { --stagger-child: 4; }
+.reveal-in > *:nth-child(6) { --stagger-child: 5; }
+.reveal-in > *:nth-child(7) { --stagger-child: 6; }
+.reveal-in > *:nth-child(8) { --stagger-child: 7; }
+.reveal-in > *:nth-child(9) { --stagger-child: 8; }
+.reveal-in > *:nth-child(10) { --stagger-child: 9; }
+.reveal-in > *:nth-child(n + 11) { --stagger-child: 10; }
+
+/* Reduced-motion users: reveal everything instantly, no cascade */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-init > *,
+  .reveal-init > * > .stagger-item {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Intro-section video rail — cinematic fade-in when its section reveals
+   (piggybacks on the section reveal observer — zero extra JS), then a
+   slow ambient float loop. */
+.story-video {
+  opacity: 0;
+  transform: translateY(28px) scale(0.97);
+  transition:
+    opacity 900ms cubic-bezier(0.22, 1, 0.36, 1) 150ms,
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1) 150ms;
+}
+@keyframes video-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+.reveal-in .story-video {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  animation: video-float 7s ease-in-out 1.4s infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .story-video {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+/* ─── Preloader ────────────────────────────────────────────────── */
+@keyframes preloader-exit {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+/* Full-screen video preloader — slow zoom-in → zoom-out breathing
+   (duration set inline: 4s per cycle = two breaths in 8s) */
+@keyframes preloader-zoom {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+}
+@keyframes loader-bar {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+.preloader-exit {
+  animation: preloader-exit 900ms cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+/* slow-mo wordmark — letters breathe apart then settle */
+@keyframes wordmark-breathe {
+  0% {
+    letter-spacing: 0.85em;
+    opacity: 0;
+    filter: blur(6px);
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    letter-spacing: 0.55em;
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+.animate-wordmark {
+  animation: wordmark-breathe 1.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
