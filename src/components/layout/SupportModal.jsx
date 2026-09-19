@@ -79,7 +79,8 @@ export default function SupportModal({ open, onClose }) {
   return (
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
       <DialogContent
-        className="glass-strong max-w-lg gap-0 rounded-2xl p-6 overflow-hidden shadow-[0_24px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(124,58,237,0.15)] data-[state=open]:animate-fade-up"
+        data-lenis-prevent
+        className="glass-strong max-w-lg max-h-[85vh] gap-0 rounded-2xl p-6 overflow-y-auto overscroll-contain shadow-[0_24px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(124,58,237,0.15)] data-[state=open]:animate-fade-up"
         showCloseButton={false}
       >
         <DialogHeader className="sr-only">

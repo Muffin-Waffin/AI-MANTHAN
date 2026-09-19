@@ -2,75 +2,126 @@ import Icon from '../ui/Icon'
 import Section from '../ui/Section'
 import { prizes, cta } from '../../data/prizes'
 
-const accentText = {
-  cyan: 'text-brand-cyan',
-  pink: 'text-pink-400',
-  emerald: 'text-emerald-400',
-}
+/**
+ * THE PRIZE VAULT — controlled futuristic luxury.
+ * Composition audit applied:
+ *  - pulse-glow loop REMOVED on all cards (constant motion was noise)
+ *  - only the champion carries accent glow; side cards stay quiet glass
+ *  - elliptical floor lights make cards float without neon bloom
+ *  - amounts are the loudest element inside each card
+ *  - 15–20% intensity reduction across borders/glow vs previous build
+ */
 
-function PodiumCard({ prize }) {
-  if (prize.champion) {
-    return (
-      <div className="order-1 md:order-2 glass-strong animate-pulse-glow p-8 rounded-2xl border-2 border-brand-violet/70 text-center flex flex-col items-center relative -translate-y-2">
-        <div className="absolute -top-3 px-3.5 py-1 rounded-full bg-brand-violet text-white text-[11px] font-mono font-bold tracking-wider uppercase shadow-md">
-          OVERALL CHAMPION
-        </div>
-        <div className="w-14 h-14 rounded-2xl bg-brand-violet/20 border border-brand-violet/40 flex items-center justify-center text-brand-violet mb-3 mt-2">
-          <Icon name="emoji_events" className="text-[28px]" />
-        </div>
-        <span className="text-xs font-mono uppercase tracking-wider text-brand-violet font-semibold">
-          {prize.title}
-        </span>
-        <div className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight my-2">
-          {prize.amount}
-        </div>
-        <p className="text-xs sm:text-sm text-zinc-300 mb-6 leading-relaxed">{prize.body}</p>
-        <div className="w-full py-2.5 rounded-xl bg-brand-violet/15 border border-brand-violet/30 text-xs font-mono text-brand-violet font-bold">
-          {prize.perk}
-        </div>
-      </div>
-    )
-  }
-
+/* Total Prize Pool — single grand centerpiece replacing the 1st/2nd/3rd
+   podium. Keeps the champion treatment: breathing violet glow ring, floor
+   light, floating "ONE ARENA • ONE VAULT" badge, sheen sweep on hover. */
+function PoolCard() {
+  const pool = prizes.pool
   return (
-    <div
-      className={`glass glass-hover sheen animate-pulse-glow p-6 rounded-2xl text-center flex flex-col items-center group/prize ${
-        prize.place === '02' ? 'order-2 md:order-1' : 'order-3'
-      } ${prize.ring === 'zinc' ? 'border-zinc-500/20' : 'border-amber-600/20'}`}
-    >
+    <div className="relative max-w-xl mx-auto pt-3.5">
+      {/* floating badge — lives OUTSIDE the overflow-hidden card so the
+          sheen layer can never clip it; straddles the card's top edge.
+          pt-3.5 (not mt) prevents margin-collapse so the straddle holds. */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 z-10 px-3.5 py-1 rounded-full bg-brand-violet text-white text-[9px] font-mono font-bold tracking-[0.16em] uppercase shadow-[0_6px_18px_-6px_rgba(124,58,237,0.8)] whitespace-nowrap">
+        {pool.badge}
+      </div>
       <div
-        className={`w-10 h-10 rounded-full bg-zinc-800 border flex items-center justify-center font-mono font-bold text-sm mb-3 transition-all duration-650 group-hover/prize:scale-110 group-hover/prize:border-amber-500/50 ${
-          prize.place === '02'
-            ? 'border-zinc-600/30 text-zinc-300'
-            : 'border-amber-600/30 text-amber-500'
-        }`}
+        style={{ '--pg-color': 'rgba(168, 85, 247, 0.55)' }}
+        className="prize-card prize-card-glow prize-card-champion bounty-card relative p-6 sm:p-8 text-center flex flex-col items-center"
       >
-        {prize.place}
+
+        {/* trophy with a slow breathing violet glow loop */}
+        <div
+          className="bounty-icon w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-brand-violet/15 border border-brand-violet/35 flex items-center justify-center text-brand-violet mt-1 mb-3"
+          style={{ '--pg-color': 'rgba(168, 85, 247, 0.6)' }}
+        >
+          <Icon name="emoji_events" className="text-[24px] sm:text-[26px]" />
+        </div>
+
+        <span className="text-[10px] sm:text-xs font-mono uppercase tracking-[0.22em] text-purple-300/90 font-semibold">
+          {pool.title}
+        </span>
+
+        {/* the amount — the loudest thing on the card, gradient + glow */}
+        <div className="pool-amount text-4xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-b from-white via-white to-purple-300 bg-clip-text text-transparent leading-tight mt-1.5 mb-2 drop-shadow-[0_0_24px_rgba(147,51,234,0.35)]">
+          {pool.amount}
+        </div>
+
+        <p className="text-[11px] sm:text-xs text-zinc-400 leading-relaxed mb-4 max-w-[44ch]">
+          {pool.body}
+        </p>
+
+        {/* reward chips */}
+        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 mb-4">
+          {pool.chips.map((chip) => (
+            <span
+              key={chip}
+              className="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.09] text-[8px] sm:text-[9px] font-mono tracking-[0.14em] text-zinc-300 transition-colors duration-300 hover:border-brand-violet/40 hover:text-purple-200"
+            >
+              {chip}
+            </span>
+          ))}
+        </div>
+
+        <div className="mt-auto w-full py-2.5 rounded-lg bg-brand-violet/12 border border-brand-violet/30 text-[8px] sm:text-[10px] font-mono tracking-[0.14em] text-purple-200/90 font-bold">
+          {pool.perk}
+        </div>
       </div>
-      <span className="text-xs font-mono uppercase tracking-wider text-zinc-400">{prize.title}</span>
-      <div className="text-3xl font-extrabold text-white tracking-tight my-2">{prize.amount}</div>
-      <p className="text-xs text-zinc-400 mb-6 leading-relaxed">{prize.body}</p>
-      <div className="w-full py-2 rounded-xl bg-white/[0.03] border border-white/[0.06] text-[11px] font-mono text-zinc-400">
-        {prize.perk}
-      </div>
+
+      {/* floor light beneath the hero */}
+      <div
+        aria-hidden="true"
+        className="prize-floor"
+        style={{ background: 'radial-gradient(ellipse at center, rgba(147,51,234,0.22), transparent 70%)' }}
+      />
     </div>
   )
 }
 
-function BountyCard({ bounty }) {
+/* Per-bounty accent colors (RGB) — drives hover border, glow & amount tint */
+const bountyAccent = {
+  cyan: '56, 189, 248',
+  pink: '244, 114, 182',
+  emerald: '52, 211, 153',
+  amber: '251, 191, 36',
+  violet: '167, 139, 250',
+  rose: '251, 113, 133',
+  orange: '251, 146, 60',
+  lime: '163, 230, 53',
+  indigo: '129, 140, 248',
+  sky: '56, 189, 248',
+}
+
+function BountyCard({ bounty, index }) {
+  const tone = {
+    cyan: 'text-sky-300/90 bg-sky-500/[0.07]',
+    pink: 'text-pink-300/90 bg-pink-500/[0.07]',
+    emerald: 'text-emerald-300/90 bg-emerald-500/[0.07]',
+    amber: 'text-amber-300/90 bg-amber-500/[0.07]',
+    violet: 'text-violet-300/90 bg-violet-500/[0.07]',
+    rose: 'text-rose-300/90 bg-rose-500/[0.07]',
+    orange: 'text-orange-300/90 bg-orange-500/[0.07]',
+    lime: 'text-lime-300/90 bg-lime-500/[0.07]',
+    indigo: 'text-indigo-300/90 bg-indigo-500/[0.07]',
+    sky: 'text-sky-300/90 bg-sky-500/[0.07]',
+  }[bounty.color] || 'text-zinc-300 bg-white/[0.04]'
+
   return (
-    <div className="glass p-4 rounded-xl flex items-center gap-3.5 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.04]">
-      <div
-        className={`w-10 h-10 rounded-lg bg-white/[0.04] flex items-center justify-center shrink-0 ${
-          accentText[bounty.color]
-        }`}
-      >
-        <Icon name={bounty.icon} className="text-[20px]" />
-      </div>
-      <div>
-        <div className="text-xs text-zinc-400">{bounty.label}</div>
-        <div className="text-sm font-semibold text-white">{bounty.title}</div>
-        <div className={`text-xs font-mono font-bold ${accentText[bounty.color]}`}>
+    <div
+      className="bounty-item"
+      style={{ '--bi': index, '--baccent': bountyAccent[bounty.color] || '139, 92, 246' }}
+    >
+      <div className="bounty-card glass rounded-xl px-4 py-3.5 flex flex-col gap-3 h-full">
+        <div className={`bounty-icon w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${tone}`}>
+          <Icon name={bounty.icon} className="text-[18px]" />
+        </div>
+        <div className="min-w-0">
+          <div className="text-[9px] font-mono uppercase tracking-[0.16em] text-zinc-600">
+            {bounty.label}
+          </div>
+          <div className="text-[13px] font-semibold text-white leading-snug">{bounty.title}</div>
+        </div>
+        <div className="bounty-amount text-xs font-mono font-bold text-zinc-300 mt-auto">
           {bounty.amount}
         </div>
       </div>
@@ -81,38 +132,67 @@ function BountyCard({ bounty }) {
 export default function Prizes() {
   return (
     <Section id="prizes">
-      <div className="text-center max-w-2xl mx-auto mb-16">
-        <span className="text-xs font-mono font-medium tracking-wider text-brand-violet uppercase">
+      {/* quiet radial stage light — single source, low opacity */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 w-[640px] h-[380px] rounded-full bg-purple-800/[0.12] blur-[110px]"
+      />
+
+      {/* Header — eyebrow, title with gradient accent word, divider */}
+      <div className="relative text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+        <span className="text-[11px] font-mono font-medium tracking-[0.28em] text-brand-violet uppercase">
           {prizes.eyebrow}
         </span>
-        <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mt-2">
-          {prizes.heading}
+        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mt-3">
+          The Prize{' '}
+          <span className="bg-gradient-to-r from-purple-400 to-fuchsia-400 bg-clip-text text-transparent">
+            Vault
+          </span>
         </h2>
-        <p className="text-zinc-400 text-sm mt-2">{prizes.body}</p>
+        <p className="text-xs sm:text-sm text-zinc-400 mt-3 leading-relaxed">{prizes.body}</p>
+        <div className="mx-auto mt-6 h-px w-24 bg-gradient-to-r from-transparent via-brand-violet/60 to-transparent" />
       </div>
 
-      {/* Podium */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-end mb-12">
-        {prizes.podium.map((prize) => (
-          <PodiumCard key={prize.title} prize={prize} />
+      {/* Total Prize Pool — single grand centerpiece (top padding so the
+          floating badge never clips against the section edge) */}
+      <div className="bounty-item pt-6 sm:pt-8 mb-14 sm:mb-16" style={{ '--bi': 0 }}>
+        <PoolCard />
+      </div>
+
+      {/* Special bounties — compact secondary grid, 10 grants */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4 max-w-6xl mx-auto">
+        {prizes.bounties.map((bounty, i) => (
+          <BountyCard key={bounty.title} bounty={bounty} index={i} />
         ))}
       </div>
 
-      {/* Special bounties */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-16">
-        {prizes.bounties.map((bounty) => (
-          <BountyCard key={bounty.title} bounty={bounty} />
-        ))}
+      {/* Eligibility note for special grants — highlighted callout */}
+      <div className="mt-8 max-w-4xl mx-auto">
+        <div
+          className="bounty-item relative flex flex-col items-center text-center gap-3 rounded-2xl border border-brand-violet/25 bg-gradient-to-r from-brand-violet/[0.09] via-brand-violet/[0.04] to-sky-500/[0.07] px-5 sm:px-7 py-5 sm:py-6 shadow-[0_0_30px_-10px_rgba(139,92,246,0.35)]"
+          style={{ '--bi': prizes.bounties.length }}
+        >
+          <div className="bounty-icon w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-brand-violet/15 border border-brand-violet/30 flex items-center justify-center shrink-0">
+            <Icon name="verified" className="text-[22px] text-brand-violet" />
+          </div>
+          <div className="min-w-0">
+            <div className="text-[10px] sm:text-[11px] font-mono font-semibold uppercase tracking-[0.22em] text-brand-violet mb-1.5">
+              Grant Eligibility
+            </div>
+            <p className="text-[13px] sm:text-[15px] text-zinc-200 leading-relaxed">
+              {prizes.bountiesNote}
+            </p>
+          </div>
+        </div>
       </div>
-
-
     </Section>
   )
 }
 
 export function FinalCTA() {
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <section className="w-full py-20">
+      <div className="site-container">
       <div className="rounded-3xl p-8 sm:p-14 bg-gradient-to-b from-obsidian-900 to-obsidian-950 border border-white/[0.1] text-center flex flex-col items-center relative overflow-hidden shadow-2xl">
         <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-brand-violet/20 rounded-full blur-[100px] pointer-events-none"></div>
 
@@ -153,6 +233,7 @@ export function FinalCTA() {
             </span>
           ))}
         </div>
+      </div>
       </div>
     </section>
   )

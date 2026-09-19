@@ -17,13 +17,13 @@ export default function EventJsonLd() {
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     location: {
       '@type': 'Place',
-      name: 'Acropolis Arena, Manglia Square, Indore',
+      name: 'Acropolis Arena, Bypass Road, Manglaya Sadak, Indore',
       address: {
         '@type': 'PostalAddress',
-        streetAddress: 'Manglia Square, Indore–Ujjain Road',
+        streetAddress: 'Bypass Road, Square, Manglaya Sadak',
         addressLocality: 'Indore',
         addressRegion: 'Madhya Pradesh',
-        postalCode: '452015',
+        postalCode: '453771',
         addressCountry: 'IN',
       },
       geo: {

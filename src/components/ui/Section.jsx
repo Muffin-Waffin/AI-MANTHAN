@@ -1,10 +1,15 @@
-export default function Section({ id, className = '', children }) {
+/* eslint-disable react/prop-types */
+export default function Section({ id, className = '', children, ...props }) {
   return (
     <section
       id={id}
-      className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 border-t border-white/[0.06] ${className}`}
+      /* Full-width section, centered content — page background bleeds
+         edge-to-edge while inner content stays in a roomy centered
+         container (previous layout behaviour, with wider breakpoints). */
+      className={`relative w-full py-20 sm:py-24 border-t border-white/[0.06] ${className}`}
+      {...props}
     >
-      {children}
+      <div className="site-container">{children}</div>
     </section>
   )
 }

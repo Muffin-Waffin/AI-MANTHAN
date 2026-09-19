@@ -1,7 +1,7 @@
 export default function SectionHeading({ eyebrow, title, body, align = 'left', className = '' }) {
   const isCenter = align === 'center'
   return (
-    <div className={`${isCenter ? 'text-center max-w-2xl mx-auto' : 'max-w-2xl'} ${className}`}>
+    <div className={`${isCenter ? 'text-center max-w-2xl mx-auto' : 'max-w-2xl pl-[3%]'} ${className}`}>
       <span className="text-xs font-mono font-medium tracking-wider text-brand-violet uppercase">
         {eyebrow}
       </span>

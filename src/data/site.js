@@ -1,19 +1,20 @@
 export const site = {
-  title: 'AI Manthan 2026',
-  subtitle: 'Acropolis • Indore',
+  title: 'AI MANTHAN',
+  titleAccent: '2K26',
+  subtitle: 'ACROPOLIS • INDORE',
   description:
     "The flagship national AI hackathon at Acropolis Institute of Technology & Research, Indore — 36 hours of relentless engineering.",
   email: 'aimanthan@acropolis.in',
   emergencyPhone: '+91 (0820) 2925555',
   coordinates: '22.7196° N, 75.8577° E',
   address:
-    'Acropolis Institute of Technology & Research, Manglia Square, Indore, MP 452015',
+    'Acropolis Institute of Technology & Research, Bypass Road, Square, Manglaya Sadak, Indore, Madhya Pradesh 453771',
   links: {
     register: 'https://unstop.com/p/ai-manthan-2026-acropolis-hackathon-1506313',
     whatsapp: 'https://whatsapp.com/channel/0029Vb87c3eDJ6GyyNKLgx0L',
     website: 'https://www.acropolis.in/',
     maps:
-      'https://maps.google.com/?q=Acropolis+Institute+of+Technology+and+Research+Manglia+Square+Indore',
+      'https://maps.google.com/?q=Acropolis+Institute+of+Technology+and+Research+Bypass+Road+Manglaya+Sadak+Indore',
   },
   /* WhatsApp community — single source for all community references */
   community: {
@@ -24,35 +25,34 @@ export const site = {
     href: 'https://whatsapp.com/channel/0029Vb87c3eDJ6GyyNKLgx0L',
   },
   nav: [
-    { label: 'Overview', href: '/#overview' },
-    { label: 'Intro', href: '/#story' },
+    { label: 'Home', href: '/#overview' },
+    { label: 'About', href: '/#story' },
     { label: 'Tracks', href: '/#tracks' },
     { label: 'Timeline', href: '/#timeline' },
     { label: 'Gallery', href: '/#gallery' },
     { label: 'Prizes', href: '/#prizes' },
     { label: 'Faculty', href: '/#faculty' },
-    { label: 'Leadership', href: '/#team' },
     { label: 'Sponsors', href: '/#partners' },
     { label: 'Venue & FAQ', href: '/#venue' },
+    { label: 'Contact', href: '/#contact' },
   ],
   stats: [
-    { value: '36 Hours', label: 'Non-stop sprint on campus' },
-    { value: '800+ Teams', label: 'Nationwide applicants' },
-    { value: '100+ Colleges', label: 'IITs, NITs, BITS & IIITs' },
-    { value: '₹2,00,000+', label: 'Cash grants & sponsor bounties' },
+    { value: '36', label: 'Hours' },
+    { value: '800+', label: 'Registered Teams' },
+    { value: '100+', label: 'Colleges' },
+    { value: '₹2L+', label: 'Prize Pool', highlight: true },
   ],
 }
 
 export const hero = {
-  badge: ['AI Manthan ’26 Flagship Hackathon', 'Acropolis • Indore'],
-  headlineA: 'Where small sparks cause',
-  headlineB: 'massive ripples.',
-  bodyStrong: '36 hours of relentless engineering at Acropolis, Indore.',
-  body:    "The flagship national AI hackathon bringing together 1,500+ frontier builders, researchers, and designers to architect the next generation of software.",
-  primaryCta: { label: 'Register on Unstop', href: site.links.register, icon: 'terminal' },
+  badge: ['AI Manthan 2K26', 'Acropolis • Indore'],
+  headlineA: 'Build the Future',
+  headlineB: 'with AI.',
+  bodyStrong: null,
+  body: "India's flagship AI Hackathon bringing together builders, innovators and creators.",
+  primaryCta: { label: 'Register Now', href: site.links.register, icon: 'rocket_launch' },
   secondaryCtas: [
-    { label: 'Explore Past Sprints', href: '#gallery', icon: 'photo_library' },
-    { label: site.community.cta, href: site.community.href, icon: site.community.icon },
+    { label: 'Explore Tracks', href: '#tracks', icon: 'explore' },
   ],
   countdown: {
     caption: 'APPLICATION WINDOW CLOSING',
@@ -104,18 +104,30 @@ export const story = {
 
 /* ── Sponsors & Partners (reference: black section, white brand cards) ──
 
-   sponsors    → 4 large static cards (title sponsors)
-   partnerRows → 3 marquee rows, opposite directions (1&3 →left, 2 →right)
+   Sponsors are split into two tiers, stacked vertically:
+     platinumSponsors → moving marquee row of 4 large landscape cards
+     goldSponsors     → moving marquee row of 5 compact 230×123 cards
+   partnerRows → 2 marquee rows, opposite directions (1 →left, 2 →right)
 
    Every item supports an optional `logo` path — drop the brand's PNG/SVG
    into `frontend/public/logos/` and set `logo: '/logos/kimirica.png'`.
    Without a logo the card renders a styled text wordmark instead.
    Names below are from the confirmed reference board. */
-export const sponsors = [
+export const platinumSponsors = [
   { name: 'KIMIRICA', sub: 'THOUGHTFUL SELF-CARE', tone: 'dark', tracking: 'wide' },
   { name: 'TAP ONN', tone: 'sky', bold: true },
   { name: 'carragreen', tone: 'green', bold: true },
   { name: 'Shri Agrawal', sub: 'SWEETS & NAMKEEN • INDORE | DUBAI', tone: 'red', script: true },
+]
+
+/* Gold tier — placeholder tiles for now; swap in the confirmed names,
+   taglines and tones once the gold sponsors are finalised. */
+export const goldSponsors = [
+  { name: 'Gold Sponsor 1', tone: 'dark', bold: true },
+  { name: 'Gold Sponsor 2', tone: 'sky', bold: true },
+  { name: 'Gold Sponsor 3', tone: 'green', bold: true },
+  { name: 'Gold Sponsor 4', tone: 'orange', bold: true },
+  { name: 'Gold Sponsor 5', tone: 'violet', bold: true },
 ]
 
 export const partnerRows = [
@@ -135,7 +147,7 @@ export const partnerRows = [
   },
   {
     direction: 'right',
-    duration: '36s',
+    duration: '42s',
     items: [
       { name: 'Startup India', tone: 'orange', bold: true },
       { name: 'MSME', tone: 'dark', bold: true },
@@ -145,13 +157,6 @@ export const partnerRows = [
       { name: 'T-Hub', tone: 'violet', bold: true },
       { name: 'CIIE.CO', tone: 'red', bold: true },
       { name: 'IIMA CIIE', tone: 'dark' },
-    ],
-  },
-  {
-    direction: 'left',
-    duration: '27s',
-    items: [
-      { name: 'NSR CEL', tone: 'orange', bold: true },
       { name: 'iCreate', tone: 'sky', bold: true },
       { name: 'Villgro', tone: 'green', bold: true },
       { name: 'Startup Bengalu', tone: 'violet' },
@@ -163,38 +168,66 @@ export const partnerRows = [
   },
 ]
 
+/* ── Footer (ref: Manipal-hackathon-style band) ─────────────────────
+   Brand left • address center • Rulebook / Meet the Team right,
+   with a giant clipped watermark behind the whole band. */
 export const footer = {
-  mission:
-    'Flagship national AI hackathon organized at Acropolis Institute of Technology & Research, Indore. Uniting developers, designers, and systems architects to build high-impact deterministic software.',
-  columns: [
+  brand: site.title,
+  brandAccent: site.titleAccent,
+  watermark: 'AI MANTHAN 2K26',
+  address: site.address,
+  legal: '© 2026 AI Manthan • Acropolis Institute of Technology & Research. All rights reserved.',
+  meta: ['Organized by Acropolis', 'Built with craft'],
+}
+
+/* ── Official Rulebook (opened from the footer "Rulebook" button) ── */
+export const rulebook = {
+  version: 'AI MANTHAN 2K26 • ROUND 1 → GRAND FINALE',
+  sections: [
     {
-      title: 'Hackathon Arenas',
-      links: [
-        { label: 'The Vanishing Dose (Healthcare)', href: '#tracks' },
-        { label: 'Blackout Mesh (Disaster Resilience)', href: '#tracks' },
-        { label: 'Verifiable Inference (Applied ZK)', href: '#tracks' },
-        { label: 'Civic Ledgers & Microfinance', href: '#tracks' },
-        { label: 'Heritage Sound & Moonshots', href: '#tracks' },
+      title: 'Eligibility & Teams',
+      icon: 'groups',
+      rules: [
+        'Open to students from any recognized university or institute. Teams must have 2–4 members; inter-college and multidisciplinary squads are welcome.',
+        'Every member must hold a valid college ID and complete registration individually before Sep 15, 23:59 IST.',
+        'A participant may belong to exactly one team — duplicate entries are disqualified without notice.',
       ],
     },
     {
-      title: 'Participant Resources',
-      links: [
-        { label: 'Past Hackathons Gallery', href: '#gallery' },
-        { label: 'Faculty Advisory', href: '#faculty' },
-        { label: 'Student Leadership', href: '#team' },
-        { label: 'Unstop Portal', href: site.links.register, external: true },
-        { label: 'Acropolis Institute', href: site.links.website, external: true },
-        { label: 'Campus Travel & Accommodation', href: '#venue' },
+      title: 'Rounds & Format',
+      icon: 'flag',
+      rules: [
+        'Round 1 (online): submit your idea deck + prototype link. Free to enter — no fee for Phase 1.',
+        'Round 2 (Oct 14–16): a 36-hour offline build sprint at Acropolis Arena, Indore. Shortlisted teams get campus lodging and meals.',
+        'Round 1 results drop Oct 1 along with the Round 2 guidelines — read them before you arrive.',
+      ],
+    },
+    {
+      title: 'Judging Rubric',
+      icon: 'grading',
+      rules: [
+        'Technical Depth — 40%: architecture quality, correctness, and intelligent use of AI.',
+        'Innovation — 30%: originality and strength of the problem-solution fit.',
+        'Execution — 20%: working demo, completeness, and polish within the time limit.',
+        'Pitch — 10%: clarity, storytelling, and live demo delivery to the jury.',
+      ],
+    },
+    {
+      title: 'Code of Conduct',
+      icon: 'shield',
+      rules: [
+        'All code and assets must be built during the event. Pre-built repositories or plagiarised work lead to immediate disqualification.',
+        'Be respectful to mentors, judges, volunteers, and fellow builders — harassment of any kind ends your run.',
+        'Open-source libraries and public APIs are allowed, but must be declared in your final submission.',
+      ],
+    },
+    {
+      title: 'IP & Ownership',
+      icon: 'copyright',
+      rules: [
+        'Teams retain 100% ownership of the code, models, and IP they build during the hackathon.',
+        'Neither Acropolis Institute of Technology & Research nor the sponsors claim any equity, claim, or license over your inventions.',
       ],
     },
   ],
-  contact: {
-    org: 'AI Manthan • Acropolis, Indore',
-    address: 'Acropolis Institute of Technology & Research, Manglia Square, MP 452015',
-    email: site.email,
-    node: 'Node: 22.7196° N, 75.8577° E',
-  },
-  legal: '© 2026 AI Manthan • Acropolis Institute of Technology & Research. All rights reserved.',
-  meta: ['Organized by Acropolis', 'Built with craft'],
 }

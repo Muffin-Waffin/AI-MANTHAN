@@ -2,33 +2,14 @@ export const prizes = {
   eyebrow: 'Incentives & Grants',
   heading: 'The Prize Vault',
   body: 'Transparent, non-dilutive cash rewards, compute credits, and fast-track founder intros.',
-  podium: [
-    {
-      place: '02',
-      title: 'First Runner Up',
-      amount: '₹60,000',
-      body: 'Direct cash grant + hardware dev-kits + $2,500 AWS credit bundle.',
-      perk: 'TROPHY • INCUBATION PASS',
-      ring: 'zinc',
-    },
-    {
-      place: null, // champion — trophy icon instead of number
-      title: 'Grand Champion',
-      amount: '₹1,00,000',
-      body: 'Unrestricted cash prize, fast-track seed syndicate pitch with partner VCs, and sponsored incubation space.',
-      perk: 'CHAMPIONSHIP CUP + VC DEMO SLOTS',
-      ring: 'violet',
-      champion: true,
-    },
-    {
-      place: '03',
-      title: 'Second Runner Up',
-      amount: '₹40,000',
-      body: 'Direct cash prize + vector cloud tier subscriptions + swag vault kit.',
-      perk: 'CERTIFICATE • SWAG CRATE',
-      ring: 'amber',
-    },
-  ],
+  pool: {
+    badge: 'One Arena • One Vault',
+    title: 'Total Prize Pool',
+    amount: '₹2,00,000+',
+    body: 'One unified vault of unrestricted cash prizes, special grants, cloud credit bundles, and fast-track founder intros — awarded across the Grand Finale.',
+    chips: ['CASH PRIZES', 'SPECIAL GRANTS', 'CLOUD CREDITS'],
+    perk: 'CHAMPIONSHIP CUP + VC DEMO SLOTS + INCUBATION PASS',
+  },
   bounties: [
     {
       icon: 'smart_toy',
@@ -51,14 +32,65 @@ export const prizes = {
       title: 'Women in Tech Spotlight',
       amount: '₹15,000 Grant',
     },
+    {
+      icon: 'rocket_launch',
+      color: 'amber',
+      label: 'Special Bounty',
+      title: 'Best First-Time Builders',
+      amount: '₹10,000 Grant',
+    },
+    {
+      icon: 'code',
+      color: 'violet',
+      label: 'Special Bounty',
+      title: 'Best Use of Open Source',
+      amount: '₹10,000 Grant',
+    },
+    {
+      icon: 'how_to_vote',
+      color: 'rose',
+      label: 'Special Bounty',
+      title: 'Community Choice Award',
+      amount: '₹10,000 Grant',
+    },
+    {
+      icon: 'public',
+      color: 'orange',
+      label: 'Special Bounty',
+      title: 'Best AI for Bharat',
+      amount: '₹15,000 Grant',
+    },
+    {
+      icon: 'eco',
+      color: 'lime',
+      label: 'Special Bounty',
+      title: 'Sustainability Champion',
+      amount: '₹10,000 Grant',
+    },
+    {
+      icon: 'lightbulb',
+      color: 'indigo',
+      label: 'Special Bounty',
+      title: 'Best Campus Startup Pitch',
+      amount: '₹10,000 Grant',
+    },
+    {
+      icon: 'star',
+      color: 'sky',
+      label: 'Special Bounty',
+      title: 'Rising Star of the Arena',
+      amount: '₹8,000 Grant',
+    },
   ],
+  bountiesNote:
+    'Special grants are awarded exclusively to participants outside the winning teams — recipients are chosen by the jury from the remaining pool of eligible participants.',
 }
 
 export const cta = {
   badge: 'APPLICATION STAGE 01 IS OPEN',
   heading: 'Ready to build software that creates a lasting ripple?',
-  body: 'Apply on Unstop. Free entry, verified certificates for all participants, and 36 hours of high-velocity creation at Acropolis, Indore.',
-  primary: { label: 'Register Team on Unstop', href: 'https://unstop.com/p/ai-manthan-2026-acropolis-hackathon-1506313', icon: 'rocket_launch' },
+  body: 'Register now — free entry, verified certificates for all participants, and 36 hours of high-velocity creation at Acropolis, Indore.',
+  primary: { label: 'Registration', href: 'https://unstop.com/p/ai-manthan-2026-acropolis-hackathon-1506313', icon: 'rocket_launch' },
   secondary: { label: 'Join WhatsApp Community', href: 'https://whatsapp.com/channel/0029Vb87c3eDJ6GyyNKLgx0L', icon: 'forum' },
   footnotes: ['ZERO REGISTRATION FEES', '36-HOUR OFFLINE CRUCIBLE', '₹2,00,000+ BOUNTY POOL'],
 }

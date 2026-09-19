@@ -15,6 +15,9 @@ const securityHeaders = [
 
 const nextConfig = {
   reactStrictMode: true,
+  /* Hide the Next.js dev-tools "N" badge (bottom-left corner). Dev-only —
+     never renders in production builds. */
+  devIndicators: false,
   async headers() {
     return [{ source: '/(.*)', headers: securityHeaders }]
   },

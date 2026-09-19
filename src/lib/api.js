@@ -10,11 +10,18 @@ function adminHeaders() {
  * The support modal + admin dashboard are the wired mutations — add more
  * calls here as the API grows (registration, team management, etc.).
  */
-export async function submitSupportInquiry({ email, category, message, kind = 'participant', rating = null }) {
+export async function submitSupportInquiry({ email, name, category, message, kind = 'participant', rating = null }) {
   const res = await fetch(`${API_BASE}/support`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ email, category, message, kind, ...(rating ? { rating } : {}) }),
+    body: JSON.stringify({
+      email,
+      ...(name ? { name } : {}),
+      category: category || 'General',
+      message,
+      kind,
+      ...(rating ? { rating } : {}),
+    }),
   })
 
   if (!res.ok) {

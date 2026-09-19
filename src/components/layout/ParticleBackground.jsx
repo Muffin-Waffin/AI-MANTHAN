@@ -136,6 +136,14 @@ export default function ParticleBackground() {
   return (
     <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-70" />
+      {/* Fixed corner sparkle — sits in the bottom-left where the dev badge
+          used to render. Twinkles slowly, matching the ambient dust. */}
+      <span
+        aria-hidden="true"
+        className="corner-sparkle absolute bottom-5 left-5 text-zinc-500/40"
+      >
+        <span className="material-symbols-outlined select-none text-[22px]">star_4pt</span>
+      </span>
       <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[540px] bg-gradient-to-b from-brand-violet/25 via-indigo-600/15 to-transparent blur-[140px]"></div>
       <div className="absolute top-[30%] -right-40 w-[550px] h-[550px] bg-cyan-500/10 blur-[150px]"></div>
       <div className="absolute top-[55%] -left-36 w-[580px] h-[580px] bg-purple-600/15 blur-[160px]"></div>

@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Icon from '@/components/ui/Icon'
 import AppShell from '@/components/layout/AppShell'
+import SmartBack from '@/components/ui/SmartBack'
 import { peopleDirectory, getPersonBySlug } from '@/data/facultyDirectory'
 
 const groupAccents = {
@@ -75,16 +76,14 @@ export default async function ProfilePage({ params }) {
 
   return (
     <AppShell>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="w-full max-w-none px-4 sm:px-6 lg:px-10 2xl:px-14 py-8">
         {/* Sub-navigation */}
         <div className="flex items-center justify-between mb-8 flex-wrap gap-3">
-          <Link
+          <SmartBack
             className="inline-flex items-center gap-2 text-sm font-semibold text-brand-violet hover:text-zinc-200 transition-colors"
             href="/#faculty"
-          >
-            <Icon name="arrow_back" className="text-[18px]" />
-            Back to Jury, Mentors &amp; Faculty
-          </Link>
+            label="Back to Jury, Mentors & Faculty"
+          />
           <div className="flex items-center gap-3">
             <Link
               className="glass px-4 py-1.5 rounded-lg text-zinc-300 text-sm font-medium hover:text-white hover:-translate-y-0.5 transition-all flex items-center gap-1.5"

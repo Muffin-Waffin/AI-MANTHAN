@@ -11,15 +11,18 @@ export default function useScrollSpy(sectionIds) {
   const [activeId, setActiveId] = useState(sectionIds[0]?.replace('/#', '') || '')
   const [progress, setProgress] = useState(0)
 
+  const idsKey = Array.isArray(sectionIds) ? sectionIds.join(',') : ''
+
   useEffect(() => {
-    const ids = sectionIds.map((h) => h.replace('/#', ''))
+    const ids = (sectionIds || []).map((h) => h.replace('/#', ''))
     let raf = null
 
     const measure = () => {
       raf = null
       const doc = document.documentElement
       const max = doc.scrollHeight - window.innerHeight
-      setProgress(max > 0 ? Math.min(1, window.scrollY / max) : 0)
+      const nextProgress = max > 0 ? Math.min(1, window.scrollY / max) : 0
+      setProgress((prev) => (Math.abs(prev - nextProgress) > 0.005 ? nextProgress : prev))
 
       // section whose band contains the viewport center line wins
       const line = window.scrollY + window.innerHeight * 0.35
@@ -32,7 +35,7 @@ export default function useScrollSpy(sectionIds) {
       if (window.innerHeight + window.scrollY >= doc.scrollHeight - 4) {
         current = ids[ids.length - 1] || current
       }
-      setActiveId(current)
+      setActiveId((prev) => (prev !== current ? current : prev))
     }
 
     const onScroll = () => {
@@ -47,7 +50,7 @@ export default function useScrollSpy(sectionIds) {
       window.removeEventListener('resize', onScroll)
       if (raf !== null) cancelAnimationFrame(raf)
     }
-  }, [sectionIds])
+  }, [idsKey])
 
   return { activeId, progress }
 }

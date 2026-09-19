@@ -2,106 +2,146 @@ import Image from 'next/image'
 import Section from '../ui/Section'
 import { gallery } from '../../data/gallery'
 
-function GalleryCard({ item, minH = 'min-h-[280px]', children }) {
+/**
+ * INSIDE AI MANTHAN — cinematic editorial gallery, art-wall treatment:
+ *  - images rest softly blurred + desaturated (gallery veil); hover snaps
+ *    them sharp — the “look closer” moment
+ *  - 3D art-frame tilt on hover: perspective rotate + lift + deep shadow,
+ *    like a canvas leaning off the wall
+ *  - single quiet bottom gradient per card; tags/kickers de-noised
+ *  - one ambient glow behind the header only; backdrop is a whisper
+ *  - compact rhythm so the whole section reads in ~one viewport
+ *  - motion: staggered keyframe entrance (.gallery-item), slow Ken Burns
+ *    drift (.gallery-ambient), sheen sweep + glow pulse + underline wipe
+ *    on hover — all keyframe-driven, reduced-motion safe (see index.css)
+ *  - eye path: heading → featured (spans 7 cols, tall) → wide → smalls
+ */
+
+function Frame({ item, ratio, sizes, children, priority = false }) {
   return (
     <div
-      className={`${minH} glass glass-hover sheen rounded-2xl overflow-hidden relative group flex flex-col justify-end`}
+      className={`gallery-frame group relative rounded-2xl overflow-hidden border border-white/[0.07] bg-obsidian-900 shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_16px_40px_-16px_rgba(0,0,0,0.75)] transition-all duration-[500ms] ease-out [transform-style:preserve-3d] will-change-transform hover:[transform:perspective(1100px)_rotateX(1.6deg)_rotateY(-2.2deg)_translateY(-6px)_scale(1.015)] hover:border-white/[0.18] hover:shadow-[0_36px_80px_-20px_rgba(0,0,0,0.9),0_0_0_1px_rgba(139,92,246,0.14)] after:pointer-events-none after:absolute after:inset-0 after:rounded-2xl after:ring-1 after:ring-inset after:ring-white/[0.05] ${ratio}`}
     >
-      <Image
-        alt={item.title}
-        className="absolute inset-0 w-full h-full object-cover opacity-55 group-hover:scale-105 group-hover:opacity-85 transition-all duration-650"
-        src={item.img}
-        fill
-        sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 45vw"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-obsidian-950/60 to-transparent"></div>
-      {children}
+      {/* ambient layer — Ken Burns drift; image rests blurred, sharpens on hover */}
+      <div className="gallery-ambient absolute inset-0">
+        <Image
+          alt={item.title}
+          src={item.img}
+          fill
+          sizes={sizes}
+          priority={priority}
+          className="object-cover scale-[1.08] blur-[6px] saturate-[0.8] transition-[transform,filter] duration-[650ms] ease-out group-hover:scale-[1.045] group-hover:blur-[0px] group-hover:saturate-100"
+        />
+      </div>
+      {/* cinematic grade: single bottom gradient + faint vignette */}
+      <div className="absolute inset-0 bg-gradient-to-t from-obsidian-950/85 via-obsidian-950/15 to-transparent" />
+      <div className="absolute inset-0 shadow-[inset_0_0_60px_rgba(0,0,0,0.35)]" />
+      {/* overlay content — lifts slightly on hover, riding the tilted plane */}
+      <div className="absolute inset-x-0 bottom-0 p-4 sm:p-5 transition-transform duration-[400ms] ease-out group-hover:-translate-y-1.5">
+        {children}
+      </div>
     </div>
   )
 }
 
-const kickerColors = {
-  cyan: 'text-brand-cyan',
-  violet: 'text-brand-violet',
-  emerald: 'text-emerald-400',
-  amber: 'text-amber-400',
+function Meta({ tag, meta, tone = 'violet' }) {
+  const toneCls =
+    tone === 'cyan'
+      ? 'bg-sky-500/15 border-sky-400/30 text-sky-200'
+      : 'bg-brand-violet/25 border-brand-violet/50 text-white'
+  return (
+    <div className="flex items-center gap-2 mb-1.5">
+      <span className={`gallery-tag px-2 py-0.5 rounded border font-mono text-[9px] uppercase tracking-[0.14em] font-semibold backdrop-blur-sm ${toneCls}`}>
+        {tag}
+      </span>
+      <span className="text-[9px] font-mono uppercase tracking-[0.14em] text-zinc-400">
+        {meta}
+      </span>
+    </div>
+  )
 }
 
 export default function Gallery() {
   return (
     <Section id="gallery">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-        <div>
-          <span className="text-xs font-mono font-medium tracking-wider text-brand-violet uppercase">
-            {gallery.eyebrow}
-          </span>
-          <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mt-2">
-            {gallery.heading}
-          </h2>
-          <p className="text-zinc-400 text-sm mt-2 max-w-xl leading-relaxed">{gallery.body}</p>
-        </div>
-        <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] text-xs font-mono text-zinc-400 shrink-0">
-          <span className="w-1.5 h-1.5 rounded-full bg-brand-cyan"></span>
-          {gallery.badge}
+      {/* one quiet haze behind the header — nothing behind the photos */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 -top-10 -translate-x-1/2 w-[560px] h-[300px] rounded-full bg-purple-800/[0.1] blur-[110px]"
+      />
+
+      {/* Header — centered, premium, compact */}
+      <div className="relative text-center max-w-2xl mx-auto mb-7 sm:mb-9">
+        <span className="text-[11px] font-mono font-medium tracking-[0.28em] text-brand-violet uppercase">
+          Memories • Moments • Milestones
         </span>
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white mt-2">
+          Inside AI Manthan
+        </h2>
+        <p className="text-xs sm:text-sm text-zinc-400 mt-2 leading-relaxed">
+          {gallery.body}
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
-        {/* Spotlight — 7 cols */}
-        <div className="md:col-span-7">
-          <GalleryCard item={gallery.spotlight} minH="min-h-[340px]">
-            <div className="relative z-10 p-6 sm:p-8">
-              <div className="flex items-center gap-2 mb-2.5">
-                <span className="px-2 py-0.5 rounded bg-brand-violet/30 border border-brand-violet/50 text-white font-mono text-[10px] uppercase tracking-wider font-semibold">
-                  {gallery.spotlight.tag}
-                </span>
-                <span className="text-xs font-mono text-zinc-300">{gallery.spotlight.meta}</span>
+      {/* Editorial composition: featured dominates, supporting recedes */}
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-3.5 sm:gap-4">
+        {/* Featured — 7 cols, taller, first in reading order */}
+        <div className="gallery-item md:col-span-7" style={{ '--gi': 0 }}>
+          <Frame
+            item={gallery.spotlight}
+            ratio="aspect-[4/3] md:aspect-auto md:h-full md:min-h-[380px]"
+            sizes="(max-width: 768px) 100vw, 58vw"
+            priority
+          >
+            <Meta tag={gallery.spotlight.tag} meta={gallery.spotlight.meta} />
+            <h3 className="gallery-title inline-block text-lg sm:text-2xl font-bold text-white tracking-tight leading-snug">
+              {gallery.spotlight.title}
+            </h3>
+            <p className="text-[11px] sm:text-xs text-zinc-300/90 mt-1.5 max-w-md leading-relaxed">
+              {gallery.spotlight.body}
+            </p>
+          </Frame>
+        </div>
+
+        {/* Wide supporting — 5 cols, quieter */}
+        <div className="gallery-item md:col-span-5" style={{ '--gi': 1 }}>
+          <Frame
+            item={gallery.wide}
+            ratio="aspect-[4/3] md:aspect-auto md:h-full md:min-h-[380px]"
+            sizes="(max-width: 768px) 100vw, 40vw"
+          >
+            <Meta tag={gallery.wide.tag} meta={gallery.wide.meta} tone="cyan" />
+            <h3 className="gallery-title inline-block text-base sm:text-lg font-bold text-white tracking-tight leading-snug">
+              {gallery.wide.title}
+            </h3>
+            <p className="text-[11px] text-zinc-300/80 mt-1 leading-relaxed line-clamp-2">
+              {gallery.wide.body}
+            </p>
+          </Frame>
+        </div>
+
+        {/* Remaining moments — compact row, quietest tier */}
+        {gallery.small.map((item, i) => (
+          <div key={item.title} className="gallery-item md:col-span-4" style={{ '--gi': i + 2 }}>
+            <Frame item={item} ratio="aspect-[16/10]" sizes="(max-width: 768px) 100vw, 30vw">
+              <div className="text-[9px] font-mono font-semibold uppercase tracking-[0.16em] text-zinc-400 mb-1">
+                {item.kicker}
               </div>
-              <h3 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-                {gallery.spotlight.title}
-              </h3>
-              <p className="text-xs sm:text-sm text-zinc-300 mt-2 max-w-lg leading-relaxed">
-                {gallery.spotlight.body}
+              <h4 className="gallery-title inline-block text-sm font-bold text-white tracking-tight leading-snug">
+                {item.title}
+              </h4>
+              <p className="text-[10px] text-zinc-400 mt-0.5 leading-relaxed line-clamp-2">
+                {item.body}
               </p>
-            </div>
-          </GalleryCard>
-        </div>
-
-        {/* Wide — 5 cols */}
-        <div className="md:col-span-5">
-          <GalleryCard item={gallery.wide} minH="min-h-[340px]">
-            <div className="relative z-10 p-6 sm:p-7">
-              <div className="flex items-center gap-2 mb-2">
-                <span className="px-2 py-0.5 rounded bg-brand-cyan/20 border border-brand-cyan/40 text-brand-cyan font-mono text-[10px] uppercase tracking-wider font-semibold">
-                  {gallery.wide.tag}
-                </span>
-                <span className="text-xs font-mono text-zinc-300">{gallery.wide.meta}</span>
-              </div>
-              <h3 className="text-lg font-bold text-white tracking-tight">{gallery.wide.title}</h3>
-              <p className="text-xs text-zinc-300 mt-1.5 leading-relaxed">{gallery.wide.body}</p>
-            </div>
-          </GalleryCard>
-        </div>
-
-        {/* Bottom row — 4 cols each */}
-        {gallery.small.map((item) => (
-          <div className="md:col-span-4" key={item.title}>
-            <GalleryCard item={item}>
-              <div className="relative z-10 p-5">
-                <div
-                  className={`text-[10px] font-mono font-semibold mb-1 ${
-                    kickerColors[item.kickerColor] || 'text-brand-violet'
-                  }`}
-                >
-                  {item.kicker}
-                </div>
-                <h4 className="text-base font-bold text-white tracking-tight">{item.title}</h4>
-                <p className="text-xs text-zinc-400 mt-1">{item.body}</p>
-              </div>
-            </GalleryCard>
+            </Frame>
           </div>
         ))}
       </div>
+
+      {/* Archive note — quiet, out of the way */}
+      <p className="text-center text-[10px] font-mono uppercase tracking-[0.22em] text-zinc-600 mt-6">
+        {gallery.badge}
+      </p>
     </Section>
   )
 }

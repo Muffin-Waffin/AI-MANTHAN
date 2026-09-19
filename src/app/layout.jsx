@@ -43,6 +43,10 @@ export const metadata = {
     'student hackathon',
     'AI hackathon',
     'blockchain hackathon',
+    'hackathon India 2026',
+    'AI hackathon Indore',
+    'college hackathon Madhya Pradesh',
+    'IIT NIT BITS hackathon',
   ],
   authors: [{ name: 'Acropolis — AI Manthan' }],
   creator: 'Acropolis Institute of Technology & Research',
@@ -57,7 +61,7 @@ export const metadata = {
     locale: 'en_IN',
     url: SITE_URL,
     siteName: 'AI Manthan 2026 — Acropolis Indore',
-    title: 'AI Manthan 2026 — 36 Hours of Relentless Engineering at Acropolis Indore',
+    title: 'AI Manthan 2026 — AI Hackathon at Acropolis Indore | Oct 14–16, 2026',
     description:
       '1,500+ builders, 6 challenge tracks, ₹2,00,000+ bounty pool. Acropolis flagship AI hackathon, October 14–16, 2026.',
   },
@@ -65,7 +69,7 @@ export const metadata = {
   // Twitter/X card — image is auto-wired by app/opengraph-image.jsx
   twitter: {
     card: 'summary_large_image',
-    title: 'AI Manthan 2026 — 36 Hours of Relentless Engineering at Acropolis Indore',
+    title: 'AI Manthan 2026 — AI Hackathon at Acropolis Indore | Oct 14–16, 2026',
     description:
       '1,500+ builders, 6 challenge tracks, ₹2,00,000+ bounty pool. October 14–16, 2026.',
   },
@@ -96,6 +100,7 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
+      data-scroll-behavior="smooth"
       className={`dark scroll-smooth ${jakarta.variable} ${spaceMono.variable} ${caveat.variable}`}
     >
       <head>

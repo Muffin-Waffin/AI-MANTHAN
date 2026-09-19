@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Icon from '../ui/Icon'
 import Button from '../ui/Button'
+import { NeonCountdown } from '../ui/NeonCountdown'
 import { hero, site } from '../../data/site'
 
 function pad(n) {
@@ -17,7 +17,6 @@ function pad(n) {
 function usePreloaderGate() {
   const [ready, setReady] = useState(true)
   useEffect(() => {
-    // Preloader visible on this load? hold the entrance until it lifts.
     if (document.body.dataset.preloader === '1') setReady(false)
     const go = () => setReady(true)
     window.addEventListener('preloader-done', go)
@@ -26,12 +25,7 @@ function usePreloaderGate() {
   return ready
 }
 
-/**
- * Real-date countdown — derives remaining time from the event target date,
- * so it survives page reloads and shows the true time left.
- * Starts as null on the server (renders `--`) and fills on mount,
- * keeping SSR markup and client hydration consistent.
- */
+/** Real-date countdown — derives remaining time from the event target date. */
 function useCountdown(targetIso) {
   const calc = () =>
     Math.max(0, Math.floor((new Date(targetIso).getTime() - Date.now()) / 1000))
@@ -49,35 +43,10 @@ function useCountdown(targetIso) {
   return {
     ready: total !== null,
     days: pad(Math.floor(t / 86400)),
-    hours: pad(Math.floor((t % 86400) / 3600)),
-    mins: pad(Math.floor((t % 3600) / 60)),
+    hours: pad(Math.floor(t % 86400 / 3600)),
+    mins: pad(Math.floor(t % 3600 / 60)),
     secs: pad(t % 60),
   }
-}
-
-function TimeCell({ value, label, accent = false }) {
-  return (
-    <div
-      className={`glass p-3 sm:p-4 rounded-xl text-center transition-all duration-300 hover:-translate-y-0.5 ${
-        accent ? 'border-brand-cyan/40 shadow-[0_0_22px_-6px_rgba(56,189,248,0.55)]' : 'hover:border-brand-violet/30'
-      }`}
-    >
-      <div
-        className={`text-2xl sm:text-4xl font-bold font-mono tracking-tight tabular-nums ${
-          accent ? 'text-brand-cyan animate-sec-tick' : 'text-white'
-        }`}
-      >
-        {value}
-      </div>
-      <div
-        className={`text-[11px] font-mono uppercase mt-1 ${
-          accent ? 'text-cyan-300/80' : 'text-zinc-500'
-        }`}
-      >
-        {label}
-      </div>
-    </div>
-  )
 }
 
 function CountdownCard({ revealed = true }) {
@@ -85,34 +54,94 @@ function CountdownCard({ revealed = true }) {
   const cell = (v) => (ready ? v : '--')
 
   return (
-    <div className="mt-14 w-full max-w-2xl">
-      <div className={`glass-strong ${revealed ? 'stagger-fade-up' : 'opacity-0'} p-4 sm:p-5 rounded-2xl shadow-[0_0_60px_-12px_rgba(124,58,237,0.3)]`} style={{ '--stagger': 4 }}>
-        <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/[0.06] text-xs font-mono text-zinc-400">
-          <span className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
-            {hero.countdown.caption}
-          </span>
-          <span>{hero.countdown.dates}</span>
-        </div>
-        <div className="grid grid-cols-4 gap-2 sm:gap-3">
-          <TimeCell value={cell(days)} label="Days" />
-          <TimeCell value={cell(hours)} label="Hours" />
-          <TimeCell value={cell(mins)} label="Mins" />
-          <TimeCell value={cell(secs)} label="Secs" accent />
-        </div>
+    <div className={`${revealed ? 'stagger-fade-up' : 'opacity-0'} mt-16 w-full max-w-4xl`} style={{ '--stagger': 4 }}>
+      <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 pb-6 mb-3 text-xs font-mono text-zinc-400">
+        <span className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.9)]"></span>
+          {hero.countdown.caption}
+        </span>
+        <span className="hidden sm:inline text-zinc-600">•</span>
+        <span className="hidden sm:inline">{hero.countdown.dates}</span>
+      </div>
+      <NeonCountdown
+        cells={[
+          { value: cell(days), label: 'Days', tone: 'cyan' },
+          { value: cell(hours), label: 'Hours', tone: 'violet' },
+          { value: cell(mins), label: 'Minutes', tone: 'fuchsia' },
+          { value: cell(secs), label: 'Seconds', tone: 'pink' },
+        ]}
+      />
+    </div>
+  )
+}
+
+/* Previous-year stats — HUD-style framed cards (cyan corner brackets,
+   dark glass body, tiny dot before the label). Last card = prize pool
+   highlight with a glowing cyan frame. Rendered standalone between
+   Hero and the Story section via StatsStrip. */
+export function StatStrip() {
+  return (
+    <div className="mt-10 w-full">
+      <div className="flex items-center gap-4 mb-4">
+        <span className="text-[11px] sm:text-xs font-bold tracking-[0.3em] text-zinc-300 uppercase whitespace-nowrap">
+          Previous Year Stats
+        </span>
+        <span className="h-px flex-1 bg-gradient-to-r from-white/25 to-transparent" />
+      </div>
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-[38px]">
+        {site.stats.map((stat) => (
+          <div
+            key={stat.label}
+            className={`hud-stat relative mx-auto flex h-[135px] sm:h-[155px] md:h-[175px] w-full max-w-[293px] flex-col items-center justify-center bg-obsidian-900/80 px-3 sm:px-5 text-center ${
+              stat.highlight ? 'hud-stat-highlight' : ''
+            }`}
+          >
+            <span aria-hidden="true" className="hud-corner hud-corner-tl" />
+            <span aria-hidden="true" className="hud-corner hud-corner-tr" />
+            <span aria-hidden="true" className="hud-corner hud-corner-bl" />
+            <span aria-hidden="true" className="hud-corner hud-corner-br" />
+            <div className={`text-2xl sm:text-3xl md:text-[42px] font-extrabold tracking-tight leading-none ${stat.highlight ? 'text-cyan-300 drop-shadow-[0_0_18px_rgba(103,232,249,0.55)]' : 'text-white'}`}>
+              {stat.value}
+            </div>
+            <div className="mt-2 sm:mt-2.5 flex items-center justify-center gap-1.5">
+              <span aria-hidden="true" className="h-1 w-1 rounded-full bg-cyan-400/90 shadow-[0_0_8px_rgba(34,211,238,0.9)]" />
+              <span className={`text-[9px] sm:text-[11px] font-mono font-semibold uppercase tracking-[0.14em] sm:tracking-[0.18em] ${stat.highlight ? 'text-cyan-300' : 'text-zinc-300'}`}>
+                {stat.label}
+              </span>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   )
 }
 
-function StatStrip() {
+/* ── Ambient particles — a handful of floating purple dots. Pure CSS
+   animation, GPU-friendly, tiny count (restrained on purpose). ────── */
+function Particles() {
+  const dots = [
+    { left: '12%', size: 3, delay: 0, dur: 11 },
+    { left: '24%', size: 2, delay: 3.2, dur: 14 },
+    { left: '38%', size: 4, delay: 6.1, dur: 12 },
+    { left: '55%', size: 2, delay: 1.7, dur: 15 },
+    { left: '67%', size: 3, delay: 8.4, dur: 10 },
+    { left: '78%', size: 2, delay: 4.6, dur: 13 },
+    { left: '88%', size: 3, delay: 2.3, dur: 16 },
+  ]
   return (
-    <div className="mt-12 w-full max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-4 pt-6 border-t border-white/[0.06] text-left">
-      {site.stats.map((stat) => (
-        <div className="px-3 py-2" key={stat.value}>
-          <div className="text-2xl sm:text-3xl font-bold text-white tracking-tight">{stat.value}</div>
-          <div className="text-xs text-zinc-400 mt-0.5">{stat.label}</div>
-        </div>
+    <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+      {dots.map((d, i) => (
+        <span
+          key={i}
+          className="hero-particle absolute rounded-full bg-purple-300"
+          style={{
+            left: d.left,
+            width: d.size,
+            height: d.size,
+            '--p-delay': `${d.delay}s`,
+            '--p-dur': `${d.dur}s`,
+          }}
+        />
       ))}
     </div>
   )
@@ -120,76 +149,83 @@ function StatStrip() {
 
 export default function Hero() {
   const preloaderDone = usePreloaderGate()
+  const reveal = (i) =>
+    `${preloaderDone ? 'stagger-fade-up' : 'opacity-0'}`
+
   return (
-    <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 pt-4 md:pt-10" id="overview">
-      {/* Scoped video backdrop — lives ONLY behind this overview section.
-          Fades out toward the bottom so it melts into the global sparkles. */}
-      <div className="mask-fade-b absolute inset-x-0 -top-28 -bottom-10 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover opacity-20 mix-blend-screen filter contrast-110"
-        >
-          <source src="/binary-fly.mp4" type="video/mp4" />
-        </video>
+    <section
+      id="overview"
+      className="relative w-full min-h-[100svh] flex items-center overflow-hidden -mt-28 sm:-mt-36 pb-8"
+    >
+      {/* ── Cinematic video stage — 8% side margins, full-bleed feel
+             (no frame/border, just the raw video) ── */}
+      <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div className="absolute inset-0 flex items-center justify-center">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            className="hero-video h-[87%] w-[90%] object-contain"
+          >
+            <source src="/binary-fly.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        {/* layered readability overlays — video stays visible */}
+        <div className="absolute inset-0 bg-obsidian-950/60" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(124,58,237,0.12),transparent_62%)]" />
+        <div className="absolute inset-0 shadow-[inset_0_0_160px_rgba(0,0,0,0.8)]" />
+
+        {/* soft moving light rays — two slow-panning gradient beams */}
+        <div className="hero-ray hero-ray-a absolute -top-1/4 left-[15%] h-[150%] w-40 rotate-12 bg-gradient-to-b from-purple-400/[0.07] via-transparent to-transparent blur-2xl" />
+        <div className="hero-ray hero-ray-b absolute -top-1/4 right-[20%] h-[150%] w-56 -rotate-6 bg-gradient-to-b from-sky-300/[0.05] via-transparent to-transparent blur-2xl" />
+
+        <Particles />
+
+        {/* bottom fade — melts into the sparkles background */}
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-obsidian-950" />
       </div>
 
-      <div className="flex flex-col items-center text-center">
-        {/* Live tag badge — entrance gated on preloader lift */}
-    <div className={`${preloaderDone ? 'stagger-fade-up' : 'opacity-0'} glass inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full mb-8 text-xs font-medium text-zinc-300`} style={{ '--stagger': 0 }}>
-          <span className="text-brand-violet">●</span>
-          <span>{hero.badge[0]}</span>
-          <span className="text-zinc-600">•</span>
-          <span className="text-zinc-400 font-mono">{hero.badge[1]}</span>
-        </div>
+      {/* ── Content ──────────────────────────────────────────────────── */}
+      <div className="site-container relative pt-24 sm:pt-28">
+        <div className="flex flex-col items-center text-center">
+          {/* Eyebrow badge */}
+          <div className={`${reveal(0)} glass inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full mb-9 text-xs font-medium text-zinc-300`} style={{ '--stagger': 0 }}>
+            <span className="text-purple-300">●</span>
+            <span className="font-mono tracking-[0.14em] uppercase">{hero.badge[0]}</span>
+            <span className="text-zinc-600">•</span>
+            <span className="text-zinc-400 font-mono">{hero.badge[1]}</span>
+          </div>
 
-        {/* Headline */}
-        <h1 className={`${preloaderDone ? 'stagger-fade-up' : 'opacity-0'} text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white max-w-5xl leading-[1.1]`} style={{ '--stagger': 1 }}>
-          {hero.headlineA} <br className="hidden sm:inline" />
-          <span className="animate-headline bg-gradient-to-r from-zinc-100 via-brand-violet/90 to-zinc-100 bg-clip-text text-transparent drop-shadow-[0_0_18px_rgba(139,92,246,0.45)]">
-            {hero.headlineB}
-          </span>
-        </h1>
+          {/* Headline */}
+          <h1 className={`${reveal(1)} text-4xl sm:text-6xl md:text-7xl lg:text-[5rem] font-extrabold tracking-tight text-white max-w-5xl leading-[1.04]`} style={{ '--stagger': 1 }}>
+            {hero.headlineA}{' '}
+            <span className="bg-gradient-to-r from-purple-300 via-fuchsia-200 to-purple-300 bg-clip-text text-transparent">
+              {hero.headlineB}
+            </span>
+          </h1>
 
-        {/* Subtitle */}
-        <p className={`${preloaderDone ? 'stagger-fade-up' : 'opacity-0'} mt-6 max-w-2xl text-base sm:text-lg text-zinc-400 leading-relaxed font-normal`} style={{ '--stagger': 2 }}>
-          <span className="text-zinc-200 font-medium">{hero.bodyStrong}</span> {hero.body}
-        </p>
+          {/* Subtitle */}
+          <p className={`${reveal(2)} mt-6 sm:mt-7 max-w-2xl text-sm sm:text-base lg:text-lg text-zinc-300/90 leading-relaxed`} style={{ '--stagger': 2 }}>
+            {hero.body}
+          </p>
 
-        {/* CTAs */}
-        <div className={`${preloaderDone ? 'stagger-fade-up' : 'opacity-0'} mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-3 sm:gap-4`} style={{ '--stagger': 3 }}>
-          <Button href={hero.primaryCta.href} external icon={hero.primaryCta.icon}>
-            {hero.primaryCta.label}
-          </Button>
-          {hero.secondaryCtas.map((cta) => (
-            <Button
-              key={cta.label}
-              href={cta.href}
-              variant="glass"
-              icon={cta.icon}
-              {...(cta.href.startsWith('http') ? { external: true } : {})}
-            >
-              {cta.label}
+          {/* CTAs */}
+          <div className={`${reveal(3)} mt-10 flex flex-wrap items-center justify-center gap-3.5`} style={{ '--stagger': 3 }}>
+            <Button href={hero.primaryCta.href} external icon={hero.primaryCta.icon} className="!bg-gradient-to-r !from-purple-600 !via-fuchsia-600 !to-purple-600 !shadow-[0_0_28px_rgba(168,85,247,0.5)]">
+              {hero.primaryCta.label}
             </Button>
-          ))}
+            {hero.secondaryCtas.map((cta) => (
+              <Button key={cta.label} href={cta.href} variant="glass" icon={cta.icon}>
+                {cta.label}
+              </Button>
+            ))}
+          </div>
+
+          <CountdownCard revealed={preloaderDone} />
         </div>
-
-        <CountdownCard revealed={preloaderDone} />
-        <StatStrip />
-
-        {/* Scroll cue — gentle bobbing chevron inviting the first scroll */}
-        <a
-          href="#story"
-          className="mt-14 inline-flex flex-col items-center gap-1 text-zinc-500 hover:text-zinc-300 transition-colors"
-          aria-label="Scroll to the introduction section"
-        >
-          <span className="font-mono text-[10px] tracking-[0.35em] uppercase">Scroll</span>
-          <span className="material-symbols-outlined animate-bounce-subtle select-none text-[20px]">
-            keyboard_arrow_down
-          </span>
-        </a>
       </div>
     </section>
   )

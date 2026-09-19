@@ -52,6 +52,10 @@
   html {
     background-color: var(--surface-0);
     color: var(--text-0);
+    /* Native form controls (select dropdown popups, scrollbars, etc.)
+       must follow the dark theme — without this the feedback form's
+       category dropdown renders a jarring white popup on Chromium. */
+    color-scheme: dark;
   }
   body {
     -webkit-font-smoothing: antialiased;
@@ -83,6 +87,32 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #3f3f46;
+}
+
+/* ─── Site-wide content gutter ────────────────────────────────────
+   On wide screens the site keeps only a small free margin on the left
+   and right so each section uses nearly the full viewport width while
+   staying perfectly centered. Applied through the shared containers
+   (Section, Hero, Footer, admin, support, team pages) via the
+   `.site-container` utility. Below 1440px the existing max-widths and
+   paddings stay untouched.
+─────────────────────────────────────────────────────────────────── */
+@utility site-container {
+  @apply mx-auto w-full max-w-screen-xl px-4 sm:px-6 lg:px-10;
+}
+
+@media (min-width: 1440px) {
+  .site-container {
+    max-width: 92%;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media (min-width: 1536px) {
+  .site-container {
+    max-width: 90%;
+  }
 }
 
 /* Hide scrollbar but keep scrollability (carousels) */
@@ -138,6 +168,17 @@
   }
 }
 
+/* ─── Native form controls on dark ────────────────────────────────
+   color-scheme: dark on <html> makes the browser paint its own UI
+   (select dropdown popups, scrollbars, date pickers) dark. Chromium
+   additionally honors explicit option styling, so both are set —
+   this fixes the white feedback-category dropdown popup. */
+option,
+optgroup {
+  background-color: var(--surface-0);
+  color: var(--text-0);
+}
+
 /* ─── Keyframes ────────────────────────────────────────────────── */
 @keyframes fade-up {
   from {
@@ -188,6 +229,72 @@
     box-shadow: 0 0 34px -6px rgba(124, 58, 237, 0.85);
   }
 }
+
+/* ─── Prize Vault — smoked-glass cards + elliptical floor light ───── */
+/* Smoked glass surface: dark translucent, inner highlight, hairline rim */
+@utility prize-card {
+  background: linear-gradient(168deg, rgba(20, 22, 34, 0.78), rgba(10, 11, 18, 0.86));
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-radius: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.07),
+    0 18px 40px -18px rgba(0, 0, 0, 0.8);
+  transition:
+    transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 400ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 400ms ease;
+}
+.prize-card:hover {
+  transform: translateY(-5px) scale(1.015);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 26px 52px -18px rgba(0, 0, 0, 0.85);
+}
+
+/* Champion hero — stronger (but controlled) violet presence */
+.prize-card-champion {
+  background: linear-gradient(168deg, rgba(38, 24, 64, 0.85), rgba(14, 10, 26, 0.9));
+  border: 1px solid rgba(168, 85, 247, 0.38);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 22px 48px -18px rgba(124, 58, 237, 0.5),
+    0 0 40px -12px rgba(147, 51, 234, 0.3);
+}
+.prize-card-champion:hover {
+  border-color: rgba(192, 132, 252, 0.55);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.13),
+    0 28px 56px -18px rgba(124, 58, 237, 0.6),
+    0 0 52px -12px rgba(168, 85, 247, 0.4);
+}
+
+/* Elliptical floor light — cards appear to float above a soft pool */
+.prize-floor {
+  position: absolute;
+  left: 50%;
+  bottom: -18px;
+  width: 72%;
+  height: 22px;
+  transform: translateX(-50%);
+  border-radius: 9999px;
+  filter: blur(14px);
+  pointer-events: none;
+}
+
+/* Global reduced-motion kill switch for all decorative loops */
+@media (prefers-reduced-motion: reduce) {
+  .animate-pulse-glow,
+  .animate-float-y,
+  .animate-butterfly-hover,
+  .ripple-float,
+  .ripple-flow,
+  .ripple-chip-live::before {
+    animation: none !important;
+  }
+}
 @keyframes float-y {
   0%,
   100% {
@@ -207,8 +314,146 @@
 @utility animate-pulse-glow {
   animation: pulse-glow 2.8s ease-in-out infinite;
 }
+
+/* Prize podium glow loop — har card ka apna color (--pg-color set karo).
+   Dhire-dhire breathe karta hai: box-shadow + border ring + icon glow,
+   4s ease-in-out, staggered delays taaki teeno cards sync me na jhankе. */
+@keyframes prize-glow-breathe {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 0 var(--pg-color),
+      0 0 0 0 transparent;
+  }
+  50% {
+    box-shadow:
+      0 0 22px -4px var(--pg-color),
+      0 0 44px -8px var(--pg-color);
+  }
+}
+@utility prize-glow-loop {
+  animation: prize-glow-breathe 4s ease-in-out infinite;
+}
+
+/* Card-level glow ring — poore card ke border pe neon ring + halo jo
+   dheere-dhire breathe karta hai (::before overlay, base shadow ko
+   touch nahi karta). Color per-card via --pg-color. */
+@keyframes prize-card-breathe {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@utility prize-card-glow {
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid var(--pg-color, rgba(168, 85, 247, 0.55));
+    box-shadow:
+      inset 0 0 24px -6px var(--pg-color, rgba(168, 85, 247, 0.55)),
+      0 0 28px -6px var(--pg-color, rgba(168, 85, 247, 0.6)),
+      0 0 60px -10px var(--pg-color, rgba(168, 85, 247, 0.5));
+    opacity: 0;
+    pointer-events: none;
+    animation: prize-card-breathe 4s ease-in-out infinite;
+  }
+}
+
+/* Champion-strength ambient tint on ALL glowing podium cards — glow OFF
+   phase me bhi card ka apna color halka mehsoos hota hai (jaise center
+   card me hota hai). Side cards ko --pg-tint se halka shade milta hai. */
+.prize-card-glow {
+  border-color: color-mix(in srgb, var(--pg-color, rgba(168, 85, 247, 0.55)) 45%, rgba(255, 255, 255, 0.08));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    0 18px 40px -18px rgba(0, 0, 0, 0.8),
+    0 0 34px -12px var(--pg-color, rgba(168, 85, 247, 0.4));
+}
+
+/* stagger — wave pattern: 02 (+1.3s) → champion (0s) → 03 (+2.6s) */
+.lg\:order-1.prize-card-glow::before {
+  animation-delay: 1.3s;
+}
+.lg\:order-3.prize-card-glow::before {
+  animation-delay: 2.6s;
+}
+.prize-card-champion .prize-glow-loop {
+  animation-delay: 0s;
+}
+/* stagger: side cards ka icon glow peak alag waqt pe aaye */
+.lg\:order-1 .prize-glow-loop {
+  animation-delay: 1.3s;
+}
+.lg\:order-3 .prize-glow-loop {
+  animation-delay: 2.6s;
+}
+@media (prefers-reduced-motion: reduce) {
+  .prize-glow-loop {
+    animation: none;
+  }
+  .prize-card-glow::before {
+    animation: none;
+    opacity: 0.55;
+  }
+}
 @utility animate-float-y {
   animation: float-y 5s ease-in-out infinite;
+}
+
+/* ─── Section backdrop animations (SectionBackdrop variants) ─────
+   Rotation/scale live in `transform`; centering uses Tailwind's
+   `translate` property, so the two compose without conflict. */
+@keyframes churn-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@utility animate-churn-spin {
+  animation: churn-spin 46s linear infinite;
+}
+@keyframes ripple-out {
+  from {
+    transform: scale(0.92);
+  }
+  to {
+    transform: scale(1.06);
+  }
+}
+@utility animate-ripple-out {
+  animation: ripple-out 9s ease-in-out infinite alternate;
+}
+@keyframes beam-sway {
+  0%,
+  100% {
+    transform: rotate(-3.5deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+@utility animate-beam-sway {
+  animation: beam-sway 7s ease-in-out infinite;
+}
+@keyframes drift-x {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(9%);
+  }
+}
+@utility animate-drift-x {
+  animation: drift-x 14s ease-in-out infinite;
 }
 
 /* Staggered entrance — set --stagger via inline style on children */
@@ -357,14 +602,56 @@
 /* ─── Section reveal-on-scroll ─────────────────────────────────── */
 .reveal-init {
   opacity: 0;
-  transform: translateY(44px) scale(0.985);
+  transform: translateY(58px) scale(0.94);
+  filter: blur(7px);
 }
 .reveal-in {
   opacity: 1;
   transform: translateY(0) scale(1);
+  filter: blur(0);
   transition:
-    opacity 800ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 950ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 950ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 950ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Seam-sweep — a glowing line races across the section boundary the
+   instant it reveals, marking the hand-off from the section above. One
+   shot, self-cleaning (animation-fill-mode ends at opacity 0). */
+.reveal-in::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(124, 58, 237, 0.95),
+    rgba(56, 189, 248, 0.95),
+    transparent
+  );
+  background-size: 200% 100%;
+  opacity: 0;
+  pointer-events: none;
+  animation: seam-sweep 1.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes seam-sweep {
+  0% {
+    opacity: 0;
+    background-position: 160% 0;
+  }
+  18% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+    background-position: -60% 0;
+  }
 }
 
 /* Stagger cascade: when a section reveals, its direct children (and one
@@ -469,6 +756,586 @@
   animation: preloader-exit 900ms cubic-bezier(0.76, 0, 0.24, 1) forwards;
 }
 
+/* ─── Neon navbar pill (ref: navbar.png) ─────────────────────────
+   Outer shell: dark glass with a violet neon rim + double halo.
+   Inner pill: darker recessed tray behind the nav links. */
+@utility neon-pill {
+  background: linear-gradient(135deg, rgba(15, 12, 28, 0.88), rgba(6, 7, 12, 0.82));
+  border: 1px solid rgba(168, 85, 247, 0.5);
+  backdrop-filter: blur(22px) saturate(1.5);
+  -webkit-backdrop-filter: blur(22px) saturate(1.5);
+  box-shadow:
+    0 0 22px -2px rgba(147, 51, 234, 0.5),
+    0 0 64px -10px rgba(217, 70, 239, 0.38),
+    0 16px 40px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+@utility nav-inner-pill {
+  background: rgba(4, 4, 10, 0.72);
+  border: 1px solid rgba(168, 85, 247, 0.22);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    0 0 18px -6px rgba(147, 51, 234, 0.4);
+}
+
+/* Standalone glass chip for the split navbar pieces (brand left,
+   support button right) — each floats on its own, no shared shell,
+   so no connected "pipe" runs behind the header. */
+@utility neon-brand {
+  background: linear-gradient(135deg, rgba(15, 12, 28, 0.88), rgba(6, 7, 12, 0.82));
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  backdrop-filter: blur(18px) saturate(1.4);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  box-shadow:
+    0 0 18px -4px rgba(147, 51, 234, 0.45),
+    0 12px 30px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* Neon "See More" pill — dark glass capsule with a violet neon rim
+   and double halo (matches the navbar treatment). Used on team roster
+   group headings to expand collapsed members. */
+@utility neon-see-more {
+  background: linear-gradient(135deg, rgba(15, 12, 28, 0.92), rgba(6, 7, 12, 0.88));
+  border: 1px solid rgba(168, 85, 247, 0.55);
+  backdrop-filter: blur(16px) saturate(1.4);
+  -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  box-shadow:
+    0 0 16px -2px rgba(147, 51, 234, 0.55),
+    0 0 42px -10px rgba(217, 70, 239, 0.4),
+    0 10px 26px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+.neon-see-more:hover {
+  border-color: rgba(192, 38, 211, 0.8);
+  box-shadow:
+    0 0 24px 0 rgba(168, 85, 247, 0.7),
+    0 0 60px -8px rgba(217, 70, 239, 0.55),
+    0 12px 30px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+}
+
+/* ─── Glowing neon countdown tiles (ref: countdown.png) ────────────
+   Dark glass tile + hair-thin cyan→violet→fuchsia neon ring (mask
+   composite trick keeps the ring crisp at any radius), soft outer
+   bloom + glossy top highlight + floor reflection via --tile-glow. */
+@utility neon-tile {
+  background:
+    radial-gradient(120% 90% at 50% 112%, rgba(88, 28, 135, 0.4), transparent 62%),
+    linear-gradient(160deg, rgba(30, 27, 55, 0.85), rgba(8, 8, 18, 0.92));
+  box-shadow:
+    0 0 26px -4px var(--tile-glow, rgba(168, 85, 247, 0.55)),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.5px;
+    background: linear-gradient(
+      135deg,
+      rgba(56, 189, 248, 0.85),
+      rgba(168, 85, 247, 0.95) 45%,
+      rgba(232, 121, 249, 0.85)
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+/* Slow breathing of the tile bloom — makes the row feel alive */
+@keyframes neon-breathe {
+  0%,
+  100% {
+    box-shadow:
+      0 0 22px -6px var(--tile-glow, rgba(168, 85, 247, 0.55)),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  }
+  50% {
+    box-shadow:
+      0 0 42px -2px var(--tile-glow, rgba(168, 85, 247, 0.75)),
+      inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  }
+}
+@utility neon-breathe {
+  animation: neon-breathe 2.6s ease-in-out infinite;
+}
+/* Digits — near-white with a fuchsia/violet halo like the reference */
+@utility neon-digit {
+  color: #fdf4ff;
+  text-shadow:
+    0 0 10px rgba(240, 171, 252, 0.6),
+    0 0 28px rgba(168, 85, 247, 0.5);
+}
+
+/* ─── Butterfly key-visual stage (intro section) ─────────────────── */
+@utility butterfly-stage {
+  background:
+    radial-gradient(90% 90% at 50% 45%, rgba(88, 28, 135, 0.42), transparent 70%),
+    radial-gradient(60% 60% at 50% 100%, rgba(56, 189, 248, 0.14), transparent 70%),
+    #06070a;
+}
+@keyframes butterfly-hover {
+  0%,
+  100% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(1.05) translateY(-6px);
+  }
+}
+@utility animate-butterfly-hover {
+  animation: butterfly-hover 7s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* ─── THE RIPPLE timeline (ref: Manipal-style wave + purple cards) ── */
+/* Solid purple BORDERLESS card (ref screenshot) — flat violet, big radius,
+   soft purple shadow, restrained hover (lift + slight scale, no zoom). */
+@utility ripple-card {
+  background: linear-gradient(170deg, #9333ea 0%, #7c28cf 100%);
+  border-radius: 20px;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    0 18px 44px -14px rgba(124, 58, 237, 0.5),
+    0 0 0 1px rgba(168, 85, 247, 0.22);
+  transition:
+    transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 350ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ripple-card:hover {
+  transform: translateY(-4px) scale(1.015);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 24px 54px -14px rgba(147, 51, 234, 0.65),
+    0 0 0 1px rgba(192, 132, 252, 0.4);
+}
+
+/* Featured (current) milestone — slightly stronger elevation + aura,
+   still the same card language. */
+.ripple-card-featured {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    0 22px 52px -12px rgba(139, 63, 224, 0.62),
+    0 0 34px -6px rgba(168, 85, 247, 0.38),
+    0 0 0 1px rgba(216, 180, 254, 0.35);
+}
+.ripple-card-featured:hover {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 28px 60px -12px rgba(147, 51, 234, 0.75),
+    0 0 44px -6px rgba(192, 132, 252, 0.5),
+    0 0 0 1px rgba(216, 180, 254, 0.5);
+}
+
+/* Statement reader swap — quick fade/slide when paging statements */
+@keyframes stmt-swap-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.stmt-swap {
+  animation: stmt-swap-in 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ── HUD stat cards (Previous Year Stats strip in Hero) ─────────── */
+.hud-stat {
+  border: 1px solid rgba(148, 163, 184, 0.12);
+}
+.hud-corner {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-color: rgba(56, 189, 248, 0.75);
+  border-style: solid;
+  border-width: 0;
+}
+.hud-corner-tl { top: -1px; left: -1px; border-top-width: 2px; border-left-width: 2px; }
+.hud-corner-tr { top: -1px; right: -1px; border-top-width: 2px; border-right-width: 2px; }
+.hud-corner-bl { bottom: -1px; left: -1px; border-bottom-width: 2px; border-left-width: 2px; }
+.hud-corner-br { bottom: -1px; right: -1px; border-bottom-width: 2px; border-right-width: 2px; }
+.hud-stat-highlight {
+  border-color: rgba(34, 211, 238, 0.45);
+  box-shadow:
+    0 0 22px -4px rgba(34, 211, 238, 0.35),
+    inset 0 0 24px -12px rgba(34, 211, 238, 0.35);
+}
+.hud-stat-highlight .hud-corner {
+  width: 18px;
+  height: 18px;
+  border-color: rgba(34, 211, 238, 1);
+  filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.7));
+}
+
+/* Status chips — tiny mono labels for instant CURRENT/NEXT/UPCOMING read */
+.ripple-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.2rem 0.625rem;
+  border-radius: 9999px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.95);
+}
+.ripple-chip-live::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background: #6ee7b7;
+  animation: chip-pulse 2.2s ease-in-out infinite;
+}
+@keyframes chip-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+/* Scroll reveal — opacity + translateY + slight scale, spring-eased.
+   .is-inview is added by Timeline's IntersectionObserver. */
+.ripple-reveal {
+  opacity: 0;
+  transform: translateY(22px) scale(0.985);
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+.ripple-reveal.is-inview {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Independent float — max 3px, slow, staggered per card. Applied to an
+   inner wrapper so it never fights the reveal/hover transforms. */
+@keyframes ripple-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+.ripple-float {
+  animation: ripple-float var(--float-duration, 7s) ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+
+/* Timeline node dots — dim until the travelling butterfly passes them,
+   then they light up. Subtle breathing once lit (soft, not flashy). */
+.ripple-node {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: #0a0a12;
+  box-shadow: 0 0 0 rgba(147, 51, 234, 0);
+  transition:
+    background 500ms ease,
+    border-color 500ms ease,
+    box-shadow 500ms ease;
+}
+.ripple-node.node-passed {
+  border-color: rgba(255, 255, 255, 0.85);
+  background: #7c3aed;
+  animation: node-breathe 3.2s ease-in-out infinite;
+}
+@keyframes node-breathe {
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(147, 51, 234, 0.7);
+  }
+  50% {
+    box-shadow: 0 0 14px rgba(168, 85, 247, 0.95);
+  }
+}
+
+/* Slow flowing light along the central line — a short bright dash that
+   drifts along the travelled path. Pure CSS, GPU-friendly. */
+@keyframes ripple-flow {
+  from {
+    stroke-dashoffset: 0.14;
+  }
+  to {
+    stroke-dashoffset: -0.14;
+  }
+}
+.ripple-flow {
+  stroke-dasharray: 0.02 0.12;
+  animation: ripple-flow 9s linear infinite;
+}
+
+/* ─── Timeline scroll arrows ───────────────────────────────────── */
+.ripple-scroll-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 30;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 12, 28, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  box-shadow:
+    0 0 16px -4px rgba(147, 51, 234, 0.5),
+    0 8px 20px rgba(0, 0, 0, 0.4);
+  transition:
+    background 250ms ease,
+    border-color 250ms ease,
+    box-shadow 250ms ease,
+    transform 250ms ease;
+}
+.ripple-scroll-arrow:hover {
+  background: rgba(30, 20, 55, 0.85);
+  border-color: rgba(192, 132, 252, 0.6);
+  color: #fff;
+  box-shadow:
+    0 0 24px -4px rgba(168, 85, 247, 0.7),
+    0 10px 28px rgba(0, 0, 0, 0.5);
+}
+.ripple-scroll-arrow-left {
+  left: 8px;
+}
+.ripple-scroll-arrow-left:hover {
+  transform: translateY(-50%) translateX(-2px);
+}
+.ripple-scroll-arrow-right {
+  right: 8px;
+}
+.ripple-scroll-arrow-right:hover {
+  transform: translateY(-50%) translateX(2px);
+}
+
+/* Swipe hint — fades out after a delay */
+.ripple-swipe-hint {
+  opacity: 0.6;
+  animation: swipe-hint-fade 6s ease forwards;
+}
+@keyframes swipe-hint-fade {
+  0%, 70% { opacity: 0.6; }
+  100% { opacity: 0; }
+}
+
+/* Respect reduced motion — kill all decorative movement */
+@media (prefers-reduced-motion: reduce) {
+  .ripple-float,
+  .node-breathe,
+  .ripple-flow,
+  .ripple-chip-live::before {
+    animation: none !important;
+  }
+  .ripple-reveal,
+  .ripple-page {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .hero-video {
+    animation: none !important;
+  }
+}
+
+/* ─── Team page — cinematic video hero + rosters ──────────────────── */
+/* Very slow Ken Burns drift on the hero video — alive but calm.
+   scale 1.02 → 1.05 over 26s, alternating (video loops underneath). */
+@keyframes hero-drift {
+  from {
+    transform: scale(1.02);
+  }
+  to {
+    transform: scale(1.05);
+  }
+}
+.hero-video {
+  animation: hero-drift 26s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+/* Homepage hero — same drift language, slightly larger stage */
+section#overview .hero-video {
+  animation-duration: 30s;
+}
+
+/* Floating hero particles — slow vertical drift + fade, staggered.
+   7 dots total; keeps the air alive without noise. */
+@keyframes hero-particle {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.55;
+  }
+  85% {
+    opacity: 0.35;
+  }
+  100% {
+    transform: translateY(-46vh);
+    opacity: 0;
+  }
+}
+.hero-particle {
+  bottom: -4%;
+  opacity: 0;
+  animation: hero-particle var(--p-dur, 12s) ease-in-out infinite;
+  animation-delay: var(--p-delay, 0s);
+  box-shadow: 0 0 6px rgba(192, 132, 252, 0.8);
+}
+
+/* Corner sparkle — decorative diamond-star in the bottom-left corner.
+   Slow twinkle so it reads as part of the ambient dust field. */
+@keyframes corner-sparkle-twinkle {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.92) rotate(0deg);
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.06) rotate(18deg);
+  }
+}
+.corner-sparkle {
+  animation: corner-sparkle-twinkle 6s ease-in-out infinite;
+  filter: drop-shadow(0 0 6px rgba(167, 139, 250, 0.45));
+}
+@media (prefers-reduced-motion: reduce) {
+  .corner-sparkle {
+    animation: none;
+  }
+}
+
+/* Moving light rays — slow horizontal sway, barely-there opacity */
+@keyframes hero-ray-sway {
+  0%,
+  100% {
+    transform: translateX(0) rotate(12deg);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateX(60px) rotate(12deg);
+    opacity: 1;
+  }
+}
+@keyframes hero-ray-sway-b {
+  0%,
+  100% {
+    transform: translateX(0) rotate(-6deg);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateX(-70px) rotate(-6deg);
+    opacity: 1;
+  }
+}
+.hero-ray-a {
+  animation: hero-ray-sway 16s ease-in-out infinite;
+}
+.hero-ray-b {
+  animation: hero-ray-sway-b 20s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-particle,
+  .hero-ray-a,
+  .hero-ray-b {
+    animation: none !important;
+  }
+  .hero-particle {
+    opacity: 0.25;
+  }
+}
+
+/* Staggered entrance for roster sections — opacity + rise + blur-to-sharp.
+   .is-inview added by a small IntersectionObserver in the page shell. */
+.team-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  filter: blur(6px);
+  transition:
+    opacity 750ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 750ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 750ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.team-reveal.is-inview {
+  opacity: 1;
+  transform: translateY(0);
+  filter: blur(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .team-reveal {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    transition: none;
+  }
+}
+
+/* Curved perspective grid (ref background) — two layered repeating
+   linear-grids with rotateX so lines converge like a warped plane. */
+@utility ripple-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.5) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.5) 1px, transparent 1px);
+  background-size: 88px 88px;
+  transform: perspective(900px) rotateX(38deg) scale(1.6);
+  transform-origin: center 30%;
+  border-radius: 9999px;
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 45%, black 30%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 45%, black 30%, transparent 78%);
+}
+
+/* Timeline pagination — page slide + card entrance.
+   .is-swapped flips a shared transition (restrained, no bounce);
+   .ripple-page-enter rises each card group once per slide. */
+.ripple-page.is-swapped {
+  opacity: 1;
+  transform: none;
+}
+.ripple-page {
+  opacity: 0;
+  transform: translateX(44px);
+  transition:
+    opacity 420ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ripple-page.is-swapped .ripple-reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: none;
+}
+.ripple-page.is-swapped .ripple-reveal.is-inview {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 640ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 640ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 /* slow-mo wordmark — letters breathe apart then settle */
 @keyframes wordmark-breathe {
   0% {
@@ -487,4 +1354,233 @@
 }
 .animate-wordmark {
   animation: wordmark-breathe 1.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ─── Gallery — cinematic keyframe motion ────────────────────────
+   One-view compact layout + layered motion, all keyframe-driven and
+   piggybacking on the section reveal observer (zero extra JS):
+     · .gallery-item   — staggered rise + de-blur entrance per card
+     · .gallery-ambient— slow Ken Burns drift on the photo layer
+     · .gallery-tag    — springy pop-in for the corner badges
+     · .gallery-title  — accent underline wipe on card hover
+     · .gallery-frame  — soft glow pulse while hovered
+   Each card sets --gi (grid index) inline for the cascade delays. */
+@keyframes gallery-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(34px) scale(0.965);
+    filter: blur(6px);
+  }
+  60% {
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+.reveal-init .gallery-item {
+  opacity: 0;
+}
+.reveal-in .gallery-item {
+  animation: gallery-enter 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(160ms + var(--gi, 0) * 120ms);
+}
+
+@keyframes gallery-drift {
+  0%,
+  100% {
+    transform: scale(1.03) translate(0, 0);
+  }
+  50% {
+    transform: scale(1.085) translate(1.2%, -1.6%);
+  }
+}
+.reveal-in .gallery-ambient {
+  animation: gallery-drift 18s ease-in-out infinite;
+}
+.gallery-frame:hover .gallery-ambient {
+  animation-play-state: paused;
+}
+
+@keyframes gallery-tag-pop {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.8);
+  }
+  70% {
+    transform: translateY(-2px) scale(1.06);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.reveal-in .gallery-tag {
+  animation: gallery-tag-pop 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(480ms + var(--gi, 0) * 120ms);
+}
+
+@keyframes gallery-glow {
+  0%,
+  100% {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 18px 44px -16px rgba(0, 0, 0, 0.8),
+      0 0 0 rgba(139, 92, 246, 0);
+  }
+  50% {
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      0 22px 52px -16px rgba(0, 0, 0, 0.85),
+      0 0 34px -6px rgba(139, 92, 246, 0.45);
+  }
+}
+.gallery-frame:hover {
+  animation: gallery-glow 2.2s ease-in-out infinite;
+}
+
+/* Accent underline wipe — gradient draws itself under the title */
+.gallery-title {
+  background-image: linear-gradient(90deg, rgba(167, 139, 250, 0.9), rgba(56, 189, 248, 0.9));
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  background-position: 0 100%;
+  padding-bottom: 2px;
+  transition: background-size 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.gallery-frame:hover .gallery-title {
+  background-size: 100% 2px;
+}
+
+/* Reduced-motion users: show everything instantly, no loops */
+@media (prefers-reduced-motion: reduce) {
+  .reveal-init .gallery-item {
+    opacity: 1;
+  }
+  .reveal-in .gallery-item,
+  .reveal-in .gallery-tag {
+    animation: none;
+  }
+  .reveal-in .gallery-ambient,
+  .gallery-frame:hover {
+    animation: none;
+  }
+}
+
+/* ─── Bounty cards — vault-strike motion system ─────────────────
+   Piggybacks on the section reveal observer (zero extra JS):
+     · .bounty-item  — staggered rise + de-blur entrance (like vault
+                       drawers sliding open one after another)
+     · .bounty-card  — hover: lifts, tilts, border ignites in its own
+                       accent color; a sheen sweeps across the glass
+     · .bounty-icon  — icon pops (scale + rotate) on card hover
+     · .bounty-amount— grant amount glows softly on card hover
+   Each card sets --bi (bounty index) and --baccent (RGB accent)
+   inline for the cascade + per-card accent color. */
+@keyframes bounty-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(26px) scale(0.94);
+    filter: blur(5px);
+  }
+  60% {
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+.reveal-init .bounty-item {
+  opacity: 0;
+}
+.reveal-in .bounty-item {
+  animation: bounty-enter 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(120ms + var(--bi, 0) * 70ms);
+}
+
+.bounty-card {
+  position: relative;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease,
+    background-color 0.35s ease,
+    box-shadow 0.4s ease;
+}
+.bounty-card:hover {
+  transform: translateY(-5px) rotateX(2deg) rotateY(-2.4deg) scale(1.02);
+  border-color: rgba(var(--baccent, 139, 92, 246), 0.45);
+  box-shadow:
+    0 24px 48px -18px rgba(0, 0, 0, 0.85),
+    0 0 26px -8px rgba(var(--baccent, 139, 92, 246), 0.4);
+}
+
+/* Sheen sweep — a light bar races across the glass once per hover */
+.bounty-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.07) 45%,
+    rgba(255, 255, 255, 0.12) 50%,
+    rgba(255, 255, 255, 0.07) 55%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+.bounty-card:hover::after {
+  animation: bounty-sheen 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+@keyframes bounty-sheen {
+  to {
+    transform: translateX(120%);
+  }
+}
+
+/* Icon pop — springs up and tilts when the card is entered */
+.bounty-icon {
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.bounty-card:hover .bounty-icon {
+  transform: scale(1.18) rotate(-6deg);
+}
+
+/* Amount glow — the grant figure breathes to life on hover */
+.bounty-amount {
+  transition:
+    color 0.35s ease,
+    text-shadow 0.35s ease;
+}
+.bounty-card:hover .bounty-amount {
+  color: rgb(var(--baccent, 139, 92, 246));
+  text-shadow: 0 0 14px rgba(var(--baccent, 139, 92, 246), 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-init .bounty-item {
+    opacity: 1;
+  }
+  .reveal-in .bounty-item {
+    animation: none;
+  }
+  .bounty-card,
+  .bounty-card:hover {
+    transform: none;
+    animation: none;
+  }
+  .bounty-card:hover::after {
+    animation: none;
+  }
+  .bounty-card:hover .bounty-icon {
+    transform: none;
+  }
 }

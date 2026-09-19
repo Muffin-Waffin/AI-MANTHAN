@@ -2,16 +2,16 @@ const img = (id) => `https://lh3.googleusercontent.com/aida-public/${id}`
 
 export const venue = {
   eyebrow: 'Command Node',
-  heading: 'Acropolis Arena — Manglia Square',
-  body: 'Located at Manglia Square on the Indore–Ujjain corridor, Madhya Pradesh. The venue provides high-speed fiber backbones, uninterrupted power generators, 24/7 security, and ergonomic workstations for all 40 finalist teams.',
+  heading: 'Acropolis Arena — Manglaya Sadak',
+  body: 'Located on Bypass Road at Manglaya Square, Indore, Madhya Pradesh. The venue provides high-speed fiber backbones, uninterrupted power generators, 24/7 security, and ergonomic workstations for all 40 finalist teams.',
   mapImg: img(
     'AB6AXuA-xDqZzaZk_lMbKt0889Z2IKUaqsd6Y4bFi7WwXzLJb4SGb8eazcylouQiUWYkkbEOTIRhkK7RmSLP6I-U7FjBfQ70nKjkrVozXBXT5tslvqleMGKXWNURURoeNbSX7FeLGmCFznN74tmYj77lx5woyWq3IDuFwpEAFvM-tbFwCjAWBgUTyIzrH4ueQkL1HXhrHhKaM1AAztTSTwJj9onpAx760OBD9lz5aYFJ4vi2wkrq4eSgTh5B',
   ),
   coordinates: '22.7196° N, 75.8577° E',
   mapsHref:
-    'https://maps.google.com/?q=Acropolis+Institute+of+Technology+and+Research+Manglia+Square+Indore',
+    'https://maps.google.com/?q=Acropolis+Institute+of+Technology+and+Research+Bypass+Road+Manglaya+Sadak+Indore',
   address:
-    'Acropolis Institute of Technology & Research, Manglia Square, Indore, MP 452015',
+    'Acropolis Institute of Technology & Research, Bypass Road, Square, Manglaya Sadak, Indore, Madhya Pradesh 453771',
   access: [
     'Airport Access: Devi Ahilyabai Holkar Airport (IDR) — 30 mins drive',
     'Train Access: Indore Railway Station (INDB) — 25 mins',
@@ -21,6 +21,7 @@ export const venue = {
 export const faq = {
   eyebrow: 'Common Questions',
   heading: 'Frequently Asked',
+  sub: 'Quick answers to the things participants usually want to know.',
   items: [
     {
       q: 'Is there any registration fee for participants?',
@@ -41,6 +42,43 @@ export const faq = {
     {
       q: 'What is the team size policy? Can we participate across universities?',
       a: 'Teams can consist of 2 to 4 members. Inter-college and multidisciplinary collaborations (e.g. computer science combined with industrial design or biotechnology) are warmly encouraged.',
+    },
+  ],
+}
+
+/* ── On-ground help contacts (opened from "Phone directory" button) ──
+   NOTE: placeholder numbers — replace with the real coordinator details. */
+export const phoneDirectory = {
+  eyebrow: 'On-ground Help',
+  heading: 'Phone Directory',
+  groups: [
+    {
+      title: 'Student Council',
+      members: [
+        { name: 'Student Council Lead', phone: '+91 98765 43210' },
+        { name: 'Volunteer Desk', phone: '+91 98765 54321' },
+      ],
+    },
+    {
+      title: 'Dev Team',
+      members: [
+        { name: 'Dev Team Lead', phone: '+91 98765 65432' },
+        { name: 'Platform Support', phone: '+91 98765 76543' },
+      ],
+    },
+    {
+      title: 'PR & Admin',
+      members: [
+        { name: 'PR & Admin Lead', phone: '+91 98765 87654' },
+        { name: 'Media Desk', phone: '+91 98765 98765' },
+      ],
+    },
+    {
+      title: 'Sponsorship',
+      members: [
+        { name: 'Sponsorship Lead', phone: '+91 98765 12345' },
+        { name: 'Partnerships Desk', phone: '+91 98765 23456' },
+      ],
     },
   ],
 }
