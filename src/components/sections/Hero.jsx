@@ -15,12 +15,22 @@ function pad(n) {
  * reveal choreography plays right as the page appears — never behind it.
  */
 function usePreloaderGate() {
+  /* Start `true` on BOTH server and client so the first client render
+     matches the server HTML (no hydration mismatch). If the preloader is
+     still up, the effect flips to hidden a beat later — the curtain covers
+     the viewport then, so no flash is ever visible. */
   const [ready, setReady] = useState(true)
+
   useEffect(() => {
-    if (document.body.dataset.preloader === '1') setReady(false)
+    if (sessionStorage.getItem('aimanthan_preloader_done') === '1') return
+    setReady(false)
     const go = () => setReady(true)
     window.addEventListener('preloader-done', go)
-    return () => window.removeEventListener('preloader-done', go)
+    const fallback = setTimeout(() => setReady(true), 4000)
+    return () => {
+      window.removeEventListener('preloader-done', go)
+      clearTimeout(fallback)
+    }
   }, [])
   return ready
 }

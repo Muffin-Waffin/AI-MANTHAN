@@ -552,17 +552,24 @@ export default function Timeline() {
       </div>
 
       {/* ── mobile: vertical rail (same content, stacked) ── */}
-      <div className="md:hidden relative pl-8 space-y-8 pb-4">
+      <div className="md:hidden relative pl-10 sm:pl-12 space-y-6 sm:space-y-8 pb-4">
+        {/* Glowing rail line */}
         <span
           aria-hidden="true"
-          className="absolute left-[9px] top-1 bottom-1 w-px bg-gradient-to-b from-purple-500/20 via-fuchsia-400/70 to-purple-500/20 shadow-[0_0_10px_rgba(192,38,211,0.6)]"
+          className="absolute left-[17px] top-3 bottom-3 w-0.5 bg-gradient-to-b from-purple-500/20 via-fuchsia-400/80 to-purple-500/20 shadow-[0_0_12px_rgba(217,70,239,0.8)]"
         />
         {timeline.phases.map((phase, i) => (
-          <div key={phase.phase} className="relative">
-            <span
+          <div key={phase.phase} className="relative group">
+            {/* Perfectly centered milestone beacon on the rail */}
+            <div
               aria-hidden="true"
-              className="ripple-node absolute -left-8 top-5 h-3.5 w-3.5 rounded-full border-2 node-passed"
-            />
+              className="absolute -left-10 sm:-left-12 top-5 flex items-center justify-center w-[35px] z-10 pointer-events-none"
+            >
+              <span className="relative flex h-4 w-4 items-center justify-center">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-fuchsia-400 opacity-40" />
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-gradient-to-tr from-purple-500 to-fuchsia-400 shadow-[0_0_10px_rgba(217,70,239,0.9)] border-2 border-white" />
+              </span>
+            </div>
             <PhaseCard phase={phase} index={i} />
           </div>
         ))}

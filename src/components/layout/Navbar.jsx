@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import useScrollSpy from './useScrollSpy'
+import VisitorCounter from './VisitorCounter'
 import { site } from '../../data/site'
 
 /* ── Brand: butterfly mark + neon wordmark — a standalone floating
@@ -10,7 +11,7 @@ function BrandMark() {
   return (
     <a
       className="neon-brand relative flex items-center gap-3 group shrink-0 rounded-full pl-2 pr-4 py-1.5"
-      href="#"
+      href="/"
     >
       {/* ambient glow behind the butterfly */}
       <span
@@ -95,6 +96,9 @@ export default function Navbar() {
 
         {/* Right — support + registration cluster */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0 pointer-events-auto">
+          {/* Live Visitor Counter Badge */}
+          <VisitorCounter variant="badge" className="hidden lg:inline-flex" />
+
           {/* Support — quiet icon button, keeps the modal one click away */}
           <button
             className="neon-brand hidden sm:inline-flex items-center justify-center w-9 h-9 rounded-full text-zinc-300 hover:text-white transition-all duration-300"
@@ -117,7 +121,7 @@ export default function Navbar() {
 
           {/* Mobile hamburger — shows below xl (nav fits till 1280px) */}
           <button
-            className="xl:hidden inline-flex items-center justify-center w-9 h-9 rounded-full text-zinc-200 border border-white/10 bg-white/[0.04] hover:text-white hover:border-fuchsia-400/50 transition-colors"
+            className="xl:hidden inline-flex items-center justify-center w-10 h-10 rounded-full text-zinc-200 border border-white/10 bg-white/[0.04] hover:text-white hover:border-fuchsia-400/50 transition-colors"
             onClick={() => setMenuOpen((v) => !v)}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
@@ -132,10 +136,16 @@ export default function Navbar() {
 
       {/* Mobile dropdown — same treatment, vertical */}
       {menuOpen && (
-        <div
-          id="mobile-menu"
-          className="neon-pill xl:hidden mx-3 sm:mx-5 mt-2 w-auto max-h-[calc(100svh-100px)] overflow-y-auto rounded-2xl pointer-events-auto animate-fade-up"
-        >
+        <>
+          <div
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm pointer-events-auto z-[-1]"
+            onClick={() => setMenuOpen(false)}
+            aria-hidden="true"
+          />
+          <div
+            id="mobile-menu"
+            className="neon-pill xl:hidden mx-3 sm:mx-5 mt-2 w-auto max-h-[calc(100svh-100px)] overflow-y-auto rounded-2xl pointer-events-auto animate-fade-up shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
+          >
           <nav className="flex flex-col p-3 text-sm font-semibold gap-0.5">
             {site.nav.map((item) => {
               const active = activeId === item.href.replace('/#', '')
@@ -155,6 +165,10 @@ export default function Navbar() {
               )
             })}
           </nav>
+          <div className="mx-3 my-1 px-3 py-2 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-between">
+            <span className="font-mono text-[10px] uppercase tracking-wider text-zinc-400">Live Traffic</span>
+            <VisitorCounter variant="badge" />
+          </div>
           <div className="flex items-center gap-2 px-3 pb-3 pt-2 border-t border-white/[0.07]">
             <button
               className="inline-flex items-center justify-center w-10 py-2.5 rounded-full text-zinc-200 border border-white/10 bg-white/[0.04] transition-colors"
@@ -174,7 +188,8 @@ export default function Navbar() {
             </a>
           </div>
         </div>
-      )}
+      </>
+    )}
     </header>
   )
 }

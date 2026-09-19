@@ -1,5 +1,6 @@
 import { footer } from '../../data/site'
 import Link from 'next/link'
+import VisitorCounter from './VisitorCounter'
 
 /* ── Footer action button (ref: Manipal — rounded-rect, hairline) ──── */
 function FooterAction({ icon, children, href, external = false, onClick }) {
@@ -152,6 +153,7 @@ export default function Footer() {
         <div className="mt-10 sm:mt-12 pt-5 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-3 text-[10px] sm:text-[11px] font-mono text-zinc-600">
           <div>{footer.legal}</div>
           <div className="flex items-center gap-3 sm:gap-4">
+            <VisitorCounter />
             {footer.meta.map((item, i) => (
               <span key={item} className="flex items-center gap-3 sm:gap-4">
                 {i > 0 && <span className="text-zinc-700">•</span>}

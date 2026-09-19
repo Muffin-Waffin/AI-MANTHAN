@@ -81,6 +81,90 @@ function StatCard({ icon, value, label, tone }) {
   )
 }
 
+/* ── Visits panel — totals + 14-day traffic sparkline ──────────── */
+function VisitsPanel({ visits }) {
+  const max = Math.max(1, ...visits.daily.map((d) => d.total))
+  const last7 = visits.daily.slice(-7)
+  const prev7 = visits.daily.slice(0, 7)
+  const sum = (arr) => arr.reduce((acc, d) => acc + d.total, 0)
+  const trend = sum(last7) - sum(prev7)
+
+  return (
+    <details className="glass mt-8 rounded-2xl overflow-hidden" open>
+      <summary className="px-5 py-4 cursor-pointer text-sm font-semibold text-white flex items-center gap-2">
+        <Icon name="visibility" className="text-[18px] text-brand-cyan" />
+        Site Traffic
+        {!visits.tracked && (
+          <span className="ml-2 px-2 py-0.5 rounded-full bg-amber-400/10 border border-amber-400/30 text-amber-400 text-[9px] font-mono uppercase">
+            memory fallback
+          </span>
+        )}
+      </summary>
+      <div className="px-5 pb-5">
+        {/* totals */}
+        <div className="grid grid-cols-2 gap-3 mb-5">
+          <div className="glass p-4 rounded-xl flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center text-sky-400 bg-sky-400/10">
+              <Icon name="pageview" className="text-[20px]" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-white tabular-nums">
+                {visits.total.toLocaleString('en-IN')}
+              </div>
+              <div className="text-[11px] font-mono text-zinc-400 uppercase">Total Visits</div>
+            </div>
+          </div>
+          <div className="glass p-4 rounded-xl flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center text-brand-violet bg-brand-violet/10">
+              <Icon name="person" className="text-[20px]" />
+            </div>
+            <div>
+              <div className="text-2xl font-bold text-white tabular-nums">
+                {visits.unique.toLocaleString('en-IN')}
+              </div>
+              <div className="text-[11px] font-mono text-zinc-400 uppercase">Unique Visitors</div>
+            </div>
+          </div>
+        </div>
+
+        {/* 14-day bar chart */}
+        <div className="mb-2 flex items-center justify-between">
+          <span className="text-[10px] font-mono uppercase tracking-[0.16em] text-zinc-500">
+            Last 14 days
+          </span>
+          <span
+            className={`text-[10px] font-mono ${
+              trend > 0 ? 'text-emerald-400' : trend < 0 ? 'text-red-400' : 'text-zinc-500'
+            }`}
+          >
+            {trend > 0 ? '▲' : trend < 0 ? '▼' : '—'} {Math.abs(trend).toLocaleString('en-IN')} vs prev week
+          </span>
+        </div>
+        <div className="flex items-end gap-1.5 h-24">
+          {visits.daily.map((d) => (
+            <div key={d.date} className="flex-1 flex flex-col items-center gap-1 group relative">
+              {/* tooltip */}
+              <div className="pointer-events-none absolute bottom-full mb-1 hidden group-hover:block z-10 px-2 py-1 rounded-lg bg-obsidian-900 border border-white/[0.12] text-[9px] font-mono text-zinc-200 whitespace-nowrap">
+                {d.date}: {d.total} visits · {d.unique} unique
+              </div>
+              <div
+                className="w-full rounded-t bg-gradient-to-t from-brand-violet/40 to-brand-cyan/70 transition-all duration-300 hover:from-brand-violet/60 hover:to-brand-cyan"
+                style={{ height: `${Math.max(4, (d.total / max) * 76)}px` }}
+              />
+              <span className="text-[8px] font-mono text-zinc-600">{d.date.slice(8)}</span>
+            </div>
+          ))}
+        </div>
+        {visits.daily.every((d) => d.total === 0) && (
+          <p className="text-[11px] font-mono text-zinc-500 mt-3">
+            No visits recorded yet — the footer badge counts live traffic.
+          </p>
+        )}
+      </div>
+    </details>
+  )
+}
+
 function Ticket({ t, onAdvance }) {
   return (
     <div className="glass glass-hover p-4 rounded-2xl">
@@ -127,6 +211,7 @@ export default function AdminPage() {
   const [stats, setStats] = useState(null)
   const [tickets, setTickets] = useState([])
   const [coordinators, setCoordinators] = useState([])
+  const [visits, setVisits] = useState(null)
   const [statusFilter, setStatusFilter] = useState('')
   const [kindFilter, setKindFilter] = useState('')
   const [error, setError] = useState('')
@@ -137,14 +222,16 @@ export default function AdminPage() {
     setLoading(true)
     setError('')
     try {
-      const [s, list, coords] = await Promise.all([
+      const [s, list, coords, v] = await Promise.all([
         adminApi.stats(),
         adminApi.inquiries({ status: statusFilter, kind: kindFilter }),
         adminApi.coordinators(),
+        adminApi.visits().catch(() => null), // counter is optional — never blocks the queue
       ])
       setStats(s)
       setTickets(list)
       setCoordinators(coords)
+      if (v) setVisits(v)
     } catch (e) {
       if (e.message === 'INVALID_KEY') {
         sessionStorage.removeItem('admin-key')
@@ -281,6 +368,9 @@ export default function AdminPage() {
           <Ticket key={t._id} t={t} onAdvance={advance} />
         ))}
       </div>
+
+      {/* site traffic — visitor counter */}
+      {visits && <VisitsPanel visits={visits} />}
 
       {/* coordinators */}
       <details className="glass mt-8 rounded-2xl overflow-hidden">

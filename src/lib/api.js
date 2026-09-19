@@ -5,6 +5,70 @@ function adminHeaders() {
   return { 'x-admin-key': sessionStorage.getItem('admin-key') || '' }
 }
 
+/* ── Visitor counter ────────────────────────────────────────── */
+
+/* Analytics-standard semantics, all tokens random & anonymous (no PII):
+
+   visitorId  → localStorage, lifetime. One unique visitor per browser.
+   sessionId  → sessionStorage, per browsing session. One "visit" per
+                session — refreshes, SPA navigations and same-tab
+                reloads never re-count. New tab / new session = 1 visit.
+
+   The ping is a module-level singleton promise: Navbar badge + Footer
+   widget + Stat card all share ONE ping per page load. */
+
+/** Anonymous lifetime id for this browser. */
+export function getVisitorId() {
+  try {
+    let id = localStorage.getItem('aim-visitor-id')
+    if (!id) {
+      id = crypto.randomUUID?.() || `v-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
+      localStorage.setItem('aim-visitor-id', id)
+    }
+    return id
+  } catch {
+    return ''
+  }
+}
+
+/** Anonymous per-browsing-session id — the "one visit" unit. */
+function getSessionId() {
+  try {
+    let id = sessionStorage.getItem('aim-session-id')
+    if (!id) {
+      id = crypto.randomUUID?.() || `s-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
+      sessionStorage.setItem('aim-session-id', id)
+    }
+    return id
+  } catch {
+    return ''
+  }
+}
+
+let pingPromise = null
+
+/**
+ * Record this page load ONCE (singleton) and return the live totals.
+ * Never throws — callers degrade silently when the API is down.
+ */
+export function pingVisit() {
+  if (pingPromise) return pingPromise
+  pingPromise = fetch(`${API_BASE}/visits/ping`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ visitorId: getVisitorId(), sessionId: getSessionId() }),
+  })
+    .then((res) => {
+      if (!res.ok) throw new Error('ping failed')
+      return res.json()
+    })
+    .catch((err) => {
+      pingPromise = null // allow a retry on the next navigation
+      throw err
+    })
+  return pingPromise
+}
+
 /**
  * Single integration point between the frontend and the NestJS backend.
  * The support modal + admin dashboard are the wired mutations — add more
@@ -69,4 +133,6 @@ export const adminApi = {
   updateInquiry: (id, patch) =>
     adminFetch(`/admin/inquiries/${id}`, { method: 'PATCH', body: JSON.stringify(patch) }),
   coordinators: () => adminFetch('/admin/coordinators'),
+  /** Visitor counter — totals + 14-day daily series. */
+  visits: () => adminFetch('/visits/admin'),
 }

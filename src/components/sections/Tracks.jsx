@@ -109,9 +109,44 @@ function HighlightedText({ text }) {
         </button>
       </div>
 
+      {/* ── Mobile/Tablet track selector: horizontal swipe rail ── */}
+      <div className="lg:hidden flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 -mx-4 px-4 sm:-mx-6 sm:px-6 snap-x mb-4">
+        {tracks.map((t) => {
+          const active = t.id === activeId
+          return (
+            <button
+              key={t.id}
+              type="button"
+              onClick={() => selectTrack(t.id)}
+              className={`shrink-0 snap-start flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl transition-all duration-300 ${
+                active
+                  ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white shadow-[0_6px_20px_-6px_rgba(147,51,234,0.8)] border border-white/20'
+                  : 'bg-zinc-900/80 text-zinc-300 hover:bg-zinc-800/80 border border-white/[0.06]'
+              }`}
+            >
+              <span
+                className={`grid h-7 w-7 place-items-center rounded-lg ${
+                  active ? 'bg-white/20 text-white' : 'bg-white/[0.05] text-zinc-400'
+                }`}
+              >
+                <span className="material-symbols-outlined text-[16px]">{t.icon}</span>
+              </span>
+              <div className="text-left">
+                <span className="block font-mono text-[11px] font-bold tracking-[0.08em] uppercase whitespace-nowrap">
+                  {t.label}
+                </span>
+                <span className={`block text-[9px] ${active ? 'text-white/80' : 'text-zinc-500'}`}>
+                  {t.bounty} bounty
+                </span>
+              </div>
+            </button>
+          )
+        })}
+      </div>
+
       <div className="grid gap-5 lg:grid-cols-[340px_1fr] items-stretch">
-        {/* ── left: track list ── */}
-        <div className="flex flex-col gap-2.5">
+        {/* ── Desktop: left track list ── */}
+        <div className="hidden lg:flex flex-col gap-2.5">
           {tracks.map((t) => {
             const active = t.id === activeId
             return (
@@ -189,7 +224,7 @@ function HighlightedText({ text }) {
           >
             <div
               data-lenis-prevent
-              className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-7 sm:p-9"
+              className="min-h-0 flex-1 overflow-y-auto overscroll-contain p-5 sm:p-8"
             >
               <div className="flex items-center justify-between gap-3">
                 <span className="font-mono text-xs font-bold tracking-[0.2em] text-zinc-400 uppercase">

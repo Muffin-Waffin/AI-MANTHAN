@@ -111,17 +111,17 @@ function BountyCard({ bounty, index }) {
       className="bounty-item"
       style={{ '--bi': index, '--baccent': bountyAccent[bounty.color] || '139, 92, 246' }}
     >
-      <div className="bounty-card glass rounded-xl px-4 py-3.5 flex flex-col gap-3 h-full">
-        <div className={`bounty-icon w-9 h-9 rounded-lg flex items-center justify-center shrink-0 ${tone}`}>
-          <Icon name={bounty.icon} className="text-[18px]" />
+      <div className="bounty-card glass rounded-xl px-3 py-3 sm:px-4 sm:py-3.5 flex flex-col gap-2.5 sm:gap-3 h-full">
+        <div className={`bounty-icon w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center shrink-0 ${tone}`}>
+          <Icon name={bounty.icon} className="text-[16px] sm:text-[18px]" />
         </div>
         <div className="min-w-0">
-          <div className="text-[9px] font-mono uppercase tracking-[0.16em] text-zinc-600">
+          <div className="text-[8px] sm:text-[9px] font-mono uppercase tracking-[0.16em] text-zinc-500">
             {bounty.label}
           </div>
-          <div className="text-[13px] font-semibold text-white leading-snug">{bounty.title}</div>
+          <div className="text-[12px] sm:text-[13px] font-semibold text-white leading-snug">{bounty.title}</div>
         </div>
-        <div className="bounty-amount text-xs font-mono font-bold text-zinc-300 mt-auto">
+        <div className="bounty-amount text-[11px] sm:text-xs font-mono font-bold text-zinc-300 mt-auto">
           {bounty.amount}
         </div>
       </div>
@@ -160,7 +160,7 @@ export default function Prizes() {
       </div>
 
       {/* Special bounties — compact secondary grid, 10 grants */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 sm:gap-4 max-w-6xl mx-auto">
+      <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-2.5 sm:gap-4 max-w-6xl mx-auto">
         {prizes.bounties.map((bounty, i) => (
           <BountyCard key={bounty.title} bounty={bounty} index={i} />
         ))}
