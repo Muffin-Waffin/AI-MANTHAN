@@ -1,7 +1,26 @@
+# Dependencies
 node_modules/
-.next/
-out/
-.env*.local
 
-# Local Netlify folder
-.netlify
+# Next.js build output
+frontend/.next/
+frontend/out/
+
+# NestJS build output
+backend/dist/
+
+# Env & secrets
+.env
+.env*.local
+backend/.env
+frontend/.env*.local
+
+# Logs
+*.log
+server.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local-only reference material — not part of the deployable repo
+waste/
