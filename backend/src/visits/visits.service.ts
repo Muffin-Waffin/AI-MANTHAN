@@ -1,9 +1,7 @@
 import { Injectable } from '@nestjs/common'
-import mongoose from 'mongoose'
-import { Visit } from './visit.model'
+import { PrismaService } from '../prisma/prisma.service'
 
-const MAX_VISITORS = 50_000
-const MAX_SESSIONS = 200_000
+const MAX_TOKENS_PER_KIND = 50_000
 
 /**
  * Honest traffic accounting with analytics-standard semantics:
@@ -14,13 +12,19 @@ const MAX_SESSIONS = 200_000
  *   pageView = every ping (raw page loads; admin analytics only).
  *
  * All identity tokens are random client-generated strings — no PII.
- * MongoDB down → in-memory fallback keeps the endpoints alive.
+ *
+ * Postgres design: dedup tokens are rows in `SeenToken` (unique index) —
+ * inserting a claim is atomic, so two concurrent first-pings can never
+ * double-count. Daily numbers live in `DailyStats` (one row per day).
+ * Supabase down → in-memory fallback keeps the endpoints alive.
  */
 @Injectable()
 export class VisitsService {
   private memory = { total: 0, unique: 0, pageViews: 0 }
   private memoryVisitors = new Set<string>()
   private memorySessions = new Set<string>()
+
+  constructor(private readonly prisma: PrismaService) {}
 
   private todayKey() {
     return new Date().toISOString().slice(0, 10)
@@ -36,112 +40,142 @@ export class VisitsService {
       return this.countPageViewOnly(today)
     }
 
-    if (mongoose.connection.readyState !== 1) {
-      this.memory.pageViews += 1
-      if (!this.memorySessions.has(session)) {
-        this.memorySessions.add(session)
-        this.memory.total += 1
-      }
-      if (!this.memoryVisitors.has(visitor)) {
-        this.memoryVisitors.add(visitor)
-        this.memory.unique += 1
-      }
-      return { ...this.memory, isNewVisit: !this.memorySessions.has(session), tracked: false }
-    }
-
     try {
-      const [newSession, newVisitor] = await Promise.all([
-        Visit.exists({ key: 'site', seenSessions: session }).then((d) => !d),
-        Visit.exists({ key: 'site', seenVisitors: visitor }).then((d) => !d),
+      // Atomic dedup claims: INSERT wins exactly once per unique token.
+      // skipDuplicates → Postgres ON CONFLICT DO NOTHING, so each returned
+      // count tells us precisely whether THIS ping created that token.
+      // (One combined createMany cannot tell WHICH token was new — that
+      // mis-attributed sessions as uniques.)
+      const [sessionClaim, visitorClaim] = await this.prisma.$transaction([
+        this.prisma.seenToken.createMany({
+          data: [{ token: `s:${session}`, kind: 'session' }],
+          skipDuplicates: true,
+        }),
+        this.prisma.seenToken.createMany({
+          data: [{ token: `v:${visitor}`, kind: 'visitor' }],
+          skipDuplicates: true,
+        }),
       ])
 
-      const update: Record<string, unknown> = {
-        $inc: {
-          pageViews: 1,
-          [`viewsPerDay.${today}`]: 1,
-          ...(newSession ? { total: 1, [`perDay.${today}`]: 1 } : {}),
-          ...(newVisitor ? { unique: 1, [`uniquePerDay.${today}`]: 1 } : {}),
-        },
-      }
-      const addToSet: Record<string, string> = {}
-      if (newSession) addToSet.seenSessions = session
-      if (newVisitor) addToSet.seenVisitors = visitor
-      if (Object.keys(addToSet).length) update.$addToSet = addToSet
+      const newSession = sessionClaim.count === 1
+      const newVisitor = visitorClaim.count === 1
+      const isNewVisit = newSession || newVisitor
 
-      const doc = await Visit.findOneAndUpdate(
-        { key: 'site' },
-        update,
-        { returnDocument: 'after', upsert: true, setDefaultsOnInsert: true },
-      ).lean()
+      const [totals, daily] = await this.prisma.$transaction([
+        this.prisma.siteVisit.upsert({
+          where: { id: 'site' },
+          create: {
+            id: 'site',
+            total: newSession ? 1 : 0,
+            unique: newVisitor ? 1 : 0,
+            pageViews: 1,
+          },
+          update: {
+            pageViews: { increment: 1 },
+            ...(newSession ? { total: { increment: 1 } } : {}),
+            ...(newVisitor ? { unique: { increment: 1 } } : {}),
+          },
+        }),
+        this.prisma.dailyStats.upsert({
+          where: { date: today },
+          create: {
+            date: today,
+            sessions: newSession ? 1 : 0,
+            uniques: newVisitor ? 1 : 0,
+            views: 1,
+          },
+          update: {
+            views: { increment: 1 },
+            ...(newSession ? { sessions: { increment: 1 } } : {}),
+            ...(newVisitor ? { uniques: { increment: 1 } } : {}),
+          },
+        }),
+      ])
 
-      this.pruneIdentities(doc)
+      // Fire-and-forget: keep the token table bounded.
+      void this.pruneTokens()
 
       return {
-        total: doc?.total ?? 0,
-        unique: doc?.unique ?? 0,
-        pageViews: doc?.pageViews ?? 0,
-        isNewVisit: newSession,
+        total: totals.total,
+        unique: totals.unique,
+        pageViews: totals.pageViews,
+        isNewVisit,
         tracked: true,
       }
-    } catch {
-      // Counter must never break the page — degrade quietly
-      this.memory.pageViews += 1
+    } catch (error) {
+      // Counter must never break the page — degrade quietly to memory
+      this.prisma.markUnavailable()
+      this.memoryFallback(session, visitor)
+      this.debugLog(`Prisma unavailable — in-memory fallback: ${error}`)
       return { ...this.memory, isNewVisit: false, tracked: false }
     }
   }
 
   /** Raw pageview when the client sends no identity (bots, private mode). */
   private async countPageViewOnly(today: string) {
-    if (mongoose.connection.readyState !== 1) {
-      this.memory.pageViews += 1
-      return { ...this.memory, isNewVisit: false, tracked: false }
-    }
     try {
-      const doc = await Visit.findOneAndUpdate(
-        { key: 'site' },
-        { $inc: { pageViews: 1, [`viewsPerDay.${today}`]: 1 } },
-        { returnDocument: 'after', upsert: true, setDefaultsOnInsert: true },
-      ).lean()
+      const [totals, daily] = await this.prisma.$transaction([
+        this.prisma.siteVisit.upsert({
+          where: { id: 'site' },
+          create: { id: 'site', pageViews: 1 },
+          update: { pageViews: { increment: 1 } },
+        }),
+        this.prisma.dailyStats.upsert({
+          where: { date: today },
+          create: { date: today, views: 1 },
+          update: { views: { increment: 1 } },
+        }),
+      ])
       return {
-        total: doc?.total ?? 0,
-        unique: doc?.unique ?? 0,
-        pageViews: doc?.pageViews ?? 0,
+        total: totals.total,
+        unique: totals.unique,
+        pageViews: totals.pageViews,
         isNewVisit: false,
         tracked: true,
       }
     } catch {
-      return { total: 0, unique: 0, pageViews: 0, isNewVisit: false, tracked: false }
+      this.prisma.markUnavailable()
+      this.memory.pageViews += 1
+      return { ...this.memory, isNewVisit: false, tracked: false }
     }
   }
 
-  /** Keep identity lists bounded (see model caps). Fire-and-forget. */
-  private async pruneIdentities(doc: Record<string, any> | null) {
-    if (!doc) return
-    const visitors = Array.isArray(doc.seenVisitors) ? doc.seenVisitors : []
-    const sessions = Array.isArray(doc.seenSessions) ? doc.seenSessions : []
-    if (visitors.length > MAX_VISITORS || sessions.length > MAX_SESSIONS) {
-      Visit.updateOne(
-        { key: 'site' },
-        {
-          $set: {
-            ...(visitors.length > MAX_VISITORS
-              ? { seenVisitors: visitors.slice(-MAX_VISITORS) }
-              : {}),
-            ...(sessions.length > MAX_SESSIONS
-              ? { seenSessions: sessions.slice(-MAX_SESSIONS) }
-              : {}),
-          },
-        },
-      ).catch(() => {})
+  private memoryFallback(session: string, visitor: string) {
+    this.memory.pageViews += 1
+    if (!this.memorySessions.has(session)) {
+      this.memorySessions.add(session)
+      this.memory.total += 1
+    }
+    if (!this.memoryVisitors.has(visitor)) {
+      this.memoryVisitors.add(visitor)
+      this.memory.unique += 1
+    }
+  }
+
+  private debugLog(message: string) {
+    // Kept minimal — counter noise on a dead DB helps nobody.
+    if (process.env.NODE_ENV !== 'production') console.warn(`[visits] ${message}`)
+  }
+
+  /** Keep SeenToken bounded (oldest rows deleted past the cap). Fire-and-forget. */
+  private async pruneTokens() {
+    try {
+      const count = await this.prisma.seenToken.count()
+      if (count <= MAX_TOKENS_PER_KIND) return
+      const old = await this.prisma.seenToken.findMany({
+        orderBy: { createdAt: 'asc' },
+        take: count - MAX_TOKENS_PER_KIND,
+        select: { id: true },
+      })
+      await this.prisma.seenToken.deleteMany({ where: { id: { in: old.map((t) => t.id) } } })
+    } catch {
+      /* pruning is best-effort */
     }
   }
 
   async getStats() {
-    if (mongoose.connection.readyState !== 1) {
-      return { ...this.memory, tracked: false }
-    }
     try {
-      const doc = await Visit.findOne({ key: 'site' }).lean()
+      const doc = await this.prisma.siteVisit.findUnique({ where: { id: 'site' } })
       return {
         total: doc?.total ?? 0,
         unique: doc?.unique ?? 0,
@@ -149,7 +183,8 @@ export class VisitsService {
         tracked: true,
       }
     } catch {
-      return { total: 0, unique: 0, pageViews: 0, tracked: false }
+      this.prisma.markUnavailable()
+      return { ...this.memory, tracked: false }
     }
   }
 
@@ -158,29 +193,24 @@ export class VisitsService {
    * and raw pageviews per day) for the dashboard chart.
    */
   async getDetailedStats() {
-    if (mongoose.connection.readyState !== 1) {
-      return {
-        ...this.memory,
-        tracked: false,
-        daily: this.emptyDaily(),
-      }
-    }
     try {
-      const doc = await Visit.findOne({ key: 'site' }).lean()
-      const asObject = (m: unknown): Record<string, number> =>
-        m instanceof Map ? Object.fromEntries(m) : ((m as Record<string, number>) || {})
-      const perDay = asObject(doc?.perDay)
-      const uniquePerDay = asObject(doc?.uniquePerDay)
-      const viewsPerDay = asObject(doc?.viewsPerDay)
+      const [doc, rows] = await this.prisma.$transaction([
+        this.prisma.siteVisit.findUnique({ where: { id: 'site' } }),
+        this.prisma.dailyStats.findMany({
+          where: { date: { gte: new Date(Date.now() - 13 * 86_400_000).toISOString().slice(0, 10) } },
+          orderBy: { date: 'asc' },
+        }),
+      ])
 
       const daily = []
       for (let i = 13; i >= 0; i--) {
         const date = new Date(Date.now() - i * 86_400_000).toISOString().slice(0, 10)
+        const row = rows.find((r) => r.date === date)
         daily.push({
           date,
-          total: perDay[date] ?? 0,
-          unique: uniquePerDay[date] ?? 0,
-          pageViews: viewsPerDay[date] ?? 0,
+          total: row?.sessions ?? 0,
+          unique: row?.uniques ?? 0,
+          pageViews: row?.views ?? 0,
         })
       }
 
@@ -192,7 +222,12 @@ export class VisitsService {
         daily,
       }
     } catch {
-      return { total: 0, unique: 0, pageViews: 0, tracked: false, daily: this.emptyDaily() }
+      this.prisma.markUnavailable()
+      return {
+        ...this.memory,
+        tracked: false,
+        daily: this.emptyDaily(),
+      }
     }
   }
 

@@ -7,7 +7,9 @@
  * src/support/support.dto.ts exactly.
  */
 require('dotenv/config')
-const mongoose = require('mongoose')
+const { PrismaClient } = require('@prisma/client')
+
+const prisma = new PrismaClient()
 
 const coordinators = [
   {
@@ -49,30 +51,17 @@ const coordinators = [
   },
 ]
 
-const schema = new mongoose.Schema(
-  {
-    name: { type: String, required: true, trim: true },
-    email: { type: String, required: true, trim: true, lowercase: true },
-    whatsapp: { type: String, required: true, trim: true },
-    categories: { type: [String], required: true, default: [] },
-    webhookUrl: { type: String, trim: true, default: '' },
-    active: { type: Boolean, default: true },
-  },
-  { timestamps: true },
-)
-
 async function run() {
-  const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/aimanthan'
-  await mongoose.connect(uri)
-  console.log('[seed] connected')
-
-  const Coordinator = mongoose.models.Coordinator || mongoose.model('Coordinator', schema)
+  console.log('[seed] connecting via Prisma…')
   for (const c of coordinators) {
-    await Coordinator.updateOne({ email: c.email }, { $set: c }, { upsert: true })
+    await prisma.coordinator.upsert({
+      where: { email: c.email },
+      update: { ...c },
+      create: { ...c },
+    })
     console.log(`[seed] upserted ${c.name} (${c.categories.join(', ')})`)
   }
-
-  await mongoose.disconnect()
+  await prisma.$disconnect()
   console.log('[seed] done')
 }
 

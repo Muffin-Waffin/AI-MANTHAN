@@ -1,0 +1,92 @@
+// AI Manthan 2026 — Supabase PostgreSQL schema
+// Migrated from Mongoose models (coordinator, inquiry, visit).
+//
+// Design notes:
+// - Coordinator.categories → native String[] (queried with Prisma `has`)
+// - The old single MongoDB counter doc is normalized into:
+//     SiteVisit (totals) + DailyStats (per-day) + SeenToken (dedup claims)
+// - SeenToken replaces Mongo's `$addToSet` identity lists: claiming a
+//   token is a unique-constraint insert, which is atomic and race-safe.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Coordinator {
+  id         String   @id @default(uuid())
+  name       String
+  email      String   @unique
+  whatsapp   String
+  categories String[]
+  webhookUrl String   @default("")
+  active     Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  inquiries Inquiry[]
+}
+
+model Inquiry {
+  id               String   @id @default(uuid())
+  email            String
+  name             String   @default("")
+  category         String   @default("General")
+  message          String
+  kind             String   @default("participant") // 'participant' | 'feedback'
+  rating           Int? // 1-5, feedback only
+  status           String   @default("open") // 'open' | 'in-progress' | 'resolved'
+  resolutionNote   String   @default("")
+
+  // Assignment snapshot (FK + denormalized contact for audit)
+  coordinatorId    String?
+  coordinator      Coordinator? @relation(fields: [coordinatorId], references: [id])
+  assignedName     String?
+  assignedEmail    String?
+  assignedWhatsapp String?
+  notifiedVia      String? // 'webhook' | 'email' | 'logged'
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+  @@index([kind])
+  @@index([createdAt])
+}
+
+// Singleton row (id = 'site') holding lifetime counters.
+model SiteVisit {
+  id        String   @id @default("site")
+  total     Int      @default(0)
+  unique    Int      @default(0)
+  pageViews Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// One row per calendar day (date = 'YYYY-MM-DD').
+model DailyStats {
+  id        String   @id @default(uuid())
+  date      String   @unique
+  sessions  Int      @default(0)
+  uniques   Int      @default(0)
+  views     Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([date])
+}
+
+// Atomic dedup: one row per claimed visitor/session token.
+model SeenToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  kind      String // 'visitor' | 'session'
+  createdAt DateTime @default(now())
+
+  @@index([kind])
+}

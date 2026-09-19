@@ -2,8 +2,7 @@ import 'dotenv/config'
 import { Injectable, Logger } from '@nestjs/common'
 import type { Transporter } from 'nodemailer'
 import nodemailer from 'nodemailer'
-import { Coordinator } from './coordinator.model'
-import { Inquiry } from './inquiry.model'
+import { PrismaService } from '../prisma/prisma.service'
 import type { SupportInquiryDto } from './support.dto'
 
 const {
@@ -66,6 +65,8 @@ function mailHtml(dto: SupportInquiryDto & { kind?: string; rating?: number }, i
 export class RoutingService {
   private readonly logger = new Logger('RoutingService')
 
+  constructor(private readonly prisma: PrismaService) {}
+
   /** Whether outbound email dispatch is configured (SMTP env present). */
   get emailReady(): boolean {
     return isEmailConfigured()
@@ -78,21 +79,26 @@ export class RoutingService {
    * Never throws — routing failures never lose the stored inquiry.
    */
   async route(dto: SupportInquiryDto & { kind?: string; rating?: number }, inquiryId: string) {
-    const patch: Record<string, unknown> = { notifiedVia: 'logged' }
+    const patch: {
+      notifiedVia: 'webhook' | 'email' | 'logged'
+      confirmationSent?: boolean
+      coordinatorId?: string
+      assignedName?: string
+      assignedEmail?: string
+      assignedWhatsapp?: string
+    } = { notifiedVia: 'logged' }
 
     try {
-      const coordinator = await Coordinator.findOne({
-        active: true,
-        categories: dto.category,
-      }).sort({ createdAt: 1 })
+      const coordinator = await this.prisma.coordinator.findFirst({
+        where: { active: true, categories: { has: dto.category } },
+        orderBy: { createdAt: 'asc' },
+      })
 
       if (coordinator) {
-        patch.assignedTo = {
-          coordinatorId: coordinator._id,
-          name: coordinator.name,
-          email: coordinator.email,
-          whatsapp: coordinator.whatsapp,
-        }
+        patch.coordinatorId = coordinator.id
+        patch.assignedName = coordinator.name
+        patch.assignedEmail = coordinator.email
+        patch.assignedWhatsapp = coordinator.whatsapp
 
         const channels = await Promise.allSettled([
           coordinator.webhookUrl
@@ -152,7 +158,9 @@ export class RoutingService {
       this.logger.warn('SMTP unconfigured — coordinator + confirmation emails skipped (queue only)')
     }
 
-    await Inquiry.findByIdAndUpdate(inquiryId, patch).catch(() => {})
-    return patch.assignedTo ?? null
+    await this.prisma.inquiry
+      .update({ where: { id: inquiryId }, data: patch })
+      .catch(() => {})
+    return patch.assignedName ? { ...patch } : null
   }
 }

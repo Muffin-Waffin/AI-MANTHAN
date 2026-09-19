@@ -2,7 +2,6 @@ import 'reflect-metadata'
 import { Logger, ValidationPipe } from '@nestjs/common'
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
-import { connectDatabase } from './config/database'
 
 /**
  * Production-ready bootstrap.
@@ -60,7 +59,8 @@ async function bootstrap() {
   const isProd = process.env.NODE_ENV === 'production'
   const logger = new Logger('Bootstrap')
 
-  await connectDatabase()
+  // Prisma connects via PrismaService.onModuleInit (no-DB-safe: boot
+  // survives a paused Supabase project and health reports honestly).
 
   const app = await NestFactory.create(AppModule, {
     // Cap request bodies — oversized payloads are rejected before routing

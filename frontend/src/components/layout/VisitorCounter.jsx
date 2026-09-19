@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { pingVisit } from '../../lib/api'
+import { subscribeToSiteVisits } from '../../lib/supabase'
 import { cn } from '../../lib/utils'
 
 /**
@@ -37,8 +38,14 @@ export default function VisitorCounter({ variant = 'footer', className = '' }) {
       .catch(() => {
         /* API down — stay hidden, never fabricate numbers */
       })
+    // Supabase Realtime: counter updates LIVE on every new visit —
+    // no polling. Silently skipped when Supabase env is not configured.
+    const unsubscribe = subscribeToSiteVisits((row) => {
+      if (alive) setStats({ total: row.total, unique: row.unique })
+    })
     return () => {
       alive = false
+      unsubscribe()
     }
   }, [])
 
