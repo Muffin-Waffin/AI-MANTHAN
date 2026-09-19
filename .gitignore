@@ -24,3 +24,6 @@ Thumbs.db
 
 # Local-only reference material — not part of the deployable repo
 waste/
+
+# Backend has its own repository (AI-MANTHAN-2K26-backend)
+backend/
