@@ -16,7 +16,8 @@
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
-    "typecheck": "prisma generate && tsc --noEmit -p tsconfig.json"
+    "typecheck": "prisma generate && tsc --noEmit -p tsconfig.json",
+    "realtime:enable": "node scripts/enable-realtime.js"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.0",
