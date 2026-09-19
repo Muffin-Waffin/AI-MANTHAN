@@ -1,0 +1,37 @@
+{
+  "name": "aimanthan-backend",
+  "overrides": {
+    "multer": "^2.2.1"
+  },
+  "version": "1.0.0",
+  "private": true,
+  "description": "NestJS API for AI Manthan 2026 — health checks and support inquiries (MERN: MongoDB via Mongoose)",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "start": "node dist/main.js",
+    "dev": "tsc -p tsconfig.json && node --watch dist/main.js",
+    "seed:coordinators": "node scripts/seed-coordinators.js",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.0.0",
+    "@nestjs/core": "^11.0.0",
+    "@nestjs/platform-express": "^11.0.0",
+    "@nestjs/throttler": "^6.5.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "mongoose": "^9.10.0",
+    "nodemailer": "^10.0.9",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^4.17.3",
+    "@types/node": "^22.0.0",
+    "@types/nodemailer": "^8.0.1",
+    "typescript": "^5.7.2"
+  }
+}
