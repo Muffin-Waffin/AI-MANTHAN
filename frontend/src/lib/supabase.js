@@ -31,8 +31,11 @@ export const supabase =
  */
 export function subscribeToSiteVisits(onChange) {
   if (!supabase) return () => {}
+  // Unique name per subscription — supabase-js returns the SAME channel
+  // instance for identical names, so a second counter (navbar + footer)
+  // would otherwise add callbacks to an already-subscribed channel.
   const channel = supabase
-    .channel('site-visits')
+    .channel(`site-visits-${Math.random().toString(36).slice(2)}`)
     .on(
       'postgres_changes',
       { event: 'UPDATE', schema: 'public', table: 'SiteVisit' },
