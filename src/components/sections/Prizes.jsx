@@ -139,7 +139,7 @@ export default function Prizes() {
       />
 
       {/* Header — eyebrow, title with gradient accent word, divider */}
-      <div className="relative text-center max-w-2xl mx-auto mb-12 sm:mb-16">
+      <div className="relative text-center max-w-2xl mx-auto mb-8 sm:mb-10">
         <span className="text-[11px] font-mono font-medium tracking-[0.28em] text-brand-violet uppercase">
           {prizes.eyebrow}
         </span>
@@ -153,9 +153,9 @@ export default function Prizes() {
         <div className="mx-auto mt-6 h-px w-24 bg-gradient-to-r from-transparent via-brand-violet/60 to-transparent" />
       </div>
 
-      {/* Total Prize Pool — single grand centerpiece (top padding so the
-          floating badge never clips against the section edge) */}
-      <div className="bounty-item pt-6 sm:pt-8 mb-14 sm:mb-16" style={{ '--bi': 0 }}>
+      {/* Total Prize Pool — single grand centerpiece. The wrapper's pt-3.5
+          (inside PoolCard) is all the badge straddle needs — no extra gap. */}
+      <div className="bounty-item mb-12 sm:mb-14" style={{ '--bi': 0 }}>
         <PoolCard />
       </div>
 
