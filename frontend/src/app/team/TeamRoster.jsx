@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import Image from 'next/image'
+import SmartImage from '@/components/ui/SmartImage'
 import { teamAccents } from '@/data/team'
 
 /* ── Portrait card — tall rectangle: photo/monogram in a 3:4 frame,
@@ -15,7 +15,7 @@ function TeamCard({ member }) {
 
         <div className="absolute inset-0 overflow-hidden">
           {member.photo ? (
-            <Image
+            <SmartImage
               alt={member.name}
               src={member.photo}
               fill

@@ -6,7 +6,10 @@ export default function Section({ id, className = '', children, ...props }) {
       /* Full-width section, centered content — page background bleeds
          edge-to-edge while inner content stays in a roomy centered
          container (previous layout behaviour, with wider breakpoints). */
-      className={`relative w-full py-20 sm:py-24 border-t border-white/[0.06] ${className}`}
+      /* overflow-x-clip: section-scoped decorative glows (SectionBackdrop,
+         corner orbs, HUD bands) bleed past the viewport on small screens —
+         clipping them here keeps the page width == device width on mobile. */
+      className={`relative w-full overflow-x-clip py-20 sm:py-24 border-t border-white/[0.06] ${className}`}
       {...props}
     >
       <div className="site-container">{children}</div>

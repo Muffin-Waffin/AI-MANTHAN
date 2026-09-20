@@ -10,7 +10,7 @@ import {
 } from '../ui/dialog'
 import Icon from '../ui/Icon'
 import { site } from '../../data/site'
-import { submitSupportInquiry } from '@/lib/api'
+import { submitSupportInquiry } from '@/lib/supabase'
 
 function Field({ label, children }) {
   return (
@@ -45,10 +45,15 @@ export default function SupportModal({ open, onClose }) {
   const [rating, setRating] = useState(0)
 
   const copyEmail = () => {
-    navigator.clipboard.writeText(site.email).then(() => {
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    })
+    navigator.clipboard
+      .writeText(site.email)
+      .then(() => {
+        setCopied(true)
+        setTimeout(() => setCopied(false), 2000)
+      })
+      .catch(() => {
+        /* clipboard permission denied — email is visible right above */
+      })
   }
 
   const handleSubmit = async (e) => {
@@ -143,7 +148,7 @@ export default function SupportModal({ open, onClose }) {
           </div>
         </div>
 
-        {/* Inquiry form — wired to NestJS POST /api/support */}
+        {/* Inquiry form — RLS-guarded insert into Supabase "Inquiry" */}
         {status === 'sent' ? (
           <div className="text-center text-xs font-mono text-emerald-400 py-6">
             {tab === 'feedback'

@@ -13,6 +13,16 @@
   /* Brand colors — exact match */
   --color-brand-violet: #7c3aed;
   --color-brand-violet-hover: #6d28d9;
+
+  /* ── CTA (call-to-action) — REGISTRATION / REGISTER buttons ONLY ──
+     In buttons ka color yahan se control karo. Baaki site (sponsors
+     headings, section accents, glows) --color-brand-violet use karti
+     hai — wo alag token hai, isliye CTA badalne se unpe koi asar
+     nahi hota. Dono ko alag rakha gaya hai jaan-bujh ke. */
+  --color-cta: #7c3aed;
+  --color-cta-hover: #6d28d9;
+  /* Light tint — dark background pe icons/labels ke liye (auto-derives) */
+  --color-cta-soft: color-mix(in srgb, var(--color-cta) 60%, #ffffff);
   --color-brand-cyan: #38bdf8;
   --color-brand-emerald: #10b981;
   --color-brand-amber: #f59e0b;
@@ -56,9 +66,19 @@
        must follow the dark theme — without this the feedback form's
        category dropdown renders a jarring white popup on Chromium. */
     color-scheme: dark;
+    /* Horizontal overflow kill-switch — decorative glows (SectionBackdrop,
+       aurora orbs, HUD grids) must never widen the layout viewport past
+       the device width. When they did, mobile browsers laid the page out
+       wider than the screen → content squeezed left + dead strip on the
+       right. `clip` preferred (no scroll container created, sticky-safe);
+       `hidden` kept as fallback for older engines. */
+    overflow-x: hidden;
+    overflow-x: clip;
   }
   body {
     -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    overflow-x: clip;
   }
   * {
     @apply border-border outline-ring/50;
@@ -121,6 +141,19 @@
   &::-webkit-scrollbar {
     display: none;
   }
+}
+
+/* ── CTA gradient — Register Now button ka signature look ─────────
+   Colors --color-cta se derive hote hain (color-mix), isliye jab bhi
+   tum --color-cta badloge, gradient bhi saath me badlega — hardcoded
+   purple classes ki zaroorat nahi. */
+@utility bg-cta-gradient {
+  background-image: linear-gradient(
+    100deg,
+    color-mix(in srgb, var(--color-cta) 80%, #ffffff),
+    color-mix(in srgb, var(--color-cta) 72%, #ff00ff) 48%,
+    color-mix(in srgb, var(--color-cta) 80%, #ffffff)
+  );
 }
 
 /* Background image utilities from the original tailwind.config */

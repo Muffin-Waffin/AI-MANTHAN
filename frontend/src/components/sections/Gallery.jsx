@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import SmartImage from '../ui/SmartImage'
 import Section from '../ui/Section'
 import { gallery } from '../../data/gallery'
 
@@ -24,7 +24,7 @@ function Frame({ item, ratio, sizes, children, priority = false }) {
     >
       {/* ambient layer — Ken Burns drift; image rests blurred, sharpens on hover */}
       <div className="gallery-ambient absolute inset-0">
-        <Image
+        <SmartImage
           alt={item.title}
           src={item.img}
           fill

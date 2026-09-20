@@ -113,10 +113,10 @@ export default function Navbar() {
             href={site.links.register}
             target="_blank"
             rel="noopener noreferrer"
-            className="group hidden min-[480px]:inline-flex items-center gap-2 px-5 py-2 sm:py-2.5 rounded-full text-zinc-100 text-xs sm:text-sm font-semibold whitespace-nowrap bg-white/[0.06] border border-white/[0.14] backdrop-blur-md transition-all duration-300 hover:bg-white/[0.12] hover:border-violet-400/40 hover:text-white hover:shadow-[0_0_24px_-6px_rgba(168,85,247,0.5)]"
+            className="group hidden min-[480px]:inline-flex items-center gap-2 px-5 py-2 sm:py-2.5 rounded-full text-zinc-100 text-xs sm:text-sm font-semibold whitespace-nowrap bg-white/[0.06] border border-white/[0.14] backdrop-blur-md transition-all duration-300 hover:bg-white/[0.12] hover:border-cta/40 hover:text-white hover:shadow-[0_0_24px_-6px_color-mix(in_srgb,var(--color-cta)_50%,transparent)]"
           >
             Registration
-            <span className="material-symbols-outlined text-[16px] text-violet-300 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">north_east</span>
+            <span className="material-symbols-outlined text-[16px] text-cta-soft transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">north_east</span>
           </a>
 
           {/* Mobile hamburger — shows below xl (nav fits till 1280px) */}
@@ -181,10 +181,10 @@ export default function Navbar() {
               href={site.links.register}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 inline-flex items-center justify-center gap-2 py-2.5 rounded-full text-zinc-100 text-sm font-semibold bg-white/[0.06] border border-white/[0.14] transition-all hover:bg-white/[0.12] hover:border-violet-400/40"
+              className="flex-1 inline-flex items-center justify-center gap-2 py-2.5 rounded-full text-zinc-100 text-sm font-semibold bg-white/[0.06] border border-white/[0.14] transition-all hover:bg-white/[0.12] hover:border-cta/40"
             >
               Registration
-              <span className="material-symbols-outlined text-[16px] text-violet-300">north_east</span>
+              <span className="material-symbols-outlined text-[16px] text-cta-soft">north_east</span>
             </a>
           </div>
         </div>

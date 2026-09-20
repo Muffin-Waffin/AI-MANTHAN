@@ -1,8 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
-import { pingVisit } from '../../lib/api'
-import { subscribeToSiteVisits } from '../../lib/supabase'
+import { pingVisit, subscribeToSiteVisits } from '../../lib/supabase'
 import { cn } from '../../lib/utils'
 
 /**
@@ -12,7 +11,7 @@ import { cn } from '../../lib/utils'
  *   'stat'   → HUD card (stats sections)
  *   'footer' → prominent widget (Footer)
  *
- * Counting contract ( enforced in lib/api.js + backend ):
+ * Counting contract ( enforced in lib/supabase.js via rpc record_visit ):
  *   • Exactly ONE ping per page load, no matter how many counters are
  *     mounted (module-level singleton promise).
  *   • 1 visit = 1 browsing session — refreshes/reloads never re-count.
@@ -49,10 +48,12 @@ export default function VisitorCounter({ variant = 'footer', className = '' }) {
     }
   }, [])
 
-  // Smooth count-up: 0 → total over ~1.2s, cubic ease-out
+  // Smooth count-up: 0 → total over ~1.2s, cubic ease-out.
+  // Honest numbers only — Math.max(1, …) jaisa koi forced minimum nahi:
+  // real count 0 ho toh 0 hi dikhega (tooltip ke saath consistent).
   useEffect(() => {
     if (!stats) return
-    const target = Math.max(1, stats.total)
+    const target = stats.total
     const start = performance.now()
     const dur = 1200
 
@@ -80,7 +81,7 @@ export default function VisitorCounter({ variant = 'footer', className = '' }) {
           'inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 backdrop-blur-md transition-all duration-300 hover:border-violet-400/40 hover:bg-white/[0.08] hover:shadow-[0_0_18px_rgba(168,85,247,0.35)]',
           className,
         )}
-        title={`${stats.total.toLocaleString('en-IN')} visits this many browsing sessions • ${stats.unique.toLocaleString('en-IN')} unique visitors`}
+        title={`${stats.total.toLocaleString('en-IN')} visits (browsing sessions) • ${stats.unique.toLocaleString('en-IN')} unique visitors`}
       >
         <span className="relative flex h-2 w-2 shrink-0">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />

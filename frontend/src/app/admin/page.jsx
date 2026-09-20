@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import Icon from '@/components/ui/Icon'
-import { adminApi } from '@/lib/api'
+import { adminApi, supabase } from '@/lib/supabase'
 
 const STATUS_STYLES = {
   open: 'text-amber-400 bg-amber-400/10 border-amber-400/30',
@@ -24,15 +24,35 @@ function timeAgo(iso) {
   return `${Math.floor(hrs / 24)}d ago`
 }
 
-function KeyGate({ onUnlock }) {
-  const [value, setValue] = useState('')
-  const [error, setError] = useState(false)
+/* ── Supabase Auth gate — email + password, RLS does the rest ──────
+   No shared admin key anywhere: the allowlist table `admin_users`
+   (managed in the Supabase dashboard) decides who gets in. */
+function AuthGate({ onSignedIn }) {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState('')
+  const [busy, setBusy] = useState(false)
 
-  const submit = (e) => {
+  const submit = async (e) => {
     e.preventDefault()
-    sessionStorage.setItem('admin-key', value.trim())
-    onUnlock(value.trim())
-    setError(true)
+    if (!supabase) {
+      setError('Supabase not configured — set NEXT_PUBLIC_SUPABASE_URL & NEXT_PUBLIC_SUPABASE_ANON_KEY.')
+      return
+    }
+    setBusy(true)
+    setError('')
+    const { error: authError } = await supabase.auth.signInWithPassword({
+      email: email.trim(),
+      password,
+    })
+    setBusy(false)
+    if (authError) {
+      setError(authError.message === 'Invalid login credentials'
+        ? 'Invalid email or password — try again'
+        : authError.message)
+      return
+    }
+    onSignedIn(true)
   }
 
   return (
@@ -44,23 +64,30 @@ function KeyGate({ onUnlock }) {
         <h1 className="text-lg font-bold text-white">Command Desk</h1>
         <p className="text-xs font-mono text-zinc-400 mt-1 mb-6">AI Manthan admin access</p>
         <input
-          type="password"
-          value={value}
-          onChange={(e) => {
-            setValue(e.target.value)
-            setError(false)
-          }}
-          placeholder="ADMIN_KEY"
-          className={`w-full text-xs px-3 py-2.5 rounded-lg glass text-white placeholder:text-zinc-600 focus:outline-none focus:border-brand-violet/60 transition-all ${
-            error ? 'border-red-500/60' : ''
-          }`}
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="admin email"
+          autoComplete="username"
+          required
+          className="w-full text-xs px-3 py-2.5 rounded-lg glass text-white placeholder:text-zinc-600 focus:outline-none focus:border-brand-violet/60 transition-all mb-2"
         />
-        {error && <p className="text-[11px] font-mono text-red-400 mt-2">Invalid key — try again</p>}
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="password"
+          autoComplete="current-password"
+          required
+          className="w-full text-xs px-3 py-2.5 rounded-lg glass text-white placeholder:text-zinc-600 focus:outline-none focus:border-brand-violet/60 transition-all"
+        />
+        {error && <p className="text-[11px] font-mono text-red-400 mt-2">{error}</p>}
         <button
-          className="w-full mt-4 py-2.5 rounded-xl bg-brand-violet hover:bg-brand-violet-hover text-white text-xs font-semibold tracking-wide transition-all hover:-translate-y-0.5"
+          className="w-full mt-4 py-2.5 rounded-xl bg-brand-violet hover:bg-brand-violet-hover text-white text-xs font-semibold tracking-wide transition-all hover:-translate-y-0.5 disabled:opacity-60"
           type="submit"
+          disabled={busy}
         >
-          Unlock Dashboard
+          {busy ? 'Signing in…' : 'Unlock Dashboard'}
         </button>
       </form>
     </div>
@@ -187,9 +214,9 @@ function Ticket({ t, onAdvance }) {
           <a href={`mailto:${t.email}`} className="text-brand-cyan hover:text-white transition-colors">
             {t.email}
           </a>
-          {t.assignedTo?.name && (
+          {t.assignedName && (
             <span className="ml-2 text-zinc-400">
-              → {t.assignedTo.name} <span className="text-zinc-600">({t.assignedTo.notifiedVia})</span>
+              → {t.assignedName} <span className="text-zinc-600">({t.notifiedVia || 'logged'})</span>
             </span>
           )}
         </div>
@@ -207,7 +234,8 @@ function Ticket({ t, onAdvance }) {
 }
 
 export default function AdminPage() {
-  const [key, setKey] = useState(null)
+  const [signedIn, setSignedIn] = useState(false)
+  const [authReady, setAuthReady] = useState(false)
   const [stats, setStats] = useState(null)
   const [tickets, setTickets] = useState([])
   const [coordinators, setCoordinators] = useState([])
@@ -218,7 +246,7 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(false)
 
   const refresh = useCallback(async () => {
-    if (!key) return
+    if (!signedIn) return
     setLoading(true)
     setError('')
     try {
@@ -229,44 +257,68 @@ export default function AdminPage() {
         adminApi.visits().catch(() => null), // counter is optional — never blocks the queue
       ])
       setStats(s)
-      setTickets(list)
-      setCoordinators(coords)
+      setTickets(list || [])
+      setCoordinators(coords || [])
       if (v) setVisits(v)
     } catch (e) {
       if (e.message === 'INVALID_KEY') {
-        sessionStorage.removeItem('admin-key')
-        setKey(null)
+        // session expired / access revoked → back to the login gate
+        await supabase?.auth.signOut()
+        setSignedIn(false)
       } else {
         setError(e.message)
       }
     } finally {
       setLoading(false)
     }
-  }, [key, statusFilter, kindFilter])
+  }, [signedIn, statusFilter, kindFilter])
 
   useEffect(() => {
-    setKey(sessionStorage.getItem('admin-key'))
+    if (!supabase) {
+      setAuthReady(true)
+      return
+    }
+    supabase.auth.getSession().then(({ data }) => {
+      setSignedIn(!!data?.session)
+      setAuthReady(true)
+    })
+    const { data: sub } = supabase.auth.onAuthStateChange((event) => {
+      if (event === 'SIGNED_OUT') setSignedIn(false)
+      if (event === 'SIGNED_IN') setSignedIn(true)
+    })
+    return () => sub?.subscription?.unsubscribe()
   }, [])
 
   useEffect(() => {
+    if (!signedIn) return
     refresh()
     const id = setInterval(refresh, 30_000)
     return () => clearInterval(id)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key, statusFilter, kindFilter])
+  }, [signedIn, statusFilter, kindFilter])
+
+  const signOut = async () => {
+    await supabase?.auth.signOut()
+    setSignedIn(false)
+    setStats(null)
+    setTickets([])
+    setCoordinators([])
+    setVisits(null)
+  }
 
   const advance = async (t) => {
     const next = NEXT_STATUS[t.status]
     const note = next === 'resolved' ? window.prompt('Resolution note (optional):') || '' : ''
     try {
-      await adminApi.updateInquiry(t._id, { status: next, resolutionNote: note })
+      await adminApi.updateInquiry(t.id, { status: next, resolutionNote: note })
       refresh()
     } catch (e) {
       setError(e.message)
     }
   }
 
-  if (!key) return <KeyGate onUnlock={setKey} />
+  if (!authReady) return null
+  if (!signedIn) return <AuthGate onSignedIn={setSignedIn} />
 
   return (
     <div className="min-h-screen max-w-6xl mx-auto px-4 sm:px-6 py-10">
@@ -288,6 +340,13 @@ export default function AdminPage() {
             aria-label="Refresh"
           >
             <Icon name="refresh" className={`text-[18px] ${loading ? 'animate-spin' : ''}`} />
+          </button>
+          <button
+            onClick={signOut}
+            className="text-xs font-mono text-zinc-400 hover:text-white px-3 py-2 rounded-lg glass transition-colors"
+            title="Sign out"
+          >
+            Sign out
           </button>
           <a
             href="/"
@@ -365,7 +424,7 @@ export default function AdminPage() {
           </div>
         )}
         {tickets.map((t) => (
-          <Ticket key={t._id} t={t} onAdvance={advance} />
+          <Ticket key={t.id} t={t} onAdvance={advance} />
         ))}
       </div>
 
@@ -380,7 +439,7 @@ export default function AdminPage() {
         </summary>
         <div className="px-5 pb-5 space-y-2">
           {coordinators.map((c) => (
-            <div key={c._id} className="glass p-3 rounded-xl flex items-center justify-between gap-3">
+            <div key={c.id} className="glass p-3 rounded-xl flex items-center justify-between gap-3">
               <div>
                 <div className="text-xs font-semibold text-white">{c.name}</div>
                 <div className="text-[11px] font-mono text-zinc-500">{c.email}</div>
@@ -393,7 +452,7 @@ export default function AdminPage() {
           ))}
           {coordinators.length === 0 && (
             <p className="text-xs font-mono text-zinc-500 py-3">
-              None seeded yet — run <code className="text-brand-cyan">npm run seed:coordinators</code>.
+              None yet — add coordinators from the Supabase dashboard (table “Coordinator”).
             </p>
           )}
         </div>

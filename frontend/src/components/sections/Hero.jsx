@@ -224,7 +224,7 @@ export default function Hero() {
 
           {/* CTAs */}
           <div className={`${reveal(3)} mt-10 flex flex-wrap items-center justify-center gap-3.5`} style={{ '--stagger': 3 }}>
-            <Button href={hero.primaryCta.href} external icon={hero.primaryCta.icon} className="!bg-gradient-to-r !from-purple-600 !via-fuchsia-600 !to-purple-600 !shadow-[0_0_28px_rgba(168,85,247,0.5)]">
+            <Button href={hero.primaryCta.href} external icon={hero.primaryCta.icon} className="!bg-cta-gradient !shadow-[0_0_28px_rgba(168,85,247,0.5)]">
               {hero.primaryCta.label}
             </Button>
             {hero.secondaryCtas.map((cta) => (

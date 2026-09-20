@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import SmartImage from '@/components/ui/SmartImage'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Icon from '@/components/ui/Icon'
@@ -113,7 +113,7 @@ export default async function ProfilePage({ params }) {
                 }`}
               >
                 {member.img ? (
-                  <Image
+                  <SmartImage
                     alt={`${member.name} portrait`}
                     className="w-full h-full object-cover object-top opacity-80"
                     src={member.img}

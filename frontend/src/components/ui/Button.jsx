@@ -9,12 +9,15 @@ import { cn } from '@/lib/utils'
  * Renders an <a> when `href` is provided (`external` opens a new tab).
  */
 const buttonVariants = cva(
-  'group/btn inline-flex items-center justify-center gap-2 font-semibold rounded-full whitespace-nowrap cursor-pointer select-none transition-all duration-300 active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-violet disabled:opacity-50 disabled:pointer-events-none',
+  'group/btn inline-flex items-center justify-center gap-2 font-semibold rounded-full whitespace-nowrap cursor-pointer select-none transition-all duration-300 active:scale-[0.97] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta disabled:opacity-50 disabled:pointer-events-none',
   {
     variants: {
       variant: {
+        /* CTA token (--color-cta) — deliberately NOT brand-violet, so
+           changing the button color never recolors the rest of the site
+           (sponsors headings, section accents all use brand-violet). */
         default:
-          'bg-brand-violet text-white shadow-[0_8px_24px_-6px_rgba(124,58,237,0.55)] hover:bg-brand-violet-hover hover:shadow-[0_12px_34px_-6px_rgba(124,58,237,0.8)] hover:-translate-y-0.5',
+          'bg-cta text-white shadow-[0_8px_24px_-6px_rgba(124,58,237,0.55)] hover:bg-cta-hover hover:shadow-[0_12px_34px_-6px_rgba(124,58,237,0.8)] hover:-translate-y-0.5',
         white:
           'bg-white text-zinc-950 shadow-[0_8px_24px_-8px_rgba(255,255,255,0.35)] hover:bg-zinc-100 hover:shadow-[0_12px_32px_-8px_rgba(255,255,255,0.55)] hover:-translate-y-0.5',
         glass:

@@ -191,7 +191,7 @@ export default function Prizes() {
 
 export function FinalCTA() {
   return (
-    <section className="w-full py-20">
+    <section className="w-full overflow-x-clip py-20">
       <div className="site-container">
       <div className="rounded-3xl p-8 sm:p-14 bg-gradient-to-b from-obsidian-900 to-obsidian-950 border border-white/[0.1] text-center flex flex-col items-center relative overflow-hidden shadow-2xl">
         <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-96 h-96 bg-brand-violet/20 rounded-full blur-[100px] pointer-events-none"></div>

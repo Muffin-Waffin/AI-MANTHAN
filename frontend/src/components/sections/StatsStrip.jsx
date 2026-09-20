@@ -7,7 +7,7 @@ import { StatStrip } from './Hero'
  */
 export default function StatsStrip() {
   return (
-    <section id="stats" className="relative w-full py-10 sm:py-12">
+    <section id="stats" className="relative w-full overflow-x-clip py-10 sm:py-12">
       <div className="site-container">
         <StatStrip />
       </div>

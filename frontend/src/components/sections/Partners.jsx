@@ -96,7 +96,7 @@ function MarqueeRow({ items, direction, duration, variant = 'square' }) {
 
 export default function Partners() {
   return (
-    <section id="partners" className="relative py-20 border-t border-white/[0.06]">
+    <section id="partners" className="relative w-full overflow-x-clip py-20 border-t border-white/[0.06]">
       <SectionBackdrop variant="flow" />
       {/* Everything stays inside the site content container */}
       <div className="site-container">

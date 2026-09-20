@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import Image from 'next/image'
+import SmartImage from '../ui/SmartImage'
 import Link from 'next/link'
 import Icon from '../ui/Icon'
 import Section, { SectionHeaderRow } from '../ui/Section'
@@ -75,7 +75,7 @@ function PeopleCard({ member }) {
         }`}
       >
         {member.img ? (
-          <Image
+          <SmartImage
             alt={member.name}
             draggable={false}
             className="object-cover object-top opacity-70 group-hover:opacity-85 group-hover:scale-105 transition-all duration-650"

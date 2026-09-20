@@ -5,15 +5,15 @@ import Link from 'next/link'
 import Icon from '@/components/ui/Icon'
 import AppShell from '@/components/layout/AppShell'
 import SmartBack from '@/components/ui/SmartBack'
-import { submitSupportInquiry } from '@/lib/api'
+import { submitSupportInquiry } from '@/lib/supabase'
 import { site } from '@/data/site'
 
 /**
  * SUPPORT TICKET — dedicated contact page (opened from "Email us").
  * Design: the site's obsidian + violet system, deliberately restrained —
  * one soft violet aura behind the card, hairline borders, mono eyebrow.
- * Submits to the NestJS backend: stored in MongoDB + auto-mailed to the
- * routing coordinator on file (SMTP configured via backend env).
+ * Submits straight to Supabase (RLS-guarded insert into "Inquiry");
+ * a DB trigger auto-assigns the routing coordinator on file.
  */
 
 const inputCls =

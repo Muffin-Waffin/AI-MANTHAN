@@ -222,17 +222,17 @@ export default function Preloader() {
 
       {/* Center cyber branding overlay */}
       <div className="absolute inset-x-4 top-1/2 -translate-y-1/2 flex flex-col items-center justify-center text-center pointer-events-none">
-        <div className="relative mb-4 flex items-center justify-center">
-          <div className="absolute w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-brand-violet/30 blur-2xl animate-pulse" />
+        <div className="relative mb-3 sm:mb-4 flex items-center justify-center">
+          <div className="absolute w-20 h-20 sm:w-32 sm:h-32 rounded-full bg-brand-violet/30 blur-2xl animate-pulse" />
           <img
             src="/logos/butterfly.png"
             alt=""
-            className="relative w-14 h-14 sm:w-20 sm:h-20 object-contain drop-shadow-[0_0_25px_rgba(217,70,239,0.8)] animate-butterfly-hover"
+            className="relative w-11 h-11 sm:w-20 sm:h-20 object-contain drop-shadow-[0_0_25px_rgba(217,70,239,0.8)] animate-butterfly-hover"
           />
         </div>
 
         <h1
-          className="font-mono text-2xl sm:text-4xl md:text-5xl font-extrabold tracking-[0.35em] sm:tracking-[0.45em] text-white uppercase pl-[0.35em]"
+          className="font-mono text-lg sm:text-4xl md:text-5xl font-extrabold tracking-[0.22em] sm:tracking-[0.45em] text-white uppercase pl-[0.22em] sm:pl-[0.45em]"
           style={{
             textShadow:
               '0 0 20px rgba(168,85,247,0.85), 0 0 45px rgba(124,58,237,0.45), 0 2px 14px rgba(0,0,0,0.95)',
@@ -241,7 +241,7 @@ export default function Preloader() {
           AI MANTHAN
         </h1>
 
-        <p className="mt-2 font-mono text-[10px] sm:text-xs tracking-[0.25em] sm:tracking-[0.32em] text-fuchsia-300/80 uppercase">
+        <p className="mt-2 font-mono text-[9px] sm:text-xs tracking-[0.18em] sm:tracking-[0.32em] text-fuchsia-300/80 uppercase">
           CENTRAL INDIA'S LARGEST AI HACKATHON
         </p>
       </div>
