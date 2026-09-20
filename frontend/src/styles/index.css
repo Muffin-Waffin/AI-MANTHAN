@@ -7,6 +7,9 @@
   --font-mono: 'Space Mono', monospace;
   --font-script: 'Caveat', cursive;
 
+  /* xs breakpoint — small phones (<400px) jahan default sm: too bada hai */
+  --breakpoint-xs: 400px;
+
   /* Extended transition scale — 650ms = signature card-hover duration */
   --transition-duration-650: 650ms;
 

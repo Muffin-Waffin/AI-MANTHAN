@@ -49,6 +49,7 @@ alter table "Coordinator" alter column id set default gen_random_uuid();
 -- @updatedAt bhi Prisma client-side tha — DB defaults zaroori hain
 alter table "SiteVisit"   alter column "updatedAt" set default now();
 alter table "Inquiry"     alter column "updatedAt" set default now();
+alter table "Inquiry"     add column if not exists phone text not null default '';
 alter table "Coordinator" alter column "updatedAt" set default now();
 
 -- Parity with Prisma @updatedAt — keep the stamp honest without NestJS
@@ -105,6 +106,7 @@ create policy "anyone can submit an inquiry" on "Inquiry"
     email ~* '(^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$)'
     and char_length(message) between 5 and 2000
     and char_length(coalesce(name, '')) <= 80
+    and char_length(coalesce(phone, '')) <= 20
     and char_length(category) <= 80
     and kind in ('participant', 'feedback', 'visitor')
     and (rating is null or rating between 1 and 5)

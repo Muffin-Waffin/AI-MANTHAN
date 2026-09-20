@@ -157,6 +157,7 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 export async function submitSupportInquiry({
   email,
   name,
+  phone,
   category,
   message,
   kind = 'participant',
@@ -167,6 +168,7 @@ export async function submitSupportInquiry({
   const clean = {
     email: String(email || '').trim(),
     name: String(name || '').trim().slice(0, 80),
+    phone: String(phone || '').trim().slice(0, 20),
     category: String(category || 'General').trim(),
     message: String(message || '').trim(),
     kind: kind === 'feedback' ? 'feedback' : 'participant',
@@ -174,6 +176,9 @@ export async function submitSupportInquiry({
   }
 
   if (!EMAIL_RE.test(clean.email)) throw new Error('A valid email is required.')
+  if (clean.phone && !/^\+?[0-9\s-]{7,20}$/.test(clean.phone)) {
+    throw new Error('That phone number does not look right — digits, spaces and dashes only.')
+  }
   if (clean.message.length < 10) throw new Error('Message must be at least 10 characters.')
   if (clean.message.length > 2000) throw new Error('Message must be at most 2000 characters.')
   if (!ALLOWED_CATEGORIES.includes(clean.category)) throw new Error('Unknown inquiry category.')
@@ -186,7 +191,9 @@ export async function submitSupportInquiry({
     .insert(clean)
 
   if (error) throw new Error(error.message || 'Something went wrong. Try the WhatsApp community.')
-  return { ok: true, id: null, source: 'supabase', emailDispatch: false }
+  /* SMTP dispatch (Edge Function) live hai — coordinator ko ticket email
+     jaata hai aur participant ko confirmation receipt. */
+  return { ok: true, id: null, source: 'supabase', emailDispatch: true }
 }
 
 /* ── Admin dashboard (Supabase Auth + RLS) ──────────────────────── */

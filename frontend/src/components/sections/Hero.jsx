@@ -167,8 +167,10 @@ export default function Hero() {
       id="overview"
       className="relative w-full min-h-[100svh] flex items-center overflow-hidden -mt-28 sm:-mt-36 pb-8"
     >
-      {/* ── Cinematic video stage — 8% side margins, full-bleed feel
-             (no frame/border, just the raw video) ── */}
+      {/* ── Cinematic video stage — full-bleed feel (no frame/border,
+             just the raw video). Portrait phones get a purpose-built
+             540×960 crop: 1280×720 ko chhoti screen pe object-contain
+             karne se thin letterboxed strip banti thi (ghost banner). */}
       <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
         <div className="absolute inset-0 flex items-center justify-center">
           <video
@@ -177,9 +179,10 @@ export default function Hero() {
             muted
             playsInline
             preload="metadata"
-            className="hero-video h-[87%] w-[90%] object-contain"
+            className="hero-video h-[87%] w-[90%] object-contain max-[820px]:h-full max-[820px]:w-full max-[820px]:object-cover"
           >
-            <source src="/binary-fly.mp4" type="video/mp4" />
+            <source src="/binary-fly.mp4" type="video/mp4" media="(min-width: 821px)" />
+            <source src="/binary-fly-mobile.mp4" type="video/mp4" media="(max-width: 820px)" />
           </video>
         </div>
 

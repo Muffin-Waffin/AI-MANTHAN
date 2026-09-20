@@ -30,3 +30,4 @@ waste/
 .agents/
 .claude/
 skills-lock.json
+supabase/.temp/

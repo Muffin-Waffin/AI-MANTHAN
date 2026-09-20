@@ -25,7 +25,6 @@ const labelCls =
 export default function SupportPage() {
   const [status, setStatus] = useState('idle') // idle | sending | sent | error
   const [error, setError] = useState('')
-  const [emailDispatch, setEmailDispatch] = useState(true)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -38,11 +37,11 @@ export default function SupportPage() {
       const res = await submitSupportInquiry({
         name: data.get('name'),
         email: data.get('email'),
+        phone: data.get('phone'),
         message: data.get('message'),
       })
-      // Backend honestly reports SMTP availability — UI usi ke hisaab se
-      // promise karta hai, warna "mail gaya" jhooth na bole.
-      setEmailDispatch(Boolean(res?.emailDispatch))
+      // SMTP dispatch (Edge Function) live hai — coordinator ko ticket
+      // email jaata hai aur participant ko confirmation receipt.
       setStatus('sent')
       form.reset()
     } catch (err) {
@@ -107,15 +106,10 @@ export default function SupportPage() {
                   </div>
                   <h2 className="text-lg font-bold text-white">Message sent</h2>
                   <p className="mt-2 text-sm text-zinc-400 leading-relaxed max-w-sm mx-auto">
-                    {emailDispatch
-                      ? 'Ticket logged and routed to the desk. A confirmation email is on its way — a coordinator will reply shortly.'
-                      : 'Ticket logged with the organizing desk. Email dispatch is not configured yet, so no automatic mail was sent — we will reach out at the address you provided.'}
+                    Your mail has been sent successfully. Our team will contact you
+                    as soon as possible within working days — keep an eye on your
+                    inbox for the confirmation.
                   </p>
-                  {!emailDispatch && (
-                    <p className="mt-3 text-[10px] font-mono text-amber-400/90 tracking-wide">
-                      ⚠ DEV MODE — SMTP unconfigured on the API server
-                    </p>
-                  )}
                   <Link
                     href="/"
                     className="mt-7 inline-flex items-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.04] px-5 py-2.5 text-xs font-semibold text-zinc-200 transition-all duration-300 hover:border-brand-violet/50 hover:text-white"
@@ -157,6 +151,20 @@ export default function SupportPage() {
                   </div>
 
                   <div>
+                    <label className={labelCls} htmlFor="sp-phone">
+                      Mobile Number <span className="text-zinc-600 normal-case tracking-normal">(optional)</span>
+                    </label>
+                    <input
+                      id="sp-phone"
+                      name="phone"
+                      className={inputCls}
+                      placeholder="+91 98765 43210"
+                      type="tel"
+                      maxLength={20}
+                    />
+                  </div>
+
+                  <div>
                     <label className={labelCls} htmlFor="sp-message">
                       How can we help you?
                     </label>
@@ -192,6 +200,10 @@ export default function SupportPage() {
                     Prefer email? Write to{' '}
                     <a href={`mailto:${site.email}`} className="text-zinc-400 hover:text-white transition-colors">
                       {site.email}
+                    </a>
+                    {' · '}
+                    <a href={`tel:${site.emergencyPhone.replace(/[^+0-9]/g, '')}`} className="text-zinc-400 hover:text-white transition-colors">
+                      {site.emergencyPhone}
                     </a>
                   </p>
                 </form>

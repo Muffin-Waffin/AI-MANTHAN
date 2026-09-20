@@ -20,10 +20,24 @@ export default function Preloader() {
   const [muted, setMuted] = useState(false)
   const [progress, setProgress] = useState(0)
   const [statusText, setStatusText] = useState('INITIALIZING NEURAL SYSTEMS...')
+  /* Mobile: 720p landscape video ko portrait pe object-cover karte hue
+     zoom-crop hota hai (effective resolution sirf ~405×720 hoti hai aur
+     overlay text chhota lagta hai). Portrait-sourced 540×960 clip se
+     phone par sahi framing + crisp text milta hai. SSR-safe match via
+     matchMedia — default landscape, client pe hi switch hota hai. */
+  const [videoSrc, setVideoSrc] = useState('/media/preloader.mp4')
   const finished = useRef(false)
   const audioRef = useRef(null)
   const videoRef = useRef(null)
   const isFirstLoad = useRef(true)
+
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 820px), (orientation: portrait)')
+    const apply = () => setVideoSrc(mq.matches ? '/media/preloader-mobile.mp4' : '/media/preloader.mp4')
+    apply()
+    mq.addEventListener?.('change', apply)
+    return () => mq.removeEventListener?.('change', apply)
+  }, [])
 
   useEffect(() => {
     const alreadyShown = sessionStorage.getItem('aimanthan_preloader_done')
@@ -200,9 +214,11 @@ export default function Preloader() {
         </div>
       </div>
 
-      {/* Full-bleed video reveal */}
+      {/* Full-bleed video reveal — portrait phones get a purpose-built
+          540×960 crop so framing + text scale stay correct */}
       <video
         ref={videoRef}
+        key={videoSrc}
         autoPlay
         muted
         playsInline
@@ -210,9 +226,9 @@ export default function Preloader() {
         onTimeUpdate={handleVideoTimeUpdate}
         onEnded={finish}
         onError={finish}
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover object-center"
       >
-        <source src="/media/preloader.mp4" type="video/mp4" />
+        <source src={videoSrc} type="video/mp4" />
       </video>
 
       {/* Atmospheric depth & readability layers */}
@@ -227,12 +243,12 @@ export default function Preloader() {
           <img
             src="/logos/butterfly.png"
             alt=""
-            className="relative w-11 h-11 sm:w-20 sm:h-20 object-contain drop-shadow-[0_0_25px_rgba(217,70,239,0.8)] animate-butterfly-hover"
+            className="relative w-10 h-10 xs:w-11 xs:h-11 sm:w-20 sm:h-20 object-contain drop-shadow-[0_0_25px_rgba(217,70,239,0.8)] animate-butterfly-hover"
           />
         </div>
 
         <h1
-          className="font-mono text-lg sm:text-4xl md:text-5xl font-extrabold tracking-[0.22em] sm:tracking-[0.45em] text-white uppercase pl-[0.22em] sm:pl-[0.45em]"
+          className="font-mono text-base xs:text-lg sm:text-4xl md:text-5xl font-extrabold tracking-[0.2em] xs:tracking-[0.22em] sm:tracking-[0.45em] text-white uppercase pl-[0.2em] xs:pl-[0.22em] sm:pl-[0.45em]"
           style={{
             textShadow:
               '0 0 20px rgba(168,85,247,0.85), 0 0 45px rgba(124,58,237,0.45), 0 2px 14px rgba(0,0,0,0.95)',
@@ -241,7 +257,7 @@ export default function Preloader() {
           AI MANTHAN
         </h1>
 
-        <p className="mt-2 font-mono text-[9px] sm:text-xs tracking-[0.18em] sm:tracking-[0.32em] text-fuchsia-300/80 uppercase">
+        <p className="mt-2 font-mono text-[9px] sm:text-xs tracking-[0.16em] xs:tracking-[0.18em] sm:tracking-[0.32em] text-fuchsia-300/80 uppercase">
           CENTRAL INDIA'S LARGEST AI HACKATHON
         </p>
       </div>
