@@ -5,7 +5,7 @@ import VisitorCounter from './VisitorCounter'
 /* ── Footer action button (ref: Manipal — rounded-rect, hairline) ──── */
 function FooterAction({ icon, children, href, external = false, onClick }) {
   const cls =
-    'group inline-flex items-center gap-2 rounded-xl border border-white/[0.14] bg-white/[0.04] px-4 sm:px-5 py-2.5 text-xs sm:text-[13px] font-semibold text-zinc-200 backdrop-blur-md transition-all duration-300 hover:border-fuchsia-400/60 hover:bg-white/[0.08] hover:text-white hover:-translate-y-0.5 hover:shadow-[0_0_22px_-4px_rgba(217,70,239,0.5)] focus-visible:outline-2 focus-visible:outline-fuchsia-400/70'
+    'group inline-flex items-center gap-2 rounded-xl border border-white/[0.14] bg-white/[0.04] px-4 sm:px-5 py-2.5 text-xs sm:text-[13px] font-semibold text-zinc-200 backdrop-blur-md transition-all duration-300 hover:border-cyan-400/60 hover:bg-white/[0.08] hover:text-white hover:-translate-y-0.5 hover:shadow-[0_0_22px_-4px_rgba(0,240,255,0.5)] focus-visible:outline-2 focus-visible:outline-cyan-400/70'
 
   const inner = (
     <>
@@ -50,7 +50,7 @@ function Watermark() {
       className="pointer-events-none absolute inset-x-0 bottom-0 select-none"
     >
       {/* soft radial depth blob behind the wordmark */}
-      <div className="absolute left-1/2 bottom-[-30%] -translate-x-1/2 w-[70vw] h-[40vw] max-w-[1100px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(124,58,237,0.14),transparent_65%)] blur-3xl" />
+      <div className="absolute left-1/2 bottom-[-30%] -translate-x-1/2 w-[70vw] h-[40vw] max-w-[1100px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(0,168,255,0.14),transparent_65%)] blur-3xl" />
 
       <svg
         viewBox="0 0 1500 190"
@@ -99,9 +99,9 @@ export default function Footer() {
       id="contact"
       className="relative w-full overflow-hidden bg-obsidian-950 text-zinc-400"
     >
-      {/* top hairline — violet glow leaking through the seam */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-brand-violet/50 to-transparent" />
-      <div className="absolute top-0 inset-x-0 h-16 bg-gradient-to-b from-brand-violet/[0.06] to-transparent" />
+      {/* top hairline — cyan glow leaking through the seam */}
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-brand-cyan/50 to-transparent" />
+      <div className="absolute top-0 inset-x-0 h-16 bg-gradient-to-b from-brand-cyan/[0.06] to-transparent" />
 
       <Watermark />
 
@@ -113,18 +113,20 @@ export default function Footer() {
             <span className="relative flex items-center justify-center">
               <span
                 aria-hidden="true"
-                className="absolute w-9 h-9 rounded-full bg-fuchsia-600/25 blur-lg opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                className="absolute w-9 h-9 rounded-full bg-cyan-600/25 blur-lg opacity-80 group-hover:opacity-100 transition-opacity duration-500"
               />
               <img
                 src="/logos/aimathan-logo.png"
-                alt="AI Manthan logo"
-                className="relative w-8 h-8 rounded object-cover transition-transform duration-500 group-hover:scale-110"
+                alt="AI Manthan 2.0 logo"
+                width={1599}
+                height={966}
+                className="relative h-9 w-14 object-contain transition-transform duration-500 group-hover:scale-110"
               />
             </span>
             <span className="font-mono text-sm sm:text-base font-bold tracking-[0.22em] text-white whitespace-nowrap">
               {footer.brand}
               <span className="text-zinc-600"> // </span>
-              <span className="text-fuchsia-300 [text-shadow:0_0_12px_rgba(232,121,249,0.5)]">
+              <span className="text-cyan-300 [text-shadow:0_0_12px_rgba(103,232,249,0.5)]">
                 {footer.brandAccent}
               </span>
             </span>

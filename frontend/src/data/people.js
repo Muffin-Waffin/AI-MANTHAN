@@ -9,7 +9,7 @@ export const mentors = {
     {
       name: 'Arjun Mehta',
       role: 'Staff Systems Eng',
-      roleColor: 'cyan',
+      roleColor: 'azure',
       org: 'AWS Distributed Labs',
       bio: 'Specializes in fault-tolerant asynchronous state engines, consensus protocols, and low-latency message streaming.',
       tag: 'Distributed Systems',
@@ -21,7 +21,7 @@ export const mentors = {
     {
       name: 'Dr. Tara Deshmukh',
       role: 'Research Scientist',
-      roleColor: 'violet',
+      roleColor: 'azure',
       org: 'Anthropic Labs',
       bio: 'Pioneering interpretability algorithms, safety bounds in neural decoders, and autonomous LLM agent execution primitives.',
       tag: 'Autonomous Agents',
@@ -66,7 +66,7 @@ export const faculty = {
     {
       initials: 'AR',
       role: 'Chief Patron',
-      roleColor: 'violet',
+      roleColor: 'azure',
       name: 'Cdr. (Dr.) Anil Rana',
       title: 'Director, Acropolis Institute of Technology & Research',
       bio: 'Championing cutting-edge research incubations, industry partnerships, and engineering excellence across the Acropolis Group of Institutions.',
@@ -76,7 +76,7 @@ export const faculty = {
     {
       initials: 'SM',
       role: 'Faculty Advisor, AI Manthan',
-      roleColor: 'cyan',
+      roleColor: 'azure',
       name: 'Dr. Srikanth Prabhu',
       title: 'Professor, Dept. of CS & Engg.',
       bio: 'Guiding technical judging rubrics, computational infrastructure, and research validation pipelines for collegiate hackathon finalists.',
@@ -97,7 +97,7 @@ export const faculty = {
 }
 
 export const team = {
-  eyebrow: 'The Team Behind AI Manthan 2026',
+  eyebrow: 'The Team Behind AI Manthan 2.0',
   heading: 'Core Organizing Committee',
   body: 'Engineered with devotion by Acropolis, the developer collective at Acropolis Institute of Technology & Research, alongside AI Manthan Category Heads.',
   aside: 'Built by Builders, for Builders',
@@ -106,17 +106,17 @@ export const team = {
       initials: 'KS',
       name: 'Kavya Sharma',
       role: 'Lead Convener',
-      roleColor: 'violet',
+      roleColor: 'azure',
       bio: 'Oversees competition operations, national outreach, and partnership roadmaps across 100+ institutions.',
       tag: 'Acropolis Lead',
-      gradient: 'from-brand-violet to-indigo-600',
-      hover: 'hover:border-brand-violet/40',
+      gradient: 'from-brand-cyan to-sky-600',
+      hover: 'hover:border-brand-cyan/40',
     },
     {
       initials: 'RH',
       name: 'Rohan Hegde',
       role: 'Technical Architect',
-      roleColor: 'cyan',
+      roleColor: 'azure',
       bio: 'Spearheading arena sandbox networks, automated judging telemetry, and live scoring dashboard infrastructure.',
       tag: 'Systems & Infra',
       gradient: 'from-sky-500 to-blue-700',

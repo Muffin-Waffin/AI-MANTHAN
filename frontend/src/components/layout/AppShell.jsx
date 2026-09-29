@@ -40,7 +40,7 @@ export default function AppShell({ children }) {
   }, [])
 
   return (
-    <div className="relative min-h-screen bg-obsidian-950 font-sans text-zinc-100 selection:bg-brand-violet/30 selection:text-white">
+    <div className="relative min-h-screen bg-obsidian-950 font-sans text-zinc-100 selection:bg-brand-cyan/30 selection:text-white">
       <Preloader />
       <SmoothScroll />
       <ParticleBackground />

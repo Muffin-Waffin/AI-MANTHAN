@@ -5,7 +5,7 @@ const img = (id) => `https://lh3.googleusercontent.com/aida-public/${id}`
  * /faculty/[slug] profile pages.
  *
  * group: 'jury'     → Industry Jury (pink accent)
- *        'mentors'  → Hackathon Mentors (violet accent)
+ *        'mentors'  → Hackathon Mentors (cyan accent — brand cyan)
  *        'faculty'  → Faculty Advisory & Leadership (cyan accent)
  *
  * Every member gets a full profile page; cards all share one design and

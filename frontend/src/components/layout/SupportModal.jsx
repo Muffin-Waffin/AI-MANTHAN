@@ -22,7 +22,7 @@ function Field({ label, children }) {
 }
 
 const inputCls =
-  'w-full text-xs px-3 py-2 rounded-lg glass text-white placeholder:text-zinc-600 focus:outline-none focus:border-brand-violet/60 focus:shadow-[0_0_0_3px_rgba(124,58,237,0.15)] transition-all'
+  'w-full text-xs px-3 py-2 rounded-lg glass text-white placeholder:text-zinc-600 focus:outline-none focus:border-brand-cyan/60 focus:shadow-[0_0_0_3px_rgba(0,168,255,0.15)] transition-all'
 
 /**
  * Support modal — Radix Dialog under the hood: focus is trapped while open,
@@ -85,7 +85,7 @@ export default function SupportModal({ open, onClose }) {
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
       <DialogContent
         data-lenis-prevent
-        className="glass-strong max-w-lg max-h-[85vh] gap-0 rounded-2xl p-6 overflow-y-auto overscroll-contain shadow-[0_24px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(124,58,237,0.15)] data-[state=open]:animate-fade-up"
+        className="glass-strong max-w-lg max-h-[85vh] gap-0 rounded-2xl p-6 overflow-y-auto overscroll-contain shadow-[0_24px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(0,168,255,0.15)] data-[state=open]:animate-fade-up"
         showCloseButton={false}
       >
         <DialogHeader className="sr-only">
@@ -99,7 +99,7 @@ export default function SupportModal({ open, onClose }) {
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-white/[0.08] mb-5">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-brand-violet/20 border border-brand-violet/40 flex items-center justify-center text-brand-violet">
+            <div className="w-8 h-8 rounded-lg bg-brand-cyan/20 border border-brand-cyan/40 flex items-center justify-center text-brand-cyan">
               <Icon name="headset_mic" className="text-[18px]" />
             </div>
             <div>
@@ -120,7 +120,7 @@ export default function SupportModal({ open, onClose }) {
 
         {/* Direct channels */}
         <div className="grid grid-cols-2 gap-2.5 mb-5 text-xs">
-          <div className="glass p-3 rounded-xl flex flex-col justify-between transition-all duration-300 hover:border-brand-violet/30">
+          <div className="glass p-3 rounded-xl flex flex-col justify-between transition-all duration-300 hover:border-brand-cyan/30">
             <div className="text-[10px] font-mono text-zinc-400 uppercase">OFFICIAL EMAIL</div>
             <div className="font-mono text-zinc-200 text-xs mt-1 truncate">{site.email}</div>
             <button
@@ -131,7 +131,7 @@ export default function SupportModal({ open, onClose }) {
               {copied ? 'Copied!' : 'Copy Email'}
             </button>
           </div>
-          <div className="glass p-3 rounded-xl flex flex-col justify-between transition-all duration-300 hover:border-brand-violet/30">
+          <div className="glass p-3 rounded-xl flex flex-col justify-between transition-all duration-300 hover:border-brand-cyan/30">
             <div className="text-[10px] font-mono text-zinc-400 uppercase">
               WHATSAPP COMMUNITY
             </div>
@@ -169,7 +169,7 @@ export default function SupportModal({ open, onClose }) {
                   onClick={() => setTab(t.id)}
                   className={`flex items-center justify-center gap-1.5 py-2 rounded-lg text-xs font-medium transition-all duration-300 ${
                     tab === t.id
-                      ? 'bg-brand-violet/25 border border-brand-violet/50 text-white shadow-[0_0_18px_-4px_rgba(124,58,237,0.6)]'
+                      ? 'bg-brand-cyan/25 border border-brand-cyan/50 text-white shadow-[0_0_18px_-4px_rgba(0,168,255,0.6)]'
                       : 'border border-transparent text-zinc-400 hover:text-white hover:bg-white/[0.05]'
                   }`}
                 >
@@ -245,7 +245,7 @@ export default function SupportModal({ open, onClose }) {
               <div className="text-[11px] font-mono text-red-400">{error}</div>
             )}
             <button
-              className="w-full py-2.5 rounded-xl bg-brand-violet hover:bg-brand-violet-hover text-white text-xs font-semibold tracking-wide shadow-[0_8px_24px_-6px_rgba(124,58,237,0.55)] hover:shadow-[0_12px_34px_-6px_rgba(124,58,237,0.8)] hover:-translate-y-0.5 transition-all flex items-center justify-center gap-1.5 disabled:opacity-60 disabled:hover:translate-y-0"
+              className="w-full py-2.5 rounded-xl bg-brand-cyan hover:bg-brand-cyan-hover text-[#06080d] text-xs font-semibold tracking-wide shadow-[0_8px_24px_-6px_rgba(0,168,255,0.55)] hover:shadow-[0_12px_34px_-6px_rgba(0,168,255,0.8)] hover:-translate-y-0.5 transition-all flex items-center justify-center gap-1.5 disabled:opacity-60 disabled:hover:translate-y-0"
               type="submit"
               disabled={status === 'sending'}
             >

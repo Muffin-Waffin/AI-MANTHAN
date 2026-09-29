@@ -20,24 +20,14 @@ export default function Preloader() {
   const [muted, setMuted] = useState(false)
   const [progress, setProgress] = useState(0)
   const [statusText, setStatusText] = useState('INITIALIZING NEURAL SYSTEMS...')
-  /* Mobile: 720p landscape video ko portrait pe object-cover karte hue
-     zoom-crop hota hai (effective resolution sirf ~405×720 hoti hai aur
-     overlay text chhota lagta hai). Portrait-sourced 540×960 clip se
-     phone par sahi framing + crisp text milta hai. SSR-safe match via
-     matchMedia — default landscape, client pe hi switch hota hai. */
-  const [videoSrc, setVideoSrc] = useState('/media/preloader.mp4')
+  /* Single official preloader video for all breakpoints. (The old
+     portrait-specific clip /media/preloader-mobile.mp4 no longer exists
+     in the repo — it 404'd on phones; object-cover handles the crop.) */
+  const videoSrc = '/media/preloader.mp4'
   const finished = useRef(false)
   const audioRef = useRef(null)
   const videoRef = useRef(null)
   const isFirstLoad = useRef(true)
-
-  useEffect(() => {
-    const mq = window.matchMedia('(max-width: 820px), (orientation: portrait)')
-    const apply = () => setVideoSrc(mq.matches ? '/media/preloader-mobile.mp4' : '/media/preloader.mp4')
-    apply()
-    mq.addEventListener?.('change', apply)
-    return () => mq.removeEventListener?.('change', apply)
-  }, [])
 
   useEffect(() => {
     const alreadyShown = sessionStorage.getItem('aimanthan_preloader_done')
@@ -112,7 +102,7 @@ export default function Preloader() {
       if (pct < 28) {
         setStatusText('INITIALIZING NEURAL NETWORKS...')
       } else if (pct < 56) {
-        setStatusText('SYNCHRONIZING 6 CHALLENGE TRACKS...')
+        setStatusText('SYNCHRONIZING 12 CHALLENGE DOMAINS...')
       } else if (pct < 84) {
         setStatusText('CALIBRATING PRIZE VAULT...')
       } else if (pct < 99) {
@@ -171,12 +161,16 @@ export default function Preloader() {
         exiting ? 'preloader-exit' : ''
       }`}
       onPointerDown={isFirstLoad.current ? finish : undefined}
-      aria-label="Loading AI Manthan 2026"
+      aria-label="Loading AI Manthan 2.0"
     >
-      {/* Procedural sound chime */}
-      <audio ref={audioRef} preload="auto" playsInline>
-        <source src="/media/preloader-chime.wav" type="audio/wav" />
-      </audio>
+      {/* Procedural sound chime — rendered only when the asset exists.
+          (/media/preloader-chime.wav is no longer in the repo; the mute
+          toggle stays so the UI contract is unchanged.) */}
+      {false && (
+        <audio ref={audioRef} preload="auto" playsInline>
+          <source src="/media/preloader-chime.wav" type="audio/wav" />
+        </audio>
+      )}
 
       {/* Top HUD Controls Bar */}
       <div className="absolute top-4 sm:top-6 inset-x-4 sm:inset-x-8 z-20 flex items-center justify-between pointer-events-none">
@@ -206,16 +200,16 @@ export default function Preloader() {
           <button
             type="button"
             onClick={handleSkipClick}
-            className="flex items-center gap-1.5 h-9 sm:h-10 px-3.5 sm:px-4 rounded-full text-zinc-200 hover:text-white bg-white/[0.08] hover:bg-white/[0.18] border border-white/20 backdrop-blur-md text-xs font-mono font-bold tracking-wider uppercase transition-all shadow-[0_0_18px_rgba(147,51,234,0.3)] hover:shadow-[0_0_24px_rgba(147,51,234,0.6)]"
+            className="flex items-center gap-1.5 h-9 sm:h-10 px-3.5 sm:px-4 rounded-full text-zinc-200 hover:text-white bg-white/[0.08] hover:bg-white/[0.18] border border-white/20 backdrop-blur-md text-xs font-mono font-bold tracking-wider uppercase transition-all shadow-[0_0_18px_rgba(0,240,255,0.3)] hover:shadow-[0_0_24px_rgba(0,240,255,0.6)]"
           >
             <span>Skip</span>
-            <Icon name="fast_forward" className="text-[15px] text-fuchsia-300" />
+            <Icon name="fast_forward" className="text-[15px] text-cyan-300" />
           </button>
         </div>
       </div>
 
-      {/* Full-bleed video reveal — portrait phones get a purpose-built
-          540×960 crop so framing + text scale stay correct */}
+      {/* Full-bleed video reveal — single official clip, object-cover
+          handles portrait/landscape crops without distortion */}
       <video
         ref={videoRef}
         key={videoSrc}
@@ -234,16 +228,16 @@ export default function Preloader() {
       {/* Atmospheric depth & readability layers */}
       <div className="absolute inset-0 bg-obsidian-950/40 pointer-events-none" />
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(4,5,8,0.85)_100%)] pointer-events-none" />
-      <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-obsidian-950 via-obsidian-950/80 to-transparent pointer-events-none" />
-
-      {/* Center cyber branding overlay */}
+      <div className="absolute inset-x-0 bottom-0 h-64 bg-gradient-to-t from-obsidian-950 via-obsidian-950/80 to-transparent pointer-events-none" />        {/* Center cyber branding overlay — official 2.0 logo */}
       <div className="absolute inset-x-4 top-1/2 -translate-y-1/2 flex flex-col items-center justify-center text-center pointer-events-none">
         <div className="relative mb-3 sm:mb-4 flex items-center justify-center">
-          <div className="absolute w-20 h-20 sm:w-32 sm:h-32 rounded-full bg-brand-violet/30 blur-2xl animate-pulse" />
+          <div className="absolute w-24 h-20 sm:w-40 sm:h-32 rounded-full bg-brand-cyan/30 blur-2xl animate-pulse" />
           <img
-            src="/logos/butterfly.png"
+            src="/logos/aimathan-logo.png"
             alt=""
-            className="relative w-10 h-10 xs:w-11 xs:h-11 sm:w-20 sm:h-20 object-contain drop-shadow-[0_0_25px_rgba(217,70,239,0.8)] animate-butterfly-hover"
+            width={1599}
+            height={966}
+            className="relative h-14 w-auto xs:h-16 sm:h-24 md:h-28 object-contain drop-shadow-[0_0_25px_rgba(0,240,255,0.8)] animate-logo-float"
           />
         </div>
 
@@ -251,13 +245,13 @@ export default function Preloader() {
           className="font-mono text-base xs:text-lg sm:text-4xl md:text-5xl font-extrabold tracking-[0.2em] xs:tracking-[0.22em] sm:tracking-[0.45em] text-white uppercase pl-[0.2em] xs:pl-[0.22em] sm:pl-[0.45em]"
           style={{
             textShadow:
-              '0 0 20px rgba(168,85,247,0.85), 0 0 45px rgba(124,58,237,0.45), 0 2px 14px rgba(0,0,0,0.95)',
+              '0 0 20px rgba(0,240,255,0.9), 0 0 45px rgba(0,168,255,0.5), 0 2px 14px rgba(0,0,0,0.95)',
           }}
         >
-          AI MANTHAN
+          AI MANTHAN 2.0
         </h1>
 
-        <p className="mt-2 font-mono text-[9px] sm:text-xs tracking-[0.16em] xs:tracking-[0.18em] sm:tracking-[0.32em] text-fuchsia-300/80 uppercase">
+        <p className="mt-2 font-mono text-[9px] sm:text-xs tracking-[0.16em] xs:tracking-[0.18em] sm:tracking-[0.32em] text-cyan-300/80 uppercase">
           CENTRAL INDIA'S LARGEST AI HACKATHON
         </p>
       </div>
@@ -267,7 +261,7 @@ export default function Preloader() {
         <div className="w-full max-w-sm sm:max-w-md px-4">
           {/* Status ticker + percentage */}
           <div className="flex items-center justify-between gap-2 mb-2 font-mono text-[10px] sm:text-[11px] tracking-wider text-zinc-400">
-            <span className="truncate text-fuchsia-300 font-semibold">{statusText}</span>
+            <span className="truncate text-cyan-300 font-semibold">{statusText}</span>
             <span className="shrink-0 text-white font-bold tabular-nums">[{progress}%]</span>
           </div>
 
@@ -275,7 +269,7 @@ export default function Preloader() {
           <div className="relative h-1.5 sm:h-2 w-full rounded-full bg-white/[0.08] border border-white/[0.12] overflow-hidden backdrop-blur-sm shadow-[inset_0_1px_2px_rgba(0,0,0,0.6)]">
             {/* Progress bar glowing gradient track */}
             <div
-              className="h-full rounded-full bg-gradient-to-r from-violet-600 via-fuchsia-500 to-cyan-400 transition-all duration-100 ease-out shadow-[0_0_14px_rgba(217,70,239,0.8)]"
+              className="h-full rounded-full bg-gradient-to-r from-[#0094ff] via-brand-cyan to-[#7df4ff] transition-all duration-100 ease-out shadow-[0_0_14px_rgba(0,240,255,0.8)]"
               style={{ width: `${progress}%` }}
             />
           </div>

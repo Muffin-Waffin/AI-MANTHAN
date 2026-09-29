@@ -15,10 +15,10 @@ const groupAccents = {
     icon: 'emoji_events',
   },
   mentors: {
-    text: 'text-brand-violet',
-    chip: 'bg-brand-violet/15 border-brand-violet/40 text-brand-violet',
-    mono: 'text-brand-violet',
-    zone: 'from-brand-violet/30 via-indigo-600/15 to-transparent text-brand-violet',
+    text: 'text-brand-cyan',
+    chip: 'bg-brand-cyan/15 border-brand-cyan/40 text-brand-cyan',
+    mono: 'text-brand-cyan',
+    zone: 'from-brand-cyan/30 via-sky-700/15 to-transparent text-brand-cyan',
     icon: 'school',
   },
   faculty: {
@@ -56,7 +56,7 @@ export async function generateMetadata({ params }) {
 function MetadataRow({ icon, children }) {
   return (
     <div className="flex items-center gap-3.5">
-      <span className="w-8 h-8 rounded-full bg-brand-violet/10 border border-brand-violet/25 text-brand-violet flex items-center justify-center shrink-0">
+      <span className="w-8 h-8 rounded-full bg-brand-cyan/10 border border-brand-cyan/25 text-brand-cyan flex items-center justify-center shrink-0">
         <Icon name={icon} className="text-[16px]" />
       </span>
       <span className="font-medium text-zinc-300 text-sm">{children}</span>
@@ -80,7 +80,7 @@ export default async function ProfilePage({ params }) {
         {/* Sub-navigation */}
         <div className="flex items-center justify-between mb-8 flex-wrap gap-3">
           <SmartBack
-            className="inline-flex items-center gap-2 text-sm font-semibold text-brand-violet hover:text-zinc-200 transition-colors"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-brand-cyan hover:text-zinc-200 transition-colors"
             href="/#faculty"
             label="Back to Jury, Mentors & Faculty"
           />
@@ -160,7 +160,7 @@ export default async function ProfilePage({ params }) {
                   )}
                   {member.email && (
                     <a
-                      className="w-9 h-9 rounded-full bg-brand-violet text-white flex items-center justify-center hover:opacity-90 transition-opacity"
+                      className="w-9 h-9 rounded-full bg-brand-cyan text-[#06080d] flex items-center justify-center hover:opacity-90 transition-opacity"
                       href={`mailto:${member.email}`}
                       aria-label={`Email ${member.name}`}
                     >
@@ -183,7 +183,7 @@ export default async function ProfilePage({ params }) {
               {/* Connect CTA */}
               {member.email && (
                 <a
-                  className="w-full mt-6 bg-gradient-to-r from-brand-violet to-indigo-600 text-white py-3 rounded-xl font-semibold shadow-[0_0_24px_rgba(124,58,237,0.35)] flex items-center justify-center gap-2 text-sm hover:opacity-95 transition-all"
+                  className="w-full mt-6 bg-gradient-to-r from-brand-cyan to-sky-600 text-[#06080d] py-3 rounded-xl font-semibold shadow-[0_0_24px_rgba(0,168,255,0.35)] flex items-center justify-center gap-2 text-sm hover:opacity-95 transition-all"
                   href={`mailto:${member.email}`}
                 >
                   <Icon name="mail" className="text-[16px]" />
@@ -193,8 +193,8 @@ export default async function ProfilePage({ params }) {
             </div>
 
             {/* Quote */}
-            <div className="rounded-2xl bg-brand-violet/[0.07] border border-brand-violet/25 p-6 relative">
-              <div className="text-brand-violet mb-2">
+            <div className="rounded-2xl bg-brand-cyan/[0.07] border border-brand-cyan/25 p-6 relative">
+              <div className="text-brand-cyan mb-2">
                 <Icon name="format_quote" className="text-[32px] opacity-70" />
               </div>
               <blockquote className="text-zinc-300 italic text-sm leading-relaxed mb-4">
@@ -233,9 +233,9 @@ export default async function ProfilePage({ params }) {
                 {member.expertise.map((skill) => (
                   <div
                     key={skill}
-                    className="glass inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-zinc-200 text-sm font-medium hover:border-brand-violet/40 hover:-translate-y-0.5 transition-all"
+                    className="glass inline-flex items-center gap-2.5 px-4 py-2 rounded-full text-zinc-200 text-sm font-medium hover:border-brand-cyan/40 hover:-translate-y-0.5 transition-all"
                   >
-                    <Icon name="bolt" className="text-[16px] text-brand-violet" />
+                    <Icon name="bolt" className="text-[16px] text-brand-cyan" />
                     {skill}
                   </div>
                 ))}
@@ -268,15 +268,15 @@ export default async function ProfilePage({ params }) {
               {member.education && (
                 <div className="glass glass-hover sheen rounded-2xl p-6 space-y-4">
                   <div className="flex items-center gap-3">
-                    <span className="w-9 h-9 rounded-lg bg-brand-violet/10 border border-brand-violet/25 text-brand-violet flex items-center justify-center">
+                    <span className="w-9 h-9 rounded-lg bg-brand-cyan/10 border border-brand-cyan/25 text-brand-cyan flex items-center justify-center">
                       <Icon name="school" className="text-[18px]" />
                     </span>
                     <h3 className="text-xl font-bold text-white">Education</h3>
                   </div>
-                  <div className="relative pl-6 space-y-4 before:absolute before:left-[7px] before:top-2 before:bottom-2 before:w-[2px] before:bg-brand-violet/30">
+                  <div className="relative pl-6 space-y-4 before:absolute before:left-[7px] before:top-2 before:bottom-2 before:w-[2px] before:bg-brand-cyan/30">
                     {member.education.map((edu) => (
                       <div className="relative" key={edu.degree}>
-                        <span className="absolute -left-[23px] top-1.5 w-3.5 h-3.5 rounded-full bg-brand-violet ring-4 ring-obsidian-900"></span>
+                        <span className="absolute -left-[23px] top-1.5 w-3.5 h-3.5 rounded-full bg-brand-cyan ring-4 ring-obsidian-900"></span>
                         <p className="text-sm font-semibold text-zinc-200">{edu.degree}</p>
                         <p className="text-xs text-zinc-500 font-mono">{edu.school}</p>
                       </div>
@@ -298,7 +298,7 @@ export default async function ProfilePage({ params }) {
                 <ul className="space-y-3 pt-1 text-sm text-zinc-300">
                   {member.notableWork.map((item) => (
                     <li className="flex items-start gap-3" key={item}>
-                      <span className="w-5 h-5 rounded-full bg-brand-violet/20 text-brand-violet flex items-center justify-center shrink-0 mt-0.5">
+                      <span className="w-5 h-5 rounded-full bg-brand-cyan/20 text-brand-cyan flex items-center justify-center shrink-0 mt-0.5">
                         <Icon name="check" className="text-[14px]" />
                       </span>
                       {item}
@@ -326,9 +326,9 @@ export default async function ProfilePage({ params }) {
             )}
 
             {/* Banner */}
-            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-brand-violet/15 via-indigo-600/10 to-brand-cyan/10 p-6 lg:p-7 border border-brand-violet/25 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-brand-cyan/15 via-sky-700/10 to-brand-cyan/10 p-6 lg:p-7 border border-brand-cyan/25 flex flex-col md:flex-row items-center justify-between gap-6">
               <div className="flex items-start gap-4 z-10">
-                <span className="w-10 h-10 rounded-full bg-brand-violet text-white flex items-center justify-center shrink-0 shadow-[0_0_20px_rgba(124,58,237,0.4)]">
+                <span className="w-10 h-10 rounded-full bg-brand-cyan text-[#06080d] flex items-center justify-center shrink-0 shadow-[0_0_20px_rgba(0,168,255,0.4)]">
                   <Icon name="tips_and_updates" className="text-[20px]" />
                 </span>
                 <div className="space-y-1">
@@ -340,7 +340,7 @@ export default async function ProfilePage({ params }) {
                 </div>
               </div>
               <a
-                className="shrink-0 z-10 bg-gradient-to-r from-brand-violet to-indigo-600 text-white px-6 py-2.5 rounded-full text-sm font-semibold shadow-[0_0_20px_rgba(124,58,237,0.35)] flex items-center gap-2 hover:opacity-95 transition-all"
+                className="shrink-0 z-10 bg-gradient-to-r from-brand-cyan to-sky-600 text-[#06080d] px-6 py-2.5 rounded-full text-sm font-semibold shadow-[0_0_20px_rgba(0,168,255,0.35)] flex items-center gap-2 hover:opacity-95 transition-all"
                 href={`mailto:${member.email}`}
               >
                 Reach Out

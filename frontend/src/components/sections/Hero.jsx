@@ -75,10 +75,10 @@ function CountdownCard({ revealed = true }) {
       </div>
       <NeonCountdown
         cells={[
-          { value: cell(days), label: 'Days', tone: 'cyan' },
-          { value: cell(hours), label: 'Hours', tone: 'violet' },
-          { value: cell(mins), label: 'Minutes', tone: 'fuchsia' },
-          { value: cell(secs), label: 'Seconds', tone: 'pink' },
+          { value: cell(days), label: 'Days', tone: 'azure' },
+          { value: cell(hours), label: 'Hours', tone: 'glow' },
+          { value: cell(mins), label: 'Minutes', tone: 'cyan' },
+          { value: cell(secs), label: 'Seconds', tone: 'ice' },
         ]}
       />
     </div>
@@ -126,7 +126,7 @@ export function StatStrip() {
   )
 }
 
-/* ── Ambient particles — a handful of floating purple dots. Pure CSS
+/* ── Ambient particles — a handful of floating cyan dots. Pure CSS
    animation, GPU-friendly, tiny count (restrained on purpose). ────── */
 function Particles() {
   const dots = [
@@ -143,7 +143,7 @@ function Particles() {
       {dots.map((d, i) => (
         <span
           key={i}
-          className="hero-particle absolute rounded-full bg-purple-300"
+          className="hero-particle absolute rounded-full bg-cyan-300"
           style={{
             left: d.left,
             width: d.size,
@@ -167,32 +167,31 @@ export default function Hero() {
       id="overview"
       className="relative w-full min-h-[100svh] flex items-center overflow-hidden -mt-28 sm:-mt-36 pb-8"
     >
-      {/* ── Cinematic video stage — full-bleed feel (no frame/border,
-             just the raw video). Portrait phones get a purpose-built
-             540×960 crop: 1280×720 ko chhoti screen pe object-contain
-             karne se thin letterboxed strip banti thi (ghost banner). */}
+      {/* ── Cinematic video stage — the OFFICIAL attached background
+             video (single asset, all breakpoints). object-cover keeps it
+             edge-to-edge with no bars/distortion at any aspect ratio. */}
       <div className="absolute inset-0 -z-10 overflow-hidden pointer-events-none" aria-hidden="true">
-        <div className="absolute inset-0 flex items-center justify-center">
+        <div className="absolute inset-0">
           <video
             autoPlay
             loop
             muted
             playsInline
             preload="metadata"
-            className="hero-video h-[87%] w-[90%] object-contain max-[820px]:h-full max-[820px]:w-full max-[820px]:object-cover"
+            poster=""
+            className="hero-video h-full w-full object-cover"
           >
-            <source src="/binary-fly.mp4" type="video/mp4" media="(min-width: 821px)" />
-            <source src="/binary-fly-mobile.mp4" type="video/mp4" media="(max-width: 820px)" />
+            <source src="/binary-fly.mp4" type="video/mp4" />
           </video>
         </div>
 
         {/* layered readability overlays — video stays visible */}
         <div className="absolute inset-0 bg-obsidian-950/60" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(124,58,237,0.12),transparent_62%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,240,255,0.12),transparent_62%)]" />
         <div className="absolute inset-0 shadow-[inset_0_0_160px_rgba(0,0,0,0.8)]" />
 
         {/* soft moving light rays — two slow-panning gradient beams */}
-        <div className="hero-ray hero-ray-a absolute -top-1/4 left-[15%] h-[150%] w-40 rotate-12 bg-gradient-to-b from-purple-400/[0.07] via-transparent to-transparent blur-2xl" />
+        <div className="hero-ray hero-ray-a absolute -top-1/4 left-[15%] h-[150%] w-40 rotate-12 bg-gradient-to-b from-cyan-400/[0.07] via-transparent to-transparent blur-2xl" />
         <div className="hero-ray hero-ray-b absolute -top-1/4 right-[20%] h-[150%] w-56 -rotate-6 bg-gradient-to-b from-sky-300/[0.05] via-transparent to-transparent blur-2xl" />
 
         <Particles />
@@ -206,16 +205,16 @@ export default function Hero() {
         <div className="flex flex-col items-center text-center">
           {/* Eyebrow badge */}
           <div className={`${reveal(0)} glass inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full mb-9 text-xs font-medium text-zinc-300`} style={{ '--stagger': 0 }}>
-            <span className="text-purple-300">●</span>
+            <span className="text-cyan-300">●</span>
             <span className="font-mono tracking-[0.14em] uppercase">{hero.badge[0]}</span>
             <span className="text-zinc-600">•</span>
             <span className="text-zinc-400 font-mono">{hero.badge[1]}</span>
           </div>
 
           {/* Headline */}
-          <h1 className={`${reveal(1)} text-4xl sm:text-6xl md:text-7xl lg:text-[5rem] font-extrabold tracking-tight text-white max-w-5xl leading-[1.04]`} style={{ '--stagger': 1 }}>
+          <h1 className={`${reveal(1)} text-titanium text-4xl sm:text-6xl md:text-7xl lg:text-[5rem] font-extrabold tracking-tight max-w-5xl leading-[1.04]`} style={{ '--stagger': 1 }}>
             {hero.headlineA}{' '}
-            <span className="bg-gradient-to-r from-purple-300 via-fuchsia-200 to-purple-300 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-brand-cyan via-[#a5f3fc] to-brand-cyan bg-clip-text text-transparent">
               {hero.headlineB}
             </span>
           </h1>
@@ -227,7 +226,7 @@ export default function Hero() {
 
           {/* CTAs */}
           <div className={`${reveal(3)} mt-10 flex flex-wrap items-center justify-center gap-3.5`} style={{ '--stagger': 3 }}>
-            <Button href={hero.primaryCta.href} external icon={hero.primaryCta.icon} className="!bg-cta-gradient !shadow-[0_0_28px_rgba(168,85,247,0.5)]">
+            <Button href={hero.primaryCta.href} external icon={hero.primaryCta.icon} className="!bg-cta-gradient !shadow-[0_0_28px_rgba(0,240,255,0.55)] !text-[#06080d]">
               {hero.primaryCta.label}
             </Button>
             {hero.secondaryCtas.map((cta) => (

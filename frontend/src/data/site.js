@@ -1,20 +1,20 @@
 export const site = {
   title: 'AI MANTHAN',
-  titleAccent: '2K26',
+  titleAccent: '2.0',
   subtitle: 'ACROPOLIS • INDORE',
   description:
-    "The flagship national AI hackathon at Acropolis Institute of Technology & Research, Indore — 36 hours of relentless engineering.",
+    "The flagship national AI hackathon at Acropolis Institute of Technology & Research, Indore — a 24-hour offline hackathon across 12 AI challenge domains.",
   email: 'aimanthan@acropolis.in',
   emergencyPhone: '+91 (0820) 2925555',
   coordinates: '22.7196° N, 75.8577° E',
   address:
-    'Acropolis Institute of Technology & Research, Bypass Road, Square, Manglaya Sadak, Indore, Madhya Pradesh 453771',
+    'Acropolis Institute of Technology & Research, Bypass Road, Mangliya Sadak, Indore, Madhya Pradesh 453771',
   links: {
-    register: 'https://unstop.com/p/ai-manthan-2026-acropolis-hackathon-1506313',
+    register: 'https://unstop.com/p/ai-manthan-2k26-acropolis-institute-of-technology-and-research-indore-1751106',
     whatsapp: 'https://whatsapp.com/channel/0029Vb87c3eDJ6GyyNKLgx0L',
     website: 'https://www.acropolis.in/',
     maps:
-      'https://maps.google.com/?q=Acropolis+Institute+of+Technology+and+Research+Bypass+Road+Manglaya+Sadak+Indore',
+      'https://maps.google.com/?q=Acropolis+Institute+of+Technology+and+Research+Bypass+Road+Mangliya+Sadak+Indore',
   },
   /* WhatsApp community — single source for all community references */
   community: {
@@ -29,23 +29,25 @@ export const site = {
     { label: 'About', href: '/#story' },
     { label: 'Tracks', href: '/#tracks' },
     { label: 'Timeline', href: '/#timeline' },
-    { label: 'Gallery', href: '/#gallery' },
+    { label: 'Memories', href: '/#gallery' },
     { label: 'Prizes', href: '/#prizes' },
     { label: 'Faculty', href: '/#faculty' },
     { label: 'Sponsors', href: '/#partners' },
     { label: 'Venue & FAQ', href: '/#venue' },
     { label: 'Contact', href: '/#contact' },
   ],
+  /* Previous-year (AI Manthan 1.0) headline statistics — historical only.
+     Source: confirmed figures from the previous edition. */
   stats: [
-    { value: '36', label: 'Hours' },
-    { value: '800+', label: 'Registered Teams' },
-    { value: '100+', label: 'Colleges' },
-    { value: '₹2L+', label: 'Prize Pool', highlight: true },
+    { value: '94,751+', label: 'Unstop Impressions', highlight: true },
+    { value: '240', label: 'Team Registrations' },
+    { value: '671', label: 'Participants' },
+    { value: '12', label: 'States Represented' },
   ],
 }
 
 export const hero = {
-  badge: ['AI Manthan 2K26', 'Acropolis • Indore'],
+  badge: ['AI Manthan 2.0', 'Acropolis • Indore'],
   headlineA: 'Build the Future',
   headlineB: 'with AI.',
   bodyStrong: null,
@@ -63,9 +65,9 @@ export const hero = {
 }
 
 export const story = {
-  eyebrow: 'Introduction — What is AI Manthan?',
+  eyebrow: 'Introduction — What is AI Manthan 2.0?',
   heading: 'The national arena where minds churn ideas into intelligence.',
-  body: 'AI Manthan is the flagship annual hackathon of Acropolis Institute of Technology & Research, Indore — a 36-hour national arena where 1,500+ builders, researchers, and designers from 100+ colleges converge to architect the next generation of intelligent software. "Manthan" — the ancient churning that yields amrit — is our metaphor: teams churn through problem statements across AI, blockchain, and frontier web, mentored by faculty and industry experts, to surface workable solutions by dawn on day three.',
+  body: 'AI-Manthan 2.0 is a National-Level Hackathon centered on Artificial Intelligence & Emerging Technologies, bringing together innovators, developers, and problem-solvers from across India. Participants will tackle real-world challenges, transform ideas into impactful solutions, and build functional prototypes. With an intense 24-hour offline hackathon, expert mentorship, collaboration, and hands-on innovation, AI-Manthan 2.0 is where ideas turn into action. Join us, innovate boldly, and build solutions that make a difference.',
   quote: {
     text: '“Manthan — the sacred churning of ideas. What emerges is intelligence.”',
     author: '— Team AI Manthan, Acropolis Indore',
@@ -73,7 +75,7 @@ export const story = {
   pillars: [
     {
       icon: 'speed',
-      color: 'cyan',
+      color: 'azure',
       title: 'Zero-Lag Gigabit Sandbox',
       body: 'Dedicated high-throughput campus lines and sponsor GPU cluster access so your compute pipeline never throttles during crunch time.',
       footnote: 'Dedicated 10Gbps line at arena',
@@ -82,12 +84,12 @@ export const story = {
       icon: 'coffee',
       color: 'amber',
       title: '24/7 Fuel & Resting Pods',
-      body: "Continuous catered meals, specialty cold brews, snack bars, and silent sleeping quarters hosted inside the Acropolis Arena at Manglia Square.",
+      body: "Continuous catered meals, specialty cold brews, snack bars, and silent resting quarters hosted inside the AITR campus at Mangliya Sadak.",
       footnote: 'All accommodations covered',
     },
     {
       icon: 'psychology',
-      color: 'violet',
+      color: 'azure',
       title: 'Faculty & Founder Mentors',
       body: 'Real-time architectural feedback from seasoned researchers, systems engineers, and founders actively shipping frontier software.',
       footnote: '1-on-1 sprint round check-ins',
@@ -127,7 +129,7 @@ export const goldSponsors = [
   { name: 'Gold Sponsor 2', tone: 'sky', bold: true },
   { name: 'Gold Sponsor 3', tone: 'green', bold: true },
   { name: 'Gold Sponsor 4', tone: 'orange', bold: true },
-  { name: 'Gold Sponsor 5', tone: 'violet', bold: true },
+  { name: 'Gold Sponsor 5', tone: 'azure', bold: true },
 ]
 
 export const partnerRows = [
@@ -136,10 +138,10 @@ export const partnerRows = [
     duration: '30s',
     items: [
       { name: 'NSRCEL', tone: 'orange', bold: true },
-      { name: 'Startup MP', tone: 'violet', bold: true },
+      { name: 'Startup MP', tone: 'azure', bold: true },
       { name: 'MP Startup', tone: 'dark' },
       { name: 'Campus Fund', tone: 'dark', bold: true },
-      { name: 'StartLabs', tone: 'violet', bold: true },
+      { name: 'StartLabs', tone: 'azure', bold: true },
       { name: 'WE Hub', tone: 'sky', bold: true },
       { name: 'A Startup', tone: 'red' },
       { name: 'Enrich', tone: 'orange', script: true },
@@ -154,12 +156,12 @@ export const partnerRows = [
       { name: 'CIE IIITH', tone: 'sky', bold: true },
       { name: 'ValuEnable', tone: 'green' },
       { name: 'Stanplus', tone: 'dark', bold: true },
-      { name: 'T-Hub', tone: 'violet', bold: true },
+      { name: 'T-Hub', tone: 'azure', bold: true },
       { name: 'CIIE.CO', tone: 'red', bold: true },
       { name: 'IIMA CIIE', tone: 'dark' },
       { name: 'iCreate', tone: 'sky', bold: true },
       { name: 'Villgro', tone: 'green', bold: true },
-      { name: 'Startup Bengalu', tone: 'violet' },
+      { name: 'Startup Bengalu', tone: 'azure' },
       { name: 'K-tech', tone: 'dark', bold: true },
       { name: 'FabIndo', tone: 'red' },
       { name: 'NIdhi', tone: 'sky', bold: true },
@@ -174,15 +176,15 @@ export const partnerRows = [
 export const footer = {
   brand: site.title,
   brandAccent: site.titleAccent,
-  watermark: 'AI MANTHAN 2K26',
+  watermark: 'AI MANTHAN 2.0',
   address: site.address,
-  legal: '© 2026 AI Manthan • Acropolis Institute of Technology & Research. All rights reserved.',
+  legal: '© 2026 AI Manthan 2.0 • Acropolis Institute of Technology & Research. All rights reserved.',
   meta: ['Organized by Acropolis', 'Built with craft'],
 }
 
 /* ── Official Rulebook (opened from the footer "Rulebook" button) ── */
 export const rulebook = {
-  version: 'AI MANTHAN 2K26 • ROUND 1 → GRAND FINALE',
+  version: 'AI MANTHAN 2.0 • ROUND 1 → GRAND FINALE',
   sections: [
     {
       title: 'Eligibility & Teams',
@@ -198,7 +200,7 @@ export const rulebook = {
       icon: 'flag',
       rules: [
         'Round 1 (online): submit your idea deck + prototype link. Free to enter — no fee for Phase 1.',
-        'Round 2 (Oct 14–16): a 36-hour offline build sprint at Acropolis Arena, Indore. Shortlisted teams get campus lodging and meals.',
+        'Round 2 (Oct 14–16): a 24-hour offline build sprint at Acropolis Arena, Indore. Shortlisted teams get campus lodging and meals.',
         'Round 1 results drop Oct 1 along with the Round 2 guidelines — read them before you arrive.',
       ],
     },

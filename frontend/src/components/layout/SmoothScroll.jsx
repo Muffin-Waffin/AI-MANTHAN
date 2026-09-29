@@ -172,7 +172,7 @@ export default function SmoothScroll() {
     <div className="fixed top-0 left-0 right-0 h-[3px] z-[90] pointer-events-none">
       <div
         ref={barRef}
-        className="h-full bg-gradient-to-r from-brand-violet via-brand-cyan to-brand-emerald shadow-[0_0_12px_rgba(56,189,248,0.6)] transition-[width] duration-150 ease-out"
+        className="h-full bg-gradient-to-r from-[#0094ff] via-brand-cyan to-[#7df4ff] shadow-[0_0_12px_rgba(0,240,255,0.6)] transition-[width] duration-150 ease-out"
         style={{ width: '0%' }}
       />
     </div>

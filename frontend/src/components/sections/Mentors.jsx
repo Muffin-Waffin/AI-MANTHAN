@@ -24,11 +24,11 @@ const groupAccents = {
     label: 'Jury',
   },
   mentors: {
-    pill: 'bg-brand-violet/15 border border-brand-violet/40 text-brand-violet',
-    title: 'text-brand-violet',
-    hover: 'hover:border-brand-violet/40',
+    pill: 'bg-brand-cyan/15 border border-brand-cyan/40 text-brand-cyan',
+    title: 'text-brand-cyan',
+    hover: 'hover:border-brand-cyan/40',
     icon: 'school',
-    dot: 'bg-brand-violet',
+    dot: 'bg-brand-cyan',
     label: 'Mentor',
   },
   faculty: {
@@ -42,8 +42,8 @@ const groupAccents = {
 }
 
 const zoneColors = {
-  violet: 'from-brand-violet/30 via-indigo-600/15 to-transparent text-brand-violet',
-  cyan: 'from-brand-cyan/30 via-sky-600/15 to-transparent text-brand-cyan',
+  azure: 'from-brand-cyan/30 via-sky-700/15 to-transparent text-brand-cyan',
+  cyan: 'from-brand-cyan/30 via-sky-700/15 to-transparent text-brand-cyan',
   emerald: 'from-emerald-500/30 via-teal-600/15 to-transparent text-emerald-400',
   amber: 'from-amber-500/30 via-orange-600/15 to-transparent text-amber-400',
   pink: 'from-pink-500/30 via-rose-600/15 to-transparent text-pink-400',
@@ -60,7 +60,7 @@ const initialsOf = (name) =>
 
 function PeopleCard({ member }) {
   const accent = groupAccents[member.group]
-  const zoneTone = member.group === 'jury' ? 'pink' : member.group === 'mentors' ? 'violet' : 'cyan'
+  const zoneTone = member.group === 'jury' ? 'pink' : member.group === 'mentors' ? 'cyan' : 'cyan'
 
   return (
     <div
@@ -119,7 +119,7 @@ function PeopleCard({ member }) {
           </span>
           <Link
             href={`/faculty/${member.slug}`}
-            className="inline-flex items-center gap-1 text-[10px] sm:text-xs font-semibold text-white hover:text-brand-violet transition-colors"
+            className="inline-flex items-center gap-1 text-[10px] sm:text-xs font-semibold text-white hover:text-brand-cyan transition-colors"
           >
             View Profile
             <Icon name="arrow_forward" className="text-[11px] sm:text-[14px]" />

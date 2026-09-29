@@ -78,7 +78,7 @@ export default function VisitorCounter({ variant = 'footer', className = '' }) {
     return (
       <div
         className={cn(
-          'inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 backdrop-blur-md transition-all duration-300 hover:border-violet-400/40 hover:bg-white/[0.08] hover:shadow-[0_0_18px_rgba(168,85,247,0.35)]',
+          'inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.04] px-3.5 py-1.5 backdrop-blur-md transition-all duration-300 hover:border-cyan-400/40 hover:bg-white/[0.08] hover:shadow-[0_0_18px_rgba(0,240,255,0.35)]',
           className,
         )}
         title={`${stats.total.toLocaleString('en-IN')} visits (browsing sessions) • ${stats.unique.toLocaleString('en-IN')} unique visitors`}
@@ -126,7 +126,7 @@ export default function VisitorCounter({ variant = 'footer', className = '' }) {
   return (
     <div
       className={cn(
-        'group relative inline-flex items-center gap-2.5 rounded-full border border-white/[0.12] bg-gradient-to-r from-white/[0.06] via-white/[0.03] to-white/[0.06] px-4 py-2 backdrop-blur-md transition-all duration-300 hover:border-violet-400/50 hover:shadow-[0_0_24px_-4px_rgba(147,51,234,0.4)]',
+        'group relative inline-flex items-center gap-2.5 rounded-full border border-white/[0.12] bg-gradient-to-r from-white/[0.06] via-white/[0.03] to-white/[0.06] px-4 py-2 backdrop-blur-md transition-all duration-300 hover:border-cyan-400/50 hover:shadow-[0_0_24px_-4px_rgba(0,240,255,0.4)]',
         className,
       )}
       title={`${stats.total.toLocaleString('en-IN')} visits (browsing sessions) • ${stats.unique.toLocaleString('en-IN')} unique visitors`}

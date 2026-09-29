@@ -14,16 +14,17 @@ import SectionBackdrop from '../ui/SectionBackdrop'
 
 const toneCls = {
   dark: 'text-zinc-100',
+  azure: 'text-brand-cyan',
   sky: 'text-brand-cyan',
   green: 'text-emerald-400',
   red: 'text-rose-400',
   orange: 'text-amber-400',
-  violet: 'text-brand-violet',
+  cyan: 'text-brand-cyan',
 }
 
 /* Shared heading style so all three tier titles line up identically. */
 const tierHeading =
-  'text-center text-[10px] sm:text-xs md:text-sm font-bold tracking-[0.35em] text-brand-violet uppercase mb-4 sm:mb-6 md:mb-8'
+  'text-center text-[10px] sm:text-xs md:text-sm font-bold tracking-[0.35em] text-brand-cyan uppercase mb-4 sm:mb-6 md:mb-8'
 
 function SponsorCard({ item, compact = false }) {
   const nameCls = item.script

@@ -1,7 +1,7 @@
 export const timeline = {
   heading: 'THE RIPPLE',
-  eyebrow: 'AI MANTHAN 2026 TIMELINE',
-  body: 'From registration to the live 36-hour physical war-room at Acropolis, Indore.',
+  eyebrow: 'AI MANTHAN 2.0 TIMELINE',
+  body: 'From registration to the live 24-hour physical war-room at Acropolis, Indore.',
   phases: [
     {
       phase: 'PHASE 01',
@@ -45,7 +45,7 @@ export const timeline = {
       date: '14th — 16th Oct',
       dates: 'Oct 14 - 16, 2026',
       title: 'Round 2: Finals',
-      body: '36-hour final build sprint at the Grand Finale, Acropolis Arena, Indore.',
+      body: '24-hour final build sprint at the Grand Finale, Acropolis Arena, Indore.',
       status: 'ACROPOLIS ARENA',
       statusColor: 'white',
       featured: true,

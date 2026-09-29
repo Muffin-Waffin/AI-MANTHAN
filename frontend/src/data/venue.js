@@ -2,16 +2,21 @@ const img = (id) => `https://lh3.googleusercontent.com/aida-public/${id}`
 
 export const venue = {
   eyebrow: 'Command Node',
-  heading: 'Acropolis Arena — Manglaya Sadak',
-  body: 'Located on Bypass Road at Manglaya Square, Indore, Madhya Pradesh. The venue provides high-speed fiber backbones, uninterrupted power generators, 24/7 security, and ergonomic workstations for all 40 finalist teams.',
+  heading: 'AITR — Mangliya Sadak',
+  body: 'Located on Bypass Road at Mangliya Sadak, Indore, Madhya Pradesh. The venue provides high-speed fiber backbones, uninterrupted power generators, 24/7 security, and ergonomic workstations for all finalist teams.',
   mapImg: img(
     'AB6AXuA-xDqZzaZk_lMbKt0889Z2IKUaqsd6Y4bFi7WwXzLJb4SGb8eazcylouQiUWYkkbEOTIRhkK7RmSLP6I-U7FjBfQ70nKjkrVozXBXT5tslvqleMGKXWNURURoeNbSX7FeLGmCFznN74tmYj77lx5woyWq3IDuFwpEAFvM-tbFwCjAWBgUTyIzrH4ueQkL1HXhrHhKaM1AAztTSTwJj9onpAx760OBD9lz5aYFJ4vi2wkrq4eSgTh5B',
   ),
   coordinates: '22.7196° N, 75.8577° E',
+  /* Google Maps embed — same verified venue query as mapsHref (no invented
+     coordinates; Google resolves the place). Clicking the preview opens the
+     full external navigation. */
+  mapEmbedSrc:
+    'https://www.google.com/maps?q=Acropolis+Institute+of+Technology+and+Research+Bypass+Road+Mangliya+Sadak+Indore&output=embed',
   mapsHref:
-    'https://maps.google.com/?q=Acropolis+Institute+of+Technology+and+Research+Bypass+Road+Manglaya+Sadak+Indore',
+    'https://maps.google.com/?q=Acropolis+Institute+of+Technology+and+Research+Bypass+Road+Mangliya+Sadak+Indore',
   address:
-    'Acropolis Institute of Technology & Research, Bypass Road, Square, Manglaya Sadak, Indore, Madhya Pradesh 453771',
+    'Acropolis Institute of Technology & Research, Bypass Road, Mangliya Sadak, Indore, Madhya Pradesh 453771',
   access: [
     'Airport Access: Devi Ahilyabai Holkar Airport (IDR) — 30 mins drive',
     'Train Access: Indore Railway Station (INDB) — 25 mins',

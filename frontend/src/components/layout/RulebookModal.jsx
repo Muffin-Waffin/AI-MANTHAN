@@ -14,7 +14,7 @@ export default function RulebookModal({ open, onClose }) {
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
       <DialogContent
         data-lenis-prevent
-        className="glass-strong max-h-[85vh] max-w-2xl gap-0 overflow-y-auto overscroll-contain rounded-2xl p-6 shadow-[0_24px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(124,58,237,0.15)] data-[state=open]:animate-fade-up"
+        className="glass-strong max-h-[85vh] max-w-2xl gap-0 overflow-y-auto overscroll-contain rounded-2xl p-6 shadow-[0_24px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(0,168,255,0.15)] data-[state=open]:animate-fade-up"
         showCloseButton={false}
       >
         <DialogHeader className="sr-only">
@@ -27,7 +27,7 @@ export default function RulebookModal({ open, onClose }) {
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-white/[0.08] mb-5">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-brand-violet/20 border border-brand-violet/40 flex items-center justify-center text-brand-violet">
+            <div className="w-8 h-8 rounded-lg bg-brand-cyan/20 border border-brand-cyan/40 flex items-center justify-center text-brand-cyan">
               <Icon name="menu_book" className="text-[18px]" />
             </div>
             <div>
@@ -51,11 +51,11 @@ export default function RulebookModal({ open, onClose }) {
           {rulebook.sections.map((section, idx) => (
             <div key={section.title} className="glass rounded-xl p-4">
               <div className="flex items-center gap-2.5 mb-3">
-                <span className="w-7 h-7 rounded-md bg-white/[0.05] border border-white/[0.1] flex items-center justify-center text-brand-violet">
+                <span className="w-7 h-7 rounded-md bg-white/[0.05] border border-white/[0.1] flex items-center justify-center text-brand-cyan">
                   <Icon name={section.icon} className="text-[15px]" />
                 </span>
                 <h4 className="text-xs sm:text-sm font-bold text-white tracking-wide">
-                  <span className="font-mono text-brand-violet mr-2">
+                  <span className="font-mono text-brand-cyan mr-2">
                     {String(idx + 1).padStart(2, '0')}
                   </span>
                   {section.title}
@@ -67,7 +67,7 @@ export default function RulebookModal({ open, onClose }) {
                     key={rule}
                     className="flex items-start gap-2 text-[11px] sm:text-xs text-zinc-400 leading-relaxed"
                   >
-                    <span className="mt-[7px] w-1 h-1 rounded-full bg-brand-violet/70 shrink-0" />
+                    <span className="mt-[7px] w-1 h-1 rounded-full bg-brand-cyan/70 shrink-0" />
                     {rule}
                   </li>
                 ))}

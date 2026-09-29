@@ -4,11 +4,11 @@ import { cn } from '@/lib/utils'
 
 /**
  * NeonTimeCell — countdown.png ke exact jaisa glowing tile.
- * Dark glass tile, hair-thin cyan→violet→fuchsia neon ring (mask composite),
+ * Dark glass tile, hair-thin cyan→cyan→cyan neon ring (mask composite),
  * soft outer bloom, glossy top-left highlight, floor reflection,
  * extrabold glowing digits + spaced uppercase label.
  *
- * Per-tile hue shift via --tile-glow (days=cyan → seconds=pink).
+ * Per-tile glow shift via --tile-glow (days → seconds, cyan family).
  */
 
 const neonTileVariants = cva(
@@ -17,9 +17,9 @@ const neonTileVariants = cva(
     variants: {
       tone: {
         cyan: '[--tw-glow:56,189,248]',
-        violet: '[--tw-glow:147,51,234]',
-        fuchsia: '[--tw-glow:192,38,211]',
-        pink: '[--tw-glow:232,121,249]',
+        azure: '[--tw-glow:0,168,255]',
+        glow: '[--tw-glow:0,240,255]',
+        ice: '[--tw-glow:103,232,249]',
       },
       size: {
         default: 'rounded-2xl sm:rounded-[24px]',
@@ -27,7 +27,7 @@ const neonTileVariants = cva(
       },
     },
     defaultVariants: {
-      tone: 'violet',
+      tone: 'glow',
       size: 'default',
     },
   }
@@ -36,10 +36,10 @@ const neonTileVariants = cva(
 function NeonTimeCell({ className, tone, size, value, label, style, ...props }) {
   const glow = {
     cyan: 'rgba(56,189,248,0.6)',
-    violet: 'rgba(147,51,234,0.65)',
-    fuchsia: 'rgba(192,38,211,0.65)',
-    pink: 'rgba(232,121,249,0.7)',
-  }[tone]
+    azure: 'rgba(0,168,255,0.65)',
+    glow: 'rgba(0,240,255,0.65)',
+    ice: 'rgba(165,243,252,0.7)',
+  }[tone] || 'rgba(0,240,255,0.65)'
 
   return (
     <div
@@ -86,7 +86,7 @@ function NeonColon({ className, ...props }) {
       {[0, 1].map((i) => (
         <span
           key={i}
-          className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-fuchsia-300 shadow-[0_0_10px_2px_rgba(232,121,249,0.85)]"
+          className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-cyan-300 shadow-[0_0_10px_2px_rgba(103,232,249,0.85)]"
         />
       ))}
     </div>

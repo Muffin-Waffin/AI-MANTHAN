@@ -13,51 +13,54 @@
   /* Extended transition scale — 650ms = signature card-hover duration */
   --transition-duration-650: 650ms;
 
-  /* Brand colors — exact match */
-  --color-brand-violet: #7c3aed;
-  --color-brand-violet-hover: #6d28d9;
+  /* ── Titanium Cyber Lumina brand ── Electric cyan primary + steel
+     chrome accents. Core #00F0FF, cerulean pulse #00A8FF, chrome
+     #EEF4F8/#D8E2EC/#8FA5BC, deep obsidian void surfaces. */
+  --color-brand-cyan: #00f0ff;
+  --color-brand-cyan-hover: #00d5e6;
+  --color-brand-cyan-soft: #7df4ff;
+  --color-brand-sky: #00a8ff;
 
   /* ── CTA (call-to-action) — REGISTRATION / REGISTER buttons ONLY ──
      In buttons ka color yahan se control karo. Baaki site (sponsors
-     headings, section accents, glows) --color-brand-violet use karti
+     headings, section accents, glows) --color-brand-cyan use karti
      hai — wo alag token hai, isliye CTA badalne se unpe koi asar
      nahi hota. Dono ko alag rakha gaya hai jaan-bujh ke. */
-  --color-cta: #7c3aed;
-  --color-cta-hover: #6d28d9;
+  --color-cta: #00f0ff;
+  --color-cta-hover: #00d5e6;
   /* Light tint — dark background pe icons/labels ke liye (auto-derives) */
   --color-cta-soft: color-mix(in srgb, var(--color-cta) 60%, #ffffff);
-  --color-brand-cyan: #38bdf8;
   --color-brand-emerald: #10b981;
   --color-brand-amber: #f59e0b;
 
-  /* Obsidian surfaces — exact match */
-  --color-obsidian-950: #06070a;
-  --color-obsidian-900: #0a0c10;
-  --color-obsidian-850: #0e1017;
-  --color-obsidian-800: #141722;
-  --color-obsidian-700: #1e2230;
-  --color-obsidian-600: #2c3245;
+  /* Obsidian surfaces — deep void tiers (cool blue undertone) */
+  --color-obsidian-950: #06080d;
+  --color-obsidian-900: #0b0f17;
+  --color-obsidian-850: #101726;
+  --color-obsidian-800: #162033;
+  --color-obsidian-700: #1d2b45;
+  --color-obsidian-600: #2a3a58;
 
   /* shadcn token mapping (dark-only site) */
   --color-background: var(--color-obsidian-950);
-  --color-foreground: #f4f4f5;
-  --color-muted: var(--color-obsidian-800);
-  --color-muted-foreground: #a1a1aa;
-  --color-border: #27272a;
-  --color-input: #27272a;
-  --color-ring: var(--color-brand-violet);
-  --color-primary: var(--color-brand-violet);
-  --color-primary-foreground: #ffffff;
-  --color-secondary: var(--color-obsidian-800);
-  --color-secondary-foreground: #f4f4f5;
-  --color-accent: var(--color-obsidian-800);
-  --color-accent-foreground: #f4f4f5;
-  --color-destructive: #ef4444;
+  --color-foreground: #eef4f8;
+  --color-muted: var(--color-obsidian-850);
+  --color-muted-foreground: #8fa5bc;
+  --color-border: #22304a;
+  --color-input: #22304a;
+  --color-ring: var(--color-brand-cyan);
+  --color-primary: var(--color-brand-cyan);
+  --color-primary-foreground: #06080d;
+  --color-secondary: var(--color-obsidian-850);
+  --color-secondary-foreground: #eef4f8;
+  --color-accent: var(--color-obsidian-850);
+  --color-accent-foreground: #eef4f8;
+  --color-destructive: #ff6b6b;
   --color-destructive-foreground: #ffffff;
-  --color-popover: #0e1017f2;
-  --color-popover-foreground: #f4f4f5;
-  --color-card: #0e1017cc;
-  --color-card-foreground: #f4f4f5;
+  --color-popover: #101726f2;
+  --color-popover-foreground: #eef4f8;
+  --color-card: #101726cc;
+  --color-card-foreground: #eef4f8;
   --radius-lg: 1rem;
 }
 
@@ -90,26 +93,26 @@
 
 /* ─── Theme surface tokens (dark-only design system) ───────────── */
 :root {
-  --surface-0: #06070a;
-  --text-0: #f4f4f5;
-  --glass-bg: linear-gradient(135deg, rgba(20, 23, 34, 0.62), rgba(10, 12, 16, 0.52));
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-bg-strong: linear-gradient(135deg, rgba(14, 16, 23, 0.86), rgba(6, 7, 10, 0.78));
-  --glass-hover-bg: linear-gradient(135deg, rgba(30, 34, 48, 0.72), rgba(14, 16, 23, 0.6));
+  --surface-0: #06080d;
+  --text-0: #eef4f8;
+  --glass-bg: linear-gradient(135deg, rgba(16, 23, 38, 0.62), rgba(8, 12, 20, 0.52));
+  --glass-border: rgba(216, 226, 236, 0.1);
+  --glass-bg-strong: linear-gradient(135deg, rgba(13, 20, 34, 0.86), rgba(6, 8, 13, 0.78));
+  --glass-hover-bg: linear-gradient(135deg, rgba(22, 32, 51, 0.72), rgba(13, 20, 34, 0.6));
 }
 
 ::-webkit-scrollbar {
   width: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #06070a;
+  background: #06080d;
 }
 ::-webkit-scrollbar-thumb {
-  background: #27272a;
+  background: #22304a;
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46;
+  background: #2e4260;
 }
 
 /* ─── Site-wide content gutter ────────────────────────────────────
@@ -149,13 +152,13 @@
 /* ── CTA gradient — Register Now button ka signature look ─────────
    Colors --color-cta se derive hote hain (color-mix), isliye jab bhi
    tum --color-cta badloge, gradient bhi saath me badlega — hardcoded
-   purple classes ki zaroorat nahi. */
+   cyan classes ki zaroorat nahi. */
 @utility bg-cta-gradient {
+  /* Primary Cyber fill — electric cyan core → cerulean pulse (DESIGN.md) */
   background-image: linear-gradient(
-    100deg,
-    color-mix(in srgb, var(--color-cta) 80%, #ffffff),
-    color-mix(in srgb, var(--color-cta) 72%, #ff00ff) 48%,
-    color-mix(in srgb, var(--color-cta) 80%, #ffffff)
+    180deg,
+    var(--color-cta) 0%,
+    #0094ff 100%
   );
 }
 
@@ -163,7 +166,7 @@
 @utility bg-subtle-radial {
   background-image: radial-gradient(
     circle at 50% -20%,
-    rgba(124, 58, 237, 0.15),
+    rgba(0, 168, 255, 0.15),
     transparent 70%
   );
 }
@@ -195,10 +198,10 @@
     background 650ms cubic-bezier(0.22, 1, 0.36, 1);
   &:hover {
     background: var(--glass-hover-bg);
-    border-color: rgba(139, 92, 246, 0.45);
+    border-color: rgba(56, 189, 248, 0.45);
     box-shadow:
-      0 0 0 1px rgba(124, 58, 237, 0.18),
-      0 14px 42px -12px rgba(124, 58, 237, 0.32),
+      0 0 0 1px rgba(0, 168, 255, 0.18),
+      0 14px 42px -12px rgba(0, 168, 255, 0.32),
       0 4px 16px -6px rgba(0, 0, 0, 0.35);
     transform: translateY(-4px);
   }
@@ -259,10 +262,10 @@ optgroup {
 @keyframes pulse-glow {
   0%,
   100% {
-    box-shadow: 0 0 18px -6px rgba(124, 58, 237, 0.5);
+    box-shadow: 0 0 18px -6px rgba(0, 168, 255, 0.5);
   }
   50% {
-    box-shadow: 0 0 34px -6px rgba(124, 58, 237, 0.85);
+    box-shadow: 0 0 34px -6px rgba(0, 168, 255, 0.85);
   }
 }
 
@@ -290,21 +293,21 @@ optgroup {
     0 26px 52px -18px rgba(0, 0, 0, 0.85);
 }
 
-/* Champion hero — stronger (but controlled) violet presence */
+/* Champion hero — stronger (but controlled) cyan presence */
 .prize-card-champion {
-  background: linear-gradient(168deg, rgba(38, 24, 64, 0.85), rgba(14, 10, 26, 0.9));
-  border: 1px solid rgba(168, 85, 247, 0.38);
+  background: linear-gradient(168deg, rgba(9, 26, 48, 0.85), rgba(5, 12, 24, 0.9));
+  border: 1px solid rgba(0, 240, 255, 0.38);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.1),
-    0 22px 48px -18px rgba(124, 58, 237, 0.5),
-    0 0 40px -12px rgba(147, 51, 234, 0.3);
+    0 22px 48px -18px rgba(0, 168, 255, 0.5),
+    0 0 40px -12px rgba(0, 240, 255, 0.3);
 }
 .prize-card-champion:hover {
-  border-color: rgba(192, 132, 252, 0.55);
+  border-color: rgba(103, 232, 249, 0.55);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.13),
-    0 28px 56px -18px rgba(124, 58, 237, 0.6),
-    0 0 52px -12px rgba(168, 85, 247, 0.4);
+    0 28px 56px -18px rgba(0, 168, 255, 0.6),
+    0 0 52px -12px rgba(0, 240, 255, 0.4);
 }
 
 /* Elliptical floor light — cards appear to float above a soft pool */
@@ -325,9 +328,7 @@ optgroup {
   .animate-pulse-glow,
   .animate-float-y,
   .animate-butterfly-hover,
-  .ripple-float,
-  .ripple-flow,
-  .ripple-chip-live::before {
+  .animate-logo-float {
     animation: none !important;
   }
 }
@@ -390,11 +391,11 @@ optgroup {
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    border: 1px solid var(--pg-color, rgba(168, 85, 247, 0.55));
+    border: 1px solid var(--pg-color, rgba(0, 240, 255, 0.55));
     box-shadow:
-      inset 0 0 24px -6px var(--pg-color, rgba(168, 85, 247, 0.55)),
-      0 0 28px -6px var(--pg-color, rgba(168, 85, 247, 0.6)),
-      0 0 60px -10px var(--pg-color, rgba(168, 85, 247, 0.5));
+      inset 0 0 24px -6px var(--pg-color, rgba(0, 240, 255, 0.55)),
+      0 0 28px -6px var(--pg-color, rgba(0, 240, 255, 0.6)),
+      0 0 60px -10px var(--pg-color, rgba(0, 240, 255, 0.5));
     opacity: 0;
     pointer-events: none;
     animation: prize-card-breathe 4s ease-in-out infinite;
@@ -405,11 +406,11 @@ optgroup {
    phase me bhi card ka apna color halka mehsoos hota hai (jaise center
    card me hota hai). Side cards ko --pg-tint se halka shade milta hai. */
 .prize-card-glow {
-  border-color: color-mix(in srgb, var(--pg-color, rgba(168, 85, 247, 0.55)) 45%, rgba(255, 255, 255, 0.08));
+  border-color: color-mix(in srgb, var(--pg-color, rgba(0, 240, 255, 0.55)) 45%, rgba(255, 255, 255, 0.08));
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.08),
     0 18px 40px -18px rgba(0, 0, 0, 0.8),
-    0 0 34px -12px var(--pg-color, rgba(168, 85, 247, 0.4));
+    0 0 34px -12px var(--pg-color, rgba(0, 240, 255, 0.4));
 }
 
 /* stagger — wave pattern: 02 (+1.3s) → champion (0s) → 03 (+2.6s) */
@@ -618,8 +619,8 @@ optgroup {
     box-shadow 300ms ease;
   &:hover {
     transform: translateY(-4px) scale(1.02);
-    border-color: rgba(139, 92, 246, 0.45);
-    box-shadow: 0 14px 34px -12px rgba(124, 58, 237, 0.35);
+    border-color: rgba(56, 189, 248, 0.45);
+    box-shadow: 0 14px 34px -12px rgba(0, 168, 255, 0.35);
   }
 }
 
@@ -664,8 +665,8 @@ optgroup {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(124, 58, 237, 0.95),
-    rgba(56, 189, 248, 0.95),
+    rgba(0, 240, 255, 0.95),
+    rgba(238, 244, 248, 0.9),
     transparent
   );
   background-size: 200% 100%;
@@ -793,76 +794,76 @@ optgroup {
 }
 
 /* ─── Neon navbar pill (ref: navbar.png) ─────────────────────────
-   Outer shell: dark glass with a violet neon rim + double halo.
+   Outer shell: dark glass with a cyan neon rim + double halo.
    Inner pill: darker recessed tray behind the nav links. */
 @utility neon-pill {
-  background: linear-gradient(135deg, rgba(15, 12, 28, 0.88), rgba(6, 7, 12, 0.82));
-  border: 1px solid rgba(168, 85, 247, 0.5);
+  background: linear-gradient(135deg, rgba(11, 17, 30, 0.88), rgba(6, 8, 13, 0.82));
+  border: 1px solid rgba(0, 240, 255, 0.5);
   backdrop-filter: blur(22px) saturate(1.5);
   -webkit-backdrop-filter: blur(22px) saturate(1.5);
   box-shadow:
-    0 0 22px -2px rgba(147, 51, 234, 0.5),
-    0 0 64px -10px rgba(217, 70, 239, 0.38),
+    0 0 22px -2px rgba(0, 240, 255, 0.5),
+    0 0 64px -10px rgba(0, 240, 255, 0.38),
     0 16px 40px rgba(0, 0, 0, 0.55),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 @utility nav-inner-pill {
-  background: rgba(4, 4, 10, 0.72);
-  border: 1px solid rgba(168, 85, 247, 0.22);
+  background: rgba(4, 8, 14, 0.72);
+  border: 1px solid rgba(0, 240, 255, 0.22);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.05),
-    0 0 18px -6px rgba(147, 51, 234, 0.4);
+    0 0 18px -6px rgba(0, 240, 255, 0.4);
 }
 
 /* Standalone glass chip for the split navbar pieces (brand left,
    support button right) — each floats on its own, no shared shell,
    so no connected "pipe" runs behind the header. */
 @utility neon-brand {
-  background: linear-gradient(135deg, rgba(15, 12, 28, 0.88), rgba(6, 7, 12, 0.82));
-  border: 1px solid rgba(168, 85, 247, 0.4);
+  background: linear-gradient(135deg, rgba(11, 17, 30, 0.88), rgba(6, 8, 13, 0.82));
+  border: 1px solid rgba(0, 240, 255, 0.4);
   backdrop-filter: blur(18px) saturate(1.4);
   -webkit-backdrop-filter: blur(18px) saturate(1.4);
   box-shadow:
-    0 0 18px -4px rgba(147, 51, 234, 0.45),
+    0 0 18px -4px rgba(0, 240, 255, 0.45),
     0 12px 30px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-/* Neon "See More" pill — dark glass capsule with a violet neon rim
+/* Neon "See More" pill — dark glass capsule with a cyan neon rim
    and double halo (matches the navbar treatment). Used on team roster
    group headings to expand collapsed members. */
 @utility neon-see-more {
-  background: linear-gradient(135deg, rgba(15, 12, 28, 0.92), rgba(6, 7, 12, 0.88));
-  border: 1px solid rgba(168, 85, 247, 0.55);
+  background: linear-gradient(135deg, rgba(11, 17, 30, 0.92), rgba(6, 8, 13, 0.88));
+  border: 1px solid rgba(0, 240, 255, 0.55);
   backdrop-filter: blur(16px) saturate(1.4);
   -webkit-backdrop-filter: blur(16px) saturate(1.4);
   box-shadow:
-    0 0 16px -2px rgba(147, 51, 234, 0.55),
-    0 0 42px -10px rgba(217, 70, 239, 0.4),
+    0 0 16px -2px rgba(0, 240, 255, 0.55),
+    0 0 42px -10px rgba(0, 240, 255, 0.4),
     0 10px 26px rgba(0, 0, 0, 0.55),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 .neon-see-more:hover {
-  border-color: rgba(192, 38, 211, 0.8);
+  border-color: rgba(0, 240, 255, 0.8);
   box-shadow:
-    0 0 24px 0 rgba(168, 85, 247, 0.7),
-    0 0 60px -8px rgba(217, 70, 239, 0.55),
+    0 0 24px 0 rgba(0, 240, 255, 0.7),
+    0 0 60px -8px rgba(0, 240, 255, 0.55),
     0 12px 30px rgba(0, 0, 0, 0.6),
     inset 0 1px 0 rgba(255, 255, 255, 0.14);
 }
 
 /* ─── Glowing neon countdown tiles (ref: countdown.png) ────────────
-   Dark glass tile + hair-thin cyan→violet→fuchsia neon ring (mask
+   Dark glass tile + hair-thin cyan→cyan→cyan neon ring (mask
    composite trick keeps the ring crisp at any radius), soft outer
    bloom + glossy top highlight + floor reflection via --tile-glow. */
 @utility neon-tile {
   background:
-    radial-gradient(120% 90% at 50% 112%, rgba(88, 28, 135, 0.4), transparent 62%),
-    linear-gradient(160deg, rgba(30, 27, 55, 0.85), rgba(8, 8, 18, 0.92));
+    radial-gradient(120% 90% at 50% 112%, rgba(0, 120, 168, 0.4), transparent 62%),
+    linear-gradient(160deg, rgba(16, 34, 56, 0.85), rgba(6, 10, 18, 0.92));
   box-shadow:
-    0 0 26px -4px var(--tile-glow, rgba(168, 85, 247, 0.55)),
+    0 0 26px -4px var(--tile-glow, rgba(0, 240, 255, 0.55)),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
   &::before {
     content: '';
@@ -872,9 +873,9 @@ optgroup {
     padding: 1.5px;
     background: linear-gradient(
       135deg,
-      rgba(56, 189, 248, 0.85),
-      rgba(168, 85, 247, 0.95) 45%,
-      rgba(232, 121, 249, 0.85)
+      rgba(125, 244, 255, 0.9),
+      rgba(0, 240, 255, 0.95) 45%,
+      rgba(0, 168, 255, 0.85)
     );
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
@@ -888,99 +889,46 @@ optgroup {
   0%,
   100% {
     box-shadow:
-      0 0 22px -6px var(--tile-glow, rgba(168, 85, 247, 0.55)),
+      0 0 22px -6px var(--tile-glow, rgba(0, 240, 255, 0.55)),
       inset 0 1px 0 rgba(255, 255, 255, 0.08);
   }
   50% {
     box-shadow:
-      0 0 42px -2px var(--tile-glow, rgba(168, 85, 247, 0.75)),
+      0 0 42px -2px var(--tile-glow, rgba(0, 240, 255, 0.75)),
       inset 0 1px 0 rgba(255, 255, 255, 0.12);
   }
 }
 @utility neon-breathe {
   animation: neon-breathe 2.6s ease-in-out infinite;
 }
-/* Digits — near-white with a fuchsia/violet halo like the reference */
+/* Digits — near-white with a cyan/cyan halo like the reference */
 @utility neon-digit {
-  color: #fdf4ff;
+  color: #eafcff;
   text-shadow:
-    0 0 10px rgba(240, 171, 252, 0.6),
-    0 0 28px rgba(168, 85, 247, 0.5);
+    0 0 10px rgba(165, 243, 252, 0.6),
+    0 0 28px rgba(0, 240, 255, 0.5);
 }
 
-/* ─── Butterfly key-visual stage (intro section) ─────────────────── */
-@utility butterfly-stage {
-  background:
-    radial-gradient(90% 90% at 50% 45%, rgba(88, 28, 135, 0.42), transparent 70%),
-    radial-gradient(60% 60% at 50% 100%, rgba(56, 189, 248, 0.14), transparent 70%),
-    #06070a;
-}
-@keyframes butterfly-hover {
+/* ─── Official logo float (intro key-visual, preloader) ──────────
+   Subtle levitation only — the logo artwork is never morphed beyond a
+   gentle 3% breathe. (The old butterfly utility name is kept as an
+   alias so any legacy usage keeps the identical motion.) */
+@keyframes logo-float {
   0%,
   100% {
     transform: scale(1) translateY(0);
   }
   50% {
-    transform: scale(1.05) translateY(-6px);
+    transform: scale(1.03) translateY(-6px);
   }
 }
-@utility animate-butterfly-hover {
-  animation: butterfly-hover 7s ease-in-out infinite;
+@utility animate-logo-float {
+  animation: logo-float 7s ease-in-out infinite;
   transform-origin: center;
 }
-
-/* ─── THE RIPPLE timeline (ref: Manipal-style wave + purple cards) ── */
-/* Solid purple BORDERLESS card (ref screenshot) — flat violet, big radius,
-   soft purple shadow, restrained hover (lift + slight scale, no zoom). */
-@utility ripple-card {
-  background: linear-gradient(170deg, #9333ea 0%, #7c28cf 100%);
-  border-radius: 20px;
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.14),
-    0 18px 44px -14px rgba(124, 58, 237, 0.5),
-    0 0 0 1px rgba(168, 85, 247, 0.22);
-  transition:
-    transform 350ms cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 350ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.ripple-card:hover {
-  transform: translateY(-4px) scale(1.015);
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    0 24px 54px -14px rgba(147, 51, 234, 0.65),
-    0 0 0 1px rgba(192, 132, 252, 0.4);
-}
-
-/* Featured (current) milestone — slightly stronger elevation + aura,
-   still the same card language. */
-.ripple-card-featured {
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    0 22px 52px -12px rgba(139, 63, 224, 0.62),
-    0 0 34px -6px rgba(168, 85, 247, 0.38),
-    0 0 0 1px rgba(216, 180, 254, 0.35);
-}
-.ripple-card-featured:hover {
-  box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    0 28px 60px -12px rgba(147, 51, 234, 0.75),
-    0 0 44px -6px rgba(192, 132, 252, 0.5),
-    0 0 0 1px rgba(216, 180, 254, 0.5);
-}
-
-/* Statement reader swap — quick fade/slide when paging statements */
-@keyframes stmt-swap-in {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.stmt-swap {
-  animation: stmt-swap-in 380ms cubic-bezier(0.22, 1, 0.36, 1) both;
+@utility animate-butterfly-hover {
+  animation: logo-float 7s ease-in-out infinite;
+  transform-origin: center;
 }
 
 /* ── HUD stat cards (Previous Year Stats strip in Hero) ─────────── */
@@ -1010,189 +958,6 @@ optgroup {
   height: 18px;
   border-color: rgba(34, 211, 238, 1);
   filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.7));
-}
-
-/* Status chips — tiny mono labels for instant CURRENT/NEXT/UPCOMING read */
-.ripple-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.375rem;
-  padding: 0.2rem 0.625rem;
-  border-radius: 9999px;
-  font-family: var(--font-mono);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  background: rgba(255, 255, 255, 0.12);
-  color: rgba(255, 255, 255, 0.95);
-}
-.ripple-chip-live::before {
-  content: '';
-  width: 5px;
-  height: 5px;
-  border-radius: 9999px;
-  background: #6ee7b7;
-  animation: chip-pulse 2.2s ease-in-out infinite;
-}
-@keyframes chip-pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.35;
-  }
-}
-
-/* Scroll reveal — opacity + translateY + slight scale, spring-eased.
-   .is-inview is added by Timeline's IntersectionObserver. */
-.ripple-reveal {
-  opacity: 0;
-  transform: translateY(22px) scale(0.985);
-  transition:
-    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
-  transition-delay: var(--reveal-delay, 0ms);
-}
-.ripple-reveal.is-inview {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-/* Independent float — max 3px, slow, staggered per card. Applied to an
-   inner wrapper so it never fights the reveal/hover transforms. */
-@keyframes ripple-float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-3px);
-  }
-}
-.ripple-float {
-  animation: ripple-float var(--float-duration, 7s) ease-in-out infinite;
-  animation-delay: var(--float-delay, 0s);
-}
-
-/* Timeline node dots — dim until the travelling butterfly passes them,
-   then they light up. Subtle breathing once lit (soft, not flashy). */
-.ripple-node {
-  border-color: rgba(255, 255, 255, 0.5);
-  background: #0a0a12;
-  box-shadow: 0 0 0 rgba(147, 51, 234, 0);
-  transition:
-    background 500ms ease,
-    border-color 500ms ease,
-    box-shadow 500ms ease;
-}
-.ripple-node.node-passed {
-  border-color: rgba(255, 255, 255, 0.85);
-  background: #7c3aed;
-  animation: node-breathe 3.2s ease-in-out infinite;
-}
-@keyframes node-breathe {
-  0%,
-  100% {
-    box-shadow: 0 0 8px rgba(147, 51, 234, 0.7);
-  }
-  50% {
-    box-shadow: 0 0 14px rgba(168, 85, 247, 0.95);
-  }
-}
-
-/* Slow flowing light along the central line — a short bright dash that
-   drifts along the travelled path. Pure CSS, GPU-friendly. */
-@keyframes ripple-flow {
-  from {
-    stroke-dashoffset: 0.14;
-  }
-  to {
-    stroke-dashoffset: -0.14;
-  }
-}
-.ripple-flow {
-  stroke-dasharray: 0.02 0.12;
-  animation: ripple-flow 9s linear infinite;
-}
-
-/* ─── Timeline scroll arrows ───────────────────────────────────── */
-.ripple-scroll-arrow {
-  position: absolute;
-  top: 50%;
-  z-index: 30;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  border-radius: 9999px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(15, 12, 28, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(168, 85, 247, 0.4);
-  color: rgba(255, 255, 255, 0.8);
-  cursor: pointer;
-  box-shadow:
-    0 0 16px -4px rgba(147, 51, 234, 0.5),
-    0 8px 20px rgba(0, 0, 0, 0.4);
-  transition:
-    background 250ms ease,
-    border-color 250ms ease,
-    box-shadow 250ms ease,
-    transform 250ms ease;
-}
-.ripple-scroll-arrow:hover {
-  background: rgba(30, 20, 55, 0.85);
-  border-color: rgba(192, 132, 252, 0.6);
-  color: #fff;
-  box-shadow:
-    0 0 24px -4px rgba(168, 85, 247, 0.7),
-    0 10px 28px rgba(0, 0, 0, 0.5);
-}
-.ripple-scroll-arrow-left {
-  left: 8px;
-}
-.ripple-scroll-arrow-left:hover {
-  transform: translateY(-50%) translateX(-2px);
-}
-.ripple-scroll-arrow-right {
-  right: 8px;
-}
-.ripple-scroll-arrow-right:hover {
-  transform: translateY(-50%) translateX(2px);
-}
-
-/* Swipe hint — fades out after a delay */
-.ripple-swipe-hint {
-  opacity: 0.6;
-  animation: swipe-hint-fade 6s ease forwards;
-}
-@keyframes swipe-hint-fade {
-  0%, 70% { opacity: 0.6; }
-  100% { opacity: 0; }
-}
-
-/* Respect reduced motion — kill all decorative movement */
-@media (prefers-reduced-motion: reduce) {
-  .ripple-float,
-  .node-breathe,
-  .ripple-flow,
-  .ripple-chip-live::before {
-    animation: none !important;
-  }
-  .ripple-reveal,
-  .ripple-page {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-  .hero-video {
-    animation: none !important;
-  }
 }
 
 /* ─── Team page — cinematic video hero + rosters ──────────────────── */
@@ -1239,7 +1004,7 @@ section#overview .hero-video {
   opacity: 0;
   animation: hero-particle var(--p-dur, 12s) ease-in-out infinite;
   animation-delay: var(--p-delay, 0s);
-  box-shadow: 0 0 6px rgba(192, 132, 252, 0.8);
+  box-shadow: 0 0 6px rgba(103, 232, 249, 0.8);
 }
 
 /* Corner sparkle — decorative diamond-star in the bottom-left corner.
@@ -1257,7 +1022,7 @@ section#overview .hero-video {
 }
 .corner-sparkle {
   animation: corner-sparkle-twinkle 6s ease-in-out infinite;
-  filter: drop-shadow(0 0 6px rgba(167, 139, 250, 0.45));
+  filter: drop-shadow(0 0 6px rgba(103, 232, 249, 0.45));
 }
 @media (prefers-reduced-motion: reduce) {
   .corner-sparkle {
@@ -1345,33 +1110,6 @@ section#overview .hero-video {
   -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 45%, black 30%, transparent 78%);
 }
 
-/* Timeline pagination — page slide + card entrance.
-   .is-swapped flips a shared transition (restrained, no bounce);
-   .ripple-page-enter rises each card group once per slide. */
-.ripple-page.is-swapped {
-  opacity: 1;
-  transform: none;
-}
-.ripple-page {
-  opacity: 0;
-  transform: translateX(44px);
-  transition:
-    opacity 420ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-.ripple-page.is-swapped .ripple-reveal {
-  opacity: 0;
-  transform: translateY(22px);
-  transition: none;
-}
-.ripple-page.is-swapped .ripple-reveal.is-inview {
-  opacity: 1;
-  transform: translateY(0);
-  transition:
-    opacity 640ms cubic-bezier(0.22, 1, 0.36, 1),
-    transform 640ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
 /* slow-mo wordmark — letters breathe apart then settle */
 @keyframes wordmark-breathe {
   0% {
@@ -1390,6 +1128,42 @@ section#overview .hero-video {
 }
 .animate-wordmark {
   animation: wordmark-breathe 1.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ─── Memories (PAST AI MANTHAN) — masonry columns + lightbox ───── */
+/* Mobile-first masonry via CSS columns; grid layout takes over at lg. */
+.memories-grid {
+  column-gap: 0.875rem;
+}
+@media (min-width: 1024px) {
+  .memories-grid {
+    display: grid;
+  }
+}
+.memories-grid > * {
+  break-inside: avoid;
+  margin-bottom: 0.875rem;
+}
+
+/* ─── Tracks grid — staggered entrance via section reveal observer ── */
+@keyframes track-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.reveal-in .tracks-grid > * {
+  animation: track-enter 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: calc(var(--di, 0) * 45ms);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal-in .tracks-grid > * {
+    animation: none;
+  }
 }
 
 /* ─── Gallery — cinematic keyframe motion ────────────────────────
@@ -1464,13 +1238,13 @@ section#overview .hero-video {
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.06),
       0 18px 44px -16px rgba(0, 0, 0, 0.8),
-      0 0 0 rgba(139, 92, 246, 0);
+      0 0 0 rgba(56, 189, 248, 0);
   }
   50% {
     box-shadow:
       inset 0 1px 0 rgba(255, 255, 255, 0.08),
       0 22px 52px -16px rgba(0, 0, 0, 0.85),
-      0 0 34px -6px rgba(139, 92, 246, 0.45);
+      0 0 34px -6px rgba(56, 189, 248, 0.45);
   }
 }
 .gallery-frame:hover {
@@ -1479,7 +1253,7 @@ section#overview .hero-video {
 
 /* Accent underline wipe — gradient draws itself under the title */
 .gallery-title {
-  background-image: linear-gradient(90deg, rgba(167, 139, 250, 0.9), rgba(56, 189, 248, 0.9));
+  background-image: linear-gradient(90deg, rgba(216, 226, 236, 0.9), rgba(0, 240, 255, 0.9));
   background-repeat: no-repeat;
   background-size: 0% 2px;
   background-position: 0 100%;
@@ -1619,4 +1393,16 @@ section#overview .hero-video {
   .bounty-card:hover .bounty-icon {
     transform: none;
   }
+}
+
+/* ─── Titanium Cyber Lumina — signature chrome text ──────────────
+   DESIGN.md: display headings use a metallic silver→white gradient
+   fill (linear-gradient(180deg, #FFFFFF 0%, #B0C4DE 100%)). Applied
+   additively via .text-titanium where a headline should read as
+   brushed metal instead of flat white. */
+@utility text-titanium {
+  background-image: linear-gradient(180deg, #ffffff 0%, #b0c4de 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }

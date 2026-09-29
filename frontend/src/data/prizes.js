@@ -5,7 +5,7 @@ export const prizes = {
   pool: {
     badge: 'One Arena • One Vault',
     title: 'Total Prize Pool',
-    amount: '₹2,00,000+',
+    amount: '₹1,00,000+',
     body: 'One unified vault of unrestricted cash prizes, special grants, cloud credit bundles, and fast-track founder intros — awarded across the Grand Finale.',
     chips: ['CASH PRIZES', 'SPECIAL GRANTS', 'CLOUD CREDITS'],
     perk: 'CHAMPIONSHIP CUP + VC DEMO SLOTS + INCUBATION PASS',
@@ -13,7 +13,7 @@ export const prizes = {
   bounties: [
     {
       icon: 'smart_toy',
-      color: 'cyan',
+      color: 'azure',
       label: 'Special Bounty',
       title: 'Best Agent Architecture',
       amount: '₹15,000 Grant',
@@ -41,7 +41,7 @@ export const prizes = {
     },
     {
       icon: 'code',
-      color: 'violet',
+      color: 'azure',
       label: 'Special Bounty',
       title: 'Best Use of Open Source',
       amount: '₹10,000 Grant',
@@ -89,8 +89,8 @@ export const prizes = {
 export const cta = {
   badge: 'APPLICATION STAGE 01 IS OPEN',
   heading: 'Ready to build software that creates a lasting ripple?',
-  body: 'Register now — free entry, verified certificates for all participants, and 36 hours of high-velocity creation at Acropolis, Indore.',
-  primary: { label: 'Registration', href: 'https://unstop.com/p/ai-manthan-2026-acropolis-hackathon-1506313', icon: 'rocket_launch' },
+  body: 'Register now — free entry, verified certificates for all participants, and a 24-hour high-velocity creation sprint at Acropolis, Indore.',
+  primary: { label: 'Registration', href: 'https://unstop.com/p/ai-manthan-2k26-acropolis-institute-of-technology-and-research-indore-1751106', icon: 'rocket_launch' },
   secondary: { label: 'Join WhatsApp Community', href: 'https://whatsapp.com/channel/0029Vb87c3eDJ6GyyNKLgx0L', icon: 'forum' },
-  footnotes: ['ZERO REGISTRATION FEES', '36-HOUR OFFLINE CRUCIBLE', '₹2,00,000+ BOUNTY POOL'],
+  footnotes: ['ZERO REGISTRATION FEES', '24-HOUR OFFLINE CRUCIBLE', '₹1,00,000+ PRIZE POOL'],
 }

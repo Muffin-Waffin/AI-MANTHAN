@@ -34,11 +34,26 @@ function FindUsCard() {
         {venue.address}
       </p>
 
+      {/* Embedded map preview — visible directly on the page, responsive
+          at every breakpoint, no redirect required. Tapping it opens the
+          full external navigation (progressive enhancement over the old
+          "button that leads away" pattern). */}
+      <div className="mt-5 overflow-hidden rounded-xl border border-white/[0.1] relative">
+        <iframe
+          src={venue.mapEmbedSrc}
+          title="Map preview — Acropolis Institute of Technology & Research, Mangliya Sadak, Indore"
+          loading="lazy"
+          allowFullScreen
+          referrerPolicy="no-referrer-when-downgrade"
+          className="block w-full h-[220px] sm:h-[260px] lg:h-[240px] border-0"
+        />
+      </div>
+
       <a
         href={venue.mapsHref}
         target="_blank"
         rel="noopener noreferrer"
-        className="group mt-5 flex items-center justify-between rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-xs sm:text-sm font-semibold text-white transition-all duration-300 hover:border-brand-violet/50 hover:bg-white/[0.06]"
+        className="group mt-4 flex items-center justify-between rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-xs sm:text-sm font-semibold text-white transition-all duration-300 hover:border-brand-cyan/50 hover:bg-white/[0.06]"
       >
         Open location in Maps
         <Icon
@@ -80,7 +95,7 @@ function TalkToUsCard() {
         </Link>
         <button
           onClick={openDirectory}
-          className="inline-flex items-center gap-2 rounded-full border border-white/[0.12] bg-white/[0.04] px-4 py-2.5 text-xs sm:text-sm font-semibold text-zinc-200 transition-all duration-300 hover:border-brand-violet/50 hover:text-white hover:bg-white/[0.07]"
+          className="inline-flex items-center gap-2 rounded-full border border-white/[0.12] bg-white/[0.04] px-4 py-2.5 text-xs sm:text-sm font-semibold text-zinc-200 transition-all duration-300 hover:border-brand-cyan/50 hover:text-white hover:bg-white/[0.07]"
         >
           <Icon name="call" className="text-[15px]" />
           Phone directory
@@ -127,13 +142,13 @@ export default function VenueFaq() {
                 >
                   <AccordionTrigger className="group py-4 sm:py-5 text-sm sm:text-base font-semibold text-white hover:no-underline hover:text-white gap-3 sm:gap-5 [&>svg]:hidden">
                     <span className="flex items-baseline gap-3 sm:gap-5 min-w-0">
-                      <span className="font-mono text-[10px] sm:text-xs text-brand-violet font-medium shrink-0">
+                      <span className="font-mono text-[10px] sm:text-xs text-brand-cyan font-medium shrink-0">
                         {String(idx + 1).padStart(2, '0')}
                       </span>
                       <span className="min-w-0">{item.q}</span>
                     </span>
                     {/* circled chevron like the reference — rotates when open */}
-                    <span className="w-8 h-8 rounded-full border border-white/[0.12] bg-white/[0.03] flex items-center justify-center shrink-0 transition-all duration-300 group-data-[state=open]:border-brand-violet/60 group-data-[state=open]:shadow-[0_0_14px_-2px_rgba(124,58,237,0.55)]">
+                    <span className="w-8 h-8 rounded-full border border-white/[0.12] bg-white/[0.03] flex items-center justify-center shrink-0 transition-all duration-300 group-data-[state=open]:border-brand-cyan/60 group-data-[state=open]:shadow-[0_0_14px_-2px_rgba(0,168,255,0.55)]">
                       <Icon
                         name="expand_more"
                         className="text-[16px] text-zinc-400 transition-transform duration-200 group-data-[state=open]:rotate-180 group-data-[state=open]:text-white"

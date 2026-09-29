@@ -5,30 +5,34 @@ import useScrollSpy from './useScrollSpy'
 import VisitorCounter from './VisitorCounter'
 import { site } from '../../data/site'
 
-/* ── Brand: butterfly mark + neon wordmark — a standalone floating
-   piece pinned to the left edge (no shared shell with the nav) ── */
+/* ── Brand: official AI MANTHAN 2.0 logo + neon wordmark — a standalone
+   floating piece pinned to the left edge (no shared shell with the nav).
+   The logo is a landscape WebP (1599×966, alpha) — object-contain only,
+   NEVER object-cover (a cover-crop was slicing the wordmark). ── */
 function BrandMark() {
   return (
     <a
-      className="neon-brand relative flex items-center gap-3 group shrink-0 rounded-full pl-2 pr-4 py-1.5"
+      className="neon-brand relative flex items-center gap-2.5 group shrink-0 rounded-full pl-2 pr-4 py-1.5"
       href="/"
     >
-      {/* ambient glow behind the butterfly */}
+      {/* ambient glow behind the emblem */}
       <span
         aria-hidden="true"
-        className="absolute -left-1 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-fuchsia-600/25 blur-xl transition-opacity duration-500 opacity-80 group-hover:opacity-100"
+        className="absolute -left-1 top-1/2 -translate-y-1/2 w-14 h-14 rounded-full bg-brand-cyan/25 blur-xl transition-opacity duration-500 opacity-80 group-hover:opacity-100"
       />
       <img
-        src="/logos/butterfly.png"
-        alt="AI Manthan butterfly logo"
-        className="relative w-8 h-8 sm:w-9 sm:h-9 lg:w-10 lg:h-10 object-contain drop-shadow-[0_0_12px_rgba(217,70,239,0.65)] transition-transform duration-500 group-hover:scale-110"
+        src="/logos/aimathan-logo.png"
+        alt="AI Manthan 2.0 logo"
+        width={1599}
+        height={966}
+        className="relative h-9 w-14 sm:h-10 sm:w-16 lg:h-11 lg:w-[72px] object-contain drop-shadow-[0_0_12px_rgba(0,240,255,0.55)] transition-transform duration-500 group-hover:scale-110"
       />
       <span className="flex flex-col leading-none">
         <span className="flex items-baseline gap-1.5">
           <span className="text-white font-extrabold text-sm sm:text-base lg:text-lg tracking-[0.14em] lg:tracking-[0.18em] whitespace-nowrap transition-colors group-hover:text-zinc-100">
             {site.title}
           </span>
-          <span className="text-xs sm:text-sm lg:text-base font-extrabold tracking-[0.14em] text-fuchsia-400 [text-shadow:0_0_14px_rgba(232,121,249,0.8)]">
+          <span className="text-xs sm:text-sm lg:text-base font-extrabold tracking-[0.14em] text-brand-cyan [text-shadow:0_0_14px_rgba(0,240,255,0.8)]">
             {site.titleAccent}
           </span>
         </span>
@@ -47,7 +51,7 @@ function NavLink({ label, href, active }) {
     <a
       className={`relative px-3.5 py-2 rounded-full text-[13px] font-semibold whitespace-nowrap transition-all duration-400 ${
         active
-          ? 'text-white bg-gradient-to-r from-purple-600 via-fuchsia-600 to-purple-600 shadow-[0_0_18px_rgba(168,85,247,0.65),inset_0_1px_0_rgba(255,255,255,0.22)]'
+          ? 'text-[#06080d] bg-gradient-to-r from-brand-cyan via-[#7df4ff] to-brand-cyan shadow-[0_0_18px_rgba(0,240,255,0.65),inset_0_1px_0_rgba(255,255,255,0.25)]'
           : 'text-zinc-300 hover:text-white'
       }`}
       href={href}
@@ -66,6 +70,10 @@ export default function Navbar() {
   const openSupport = () => {
     setMenuOpen(false)
     window.dispatchEvent(new Event('open-support-modal'))
+  }
+  const openRulebook = () => {
+    setMenuOpen(false)
+    window.dispatchEvent(new Event('open-rulebook-modal'))
   }
 
   return (
@@ -99,6 +107,18 @@ export default function Navbar() {
           {/* Live Visitor Counter Badge */}
           <VisitorCounter variant="badge" className="hidden lg:inline-flex" />
 
+          {/* Rulebook — dedicated navbar entry (desktop). Opens the SAME
+              global modal via the shared window event; behavior unchanged. */}
+          <button
+            className="neon-brand hidden xl:inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-[13px] font-semibold text-zinc-300 hover:text-white transition-all duration-300"
+            onClick={openRulebook}
+            aria-label="Open rulebook"
+            title="Rulebook"
+          >
+            <span className="material-symbols-outlined text-[16px] select-none">menu_book</span>
+            Rulebook
+          </button>
+
           {/* Support — quiet icon button, keeps the modal one click away */}
           <button
             className="neon-brand hidden sm:inline-flex items-center justify-center w-9 h-9 rounded-full text-zinc-300 hover:text-white transition-all duration-300"
@@ -121,7 +141,7 @@ export default function Navbar() {
 
           {/* Mobile hamburger — shows below xl (nav fits till 1280px) */}
           <button
-            className="xl:hidden inline-flex items-center justify-center w-10 h-10 rounded-full text-zinc-200 border border-white/10 bg-white/[0.04] hover:text-white hover:border-fuchsia-400/50 transition-colors"
+            className="xl:hidden inline-flex items-center justify-center w-10 h-10 rounded-full text-zinc-200 border border-white/10 bg-white/[0.04] hover:text-white hover:border-cyan-400/50 transition-colors"
             onClick={() => setMenuOpen((v) => !v)}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
@@ -155,7 +175,7 @@ export default function Navbar() {
                   href={item.href}
                   className={`px-3.5 py-2.5 rounded-xl transition-all ${
                     active
-                      ? 'text-white bg-gradient-to-r from-purple-600/80 via-fuchsia-600/80 to-purple-600/80 shadow-[0_0_16px_rgba(168,85,247,0.5)]'
+                      ? 'text-[#06080d] bg-gradient-to-r from-brand-cyan/90 via-[#7df4ff]/90 to-brand-cyan/90 shadow-[0_0_16px_rgba(0,240,255,0.5)]'
                       : 'text-zinc-300 hover:text-white hover:bg-white/[0.05]'
                   }`}
                   onClick={() => setMenuOpen(false)}
@@ -176,6 +196,13 @@ export default function Navbar() {
               aria-label="Open support"
             >
               <span className="material-symbols-outlined text-[18px] select-none">headset_mic</span>
+            </button>
+            <button
+              className="inline-flex flex-1 items-center justify-center gap-2 py-2.5 rounded-full text-zinc-100 text-sm font-semibold bg-white/[0.06] border border-white/[0.14] transition-all hover:bg-white/[0.12]"
+              onClick={openRulebook}
+            >
+              <span className="material-symbols-outlined text-[16px]">menu_book</span>
+              Rulebook
             </button>
             <a
               href={site.links.register}

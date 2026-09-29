@@ -1,5 +1,6 @@
 import { Plus_Jakarta_Sans, Space_Mono, Caveat } from 'next/font/google'
 import '@/styles/index.css'
+import '@/styles/vertical-timeline.css'
 import AppShell from '@/components/layout/AppShell'
 import Analytics from '@/components/seo/Analytics'
 
@@ -29,26 +30,27 @@ export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://ai-manthan.
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'AI Manthan 2026 — 36 Hours of Relentless Engineering at Acropolis Indore',
-    template: '%s | AI Manthan 2026',
+    default: 'AI MANTHAN 2.0 — 24-Hour National AI Hackathon at Acropolis Indore',
+    template: '%s | AI MANTHAN 2.0',
   },
   description:
-    "The flagship national AI hackathon at Acropolis Institute of Technology & Research, Indore — 36 hours of relentless engineering, ₹2,00,000+ bounty pool, and 1,500+ frontier builders. October 14–16, 2026.",
+    "AI MANTHAN 2.0 — the national-level AI hackathon at Acropolis Institute of Technology & Research, Indore. A 24-hour offline hackathon across 12 AI challenge domains and a ₹1,00,000+ prize pool. October 14–16, 2026.",
   keywords: [
+    'AI Manthan 2.0',
     'AI Manthan hackathon',
     'Acropolis Indore hackathon',
-    'AI Manthan 2026',
+    'AI Manthan 2K26',
     'national AI hackathon India',
-    '36 hour hackathon',
+    '24 hour hackathon',
+    '24-hour offline hackathon',
     'student hackathon',
     'AI hackathon',
-    'blockchain hackathon',
     'hackathon India 2026',
     'AI hackathon Indore',
     'college hackathon Madhya Pradesh',
     'IIT NIT BITS hackathon',
   ],
-  authors: [{ name: 'Acropolis — AI Manthan' }],
+  authors: [{ name: 'Acropolis — AI MANTHAN 2.0' }],
   creator: 'Acropolis Institute of Technology & Research',
   publisher: 'Acropolis Institute of Technology & Research, Indore',
 
@@ -60,18 +62,18 @@ export const metadata = {
     type: 'website',
     locale: 'en_IN',
     url: SITE_URL,
-    siteName: 'AI Manthan 2026 — Acropolis Indore',
-    title: 'AI Manthan 2026 — AI Hackathon at Acropolis Indore | Oct 14–16, 2026',
+    siteName: 'AI MANTHAN 2.0 — Acropolis Indore',
+    title: 'AI MANTHAN 2.0 — National AI Hackathon at Acropolis Indore | Oct 14–16, 2026',
     description:
-      '1,500+ builders, 6 challenge tracks, ₹2,00,000+ bounty pool. Acropolis flagship AI hackathon, October 14–16, 2026.',
+      '12 AI challenge domains, 24-hour offline finale, ₹1,00,000+ prize pool. Acropolis flagship AI hackathon, October 14–16, 2026.',
   },
 
   // Twitter/X card — image is auto-wired by app/opengraph-image.jsx
   twitter: {
     card: 'summary_large_image',
-    title: 'AI Manthan 2026 — AI Hackathon at Acropolis Indore | Oct 14–16, 2026',
+    title: 'AI MANTHAN 2.0 — National AI Hackathon at Acropolis Indore | Oct 14–16, 2026',
     description:
-      '1,500+ builders, 6 challenge tracks, ₹2,00,000+ bounty pool. October 14–16, 2026.',
+      '12 AI challenge domains, 24-hour offline finale, ₹1,00,000+ prize pool. October 14–16, 2026.',
   },
 
   robots: {
@@ -93,7 +95,7 @@ export const metadata = {
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
-  themeColor: '#06070a',
+  themeColor: '#06080d',
 }
 
 export default function RootLayout({ children }) {

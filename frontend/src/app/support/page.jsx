@@ -10,14 +10,14 @@ import { site } from '@/data/site'
 
 /**
  * SUPPORT TICKET — dedicated contact page (opened from "Email us").
- * Design: the site's obsidian + violet system, deliberately restrained —
- * one soft violet aura behind the card, hairline borders, mono eyebrow.
+ * Design: the site's obsidian + cyan system, deliberately restrained —
+ * one soft cyan aura behind the card, hairline borders, mono eyebrow.
  * Submits straight to Supabase (RLS-guarded insert into "Inquiry");
  * a DB trigger auto-assigns the routing coordinator on file.
  */
 
 const inputCls =
-  'w-full rounded-xl border border-white/[0.09] bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-brand-violet/50 transition-colors duration-300'
+  'w-full rounded-xl border border-white/[0.09] bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-brand-cyan/50 transition-colors duration-300'
 
 const labelCls =
   'block text-[10px] font-mono font-medium tracking-[0.18em] text-zinc-500 uppercase mb-2'
@@ -71,7 +71,7 @@ export default function SupportPage() {
         {/* single soft aura — restrained, no neon overload */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute left-1/2 top-[-30%] -translate-x-1/2 w-[60vw] h-[60vw] max-w-[900px] max-h-[900px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(124,58,237,0.09),transparent_65%)] blur-3xl"
+          className="pointer-events-none absolute left-1/2 top-[-30%] -translate-x-1/2 w-[60vw] h-[60vw] max-w-[900px] max-h-[900px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(0,168,255,0.09),transparent_65%)] blur-3xl"
         />
 
         <div className="site-container relative z-10 py-7 sm:py-9">
@@ -85,7 +85,7 @@ export default function SupportPage() {
 
             {/* Header — compact for one-view fit */}
             <div className="mt-4 mb-5">
-              <span className="text-[11px] font-mono font-medium tracking-[0.28em] text-brand-violet uppercase">
+              <span className="text-[11px] font-mono font-medium tracking-[0.28em] text-brand-cyan uppercase">
                 Support Ticket
               </span>
               <h1 className="mt-1.5 font-mono text-2xl sm:text-3xl font-bold uppercase tracking-tight text-white">
@@ -112,7 +112,7 @@ export default function SupportPage() {
                   </p>
                   <Link
                     href="/"
-                    className="mt-7 inline-flex items-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.04] px-5 py-2.5 text-xs font-semibold text-zinc-200 transition-all duration-300 hover:border-brand-violet/50 hover:text-white"
+                    className="mt-7 inline-flex items-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.04] px-5 py-2.5 text-xs font-semibold text-zinc-200 transition-all duration-300 hover:border-brand-cyan/50 hover:text-white"
                   >
                     Back to home
                     <Icon name="arrow_forward" className="text-[14px]" />
@@ -187,7 +187,7 @@ export default function SupportPage() {
                   <button
                     type="submit"
                     disabled={status === 'sending'}
-                    className="group w-full inline-flex items-center justify-center gap-2 rounded-xl bg-brand-violet py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-brand-violet-hover disabled:opacity-60"
+                    className="group w-full inline-flex items-center justify-center gap-2 rounded-xl bg-brand-cyan py-3 text-sm font-semibold text-[#06080d] transition-all duration-300 hover:bg-brand-cyan-hover disabled:opacity-60"
                   >
                     <Icon
                       name={status === 'sending' ? 'refresh' : 'send'}

@@ -4,7 +4,7 @@ import SectionBackdrop from '../ui/SectionBackdrop'
 import { story } from '../../data/site'
 
 const textTone = {
-  violet: 'text-brand-violet',
+  azure: 'text-brand-cyan',
   cyan: 'text-brand-cyan',
   emerald: 'text-emerald-400',
   amber: 'text-amber-400',
@@ -17,7 +17,7 @@ function PillarCard({ pillar }) {
       <div>
         <div
           className={`w-8 sm:w-10 h-8 sm:h-10 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center mb-2.5 sm:mb-4 transition-all duration-650 group-hover/pillar:scale-110 group-hover/pillar:border-white/20 ${
-            textTone[pillar.color] || 'text-brand-violet'
+            textTone[pillar.color] || 'text-brand-cyan'
           }`}
         >
           <Icon name={pillar.icon} className="text-[18px] sm:text-[22px]" />
@@ -38,7 +38,7 @@ export default function Story() {
       <SectionBackdrop variant="churn" />
       <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,500px)] lg:items-start gap-6 sm:gap-8 lg:gap-8 mb-6 sm:mb-8">
         <div className="max-w-2xl pl-[3%]">
-          <span className="text-[10px] sm:text-xs font-mono font-medium tracking-wider text-brand-violet uppercase">
+          <span className="text-[10px] sm:text-xs font-mono font-medium tracking-wider text-brand-cyan uppercase">
             {story.eyebrow}
           </span>
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white mt-1.5 leading-tight">
@@ -46,18 +46,21 @@ export default function Story() {
           </h2>
           <p className="text-xs sm:text-sm md:text-base text-zinc-400 mt-2 sm:mt-3 leading-relaxed">{story.body}</p>
         </div>
-        {/* Right rail — crystal butterfly key-visual + quote beneath it.
-            No frame/border — the butterfly floats free with a soft glow. */}
+        {/* Right rail — official AI MANTHAN 2.0 logo key-visual + quote
+            beneath it. No frame/border — the emblem floats free with a
+            soft glow. Subtle float only — the logo is never morphed. */}
         <div className="w-full flex flex-col gap-3 sm:gap-4">
           <div className="story-video relative w-full flex items-center justify-center">
             <div
               aria-hidden="true"
-              className="absolute inset-8 bg-purple-600/20 blur-[70px] rounded-full pointer-events-none"
+              className="absolute inset-8 bg-cyan-600/20 blur-[70px] rounded-full pointer-events-none"
             />
             <img
-              src="/logos/butterfly.png"
-              alt="AI Manthan — crystal butterfly emblem"
-              className="relative w-full max-w-[420px] object-contain animate-butterfly-hover drop-shadow-[0_0_50px_rgba(147,51,234,0.5)]"
+              src="/logos/aimathan-logo.png"
+              alt="AI Manthan 2.0 — official event logo"
+              width={1599}
+              height={966}
+              className="relative w-full max-w-[460px] h-auto object-contain animate-logo-float drop-shadow-[0_0_50px_rgba(0,240,255,0.5)]"
             />
           </div>
           <div className="glass p-3 sm:p-3.5 rounded-xl text-[10px] sm:text-xs font-mono text-zinc-400">

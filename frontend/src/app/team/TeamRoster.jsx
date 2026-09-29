@@ -10,7 +10,7 @@ import { teamAccents } from '@/data/team'
 function TeamCard({ member }) {
   return (
     <div className="group flex flex-col items-center">
-      <div className="relative w-[260px] h-[365px] rounded-[1.25rem] border border-white/[0.1] bg-obsidian-900/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_16px_40px_-14px_rgba(0,0,0,0.8)] overflow-hidden transition-all duration-300 ease-out group-hover:-translate-y-1.5 group-hover:scale-[1.02] group-hover:border-brand-violet/60 group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_0_30px_-6px_rgba(168,85,247,0.5),0_22px_44px_-14px_rgba(0,0,0,0.85)] shrink-0">
+      <div className="relative w-[260px] h-[365px] rounded-[1.25rem] border border-white/[0.1] bg-obsidian-900/80 shadow-[inset_0_1px_0_rgba(255,255,255,0.07),0_16px_40px_-14px_rgba(0,0,0,0.8)] overflow-hidden transition-all duration-300 ease-out group-hover:-translate-y-1.5 group-hover:scale-[1.02] group-hover:border-brand-cyan/60 group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.1),0_0_30px_-6px_rgba(0,240,255,0.5),0_22px_44px_-14px_rgba(0,0,0,0.85)] shrink-0">
         <div className="absolute top-2.5 left-1/2 -translate-x-1/2 w-11 h-1 rounded-full bg-white/[0.14] z-10" />
 
         <div className="absolute inset-0 overflow-hidden">
@@ -25,7 +25,7 @@ function TeamCard({ member }) {
           ) : (
             <div
               className={`absolute inset-0 bg-gradient-to-br flex items-center justify-center ${
-                teamAccents[member.accent] || teamAccents.violet
+                teamAccents[member.accent] || teamAccents.cyan
               }`}
             >
               {/* faint oversized echo of the initials — depth without noise */}
@@ -222,7 +222,7 @@ function TeamGroup({ group }) {
                 aria-label={`Go to position ${i + 1}`}
                 className={`h-1.5 rounded-full transition-all duration-300 ${
                   index === i
-                    ? 'w-5 bg-brand-violet'
+                    ? 'w-5 bg-brand-cyan'
                     : 'w-1.5 bg-zinc-700 hover:bg-zinc-500'
                 }`}
                 onClick={() => goTo(i)}

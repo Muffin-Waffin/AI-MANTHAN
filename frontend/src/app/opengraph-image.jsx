@@ -3,9 +3,9 @@ import { ImageResponse } from 'next/og'
 /**
  * Auto-wired OG/Twitter image (1200×630) — Next.js serves it and
  * references it in meta tags automatically. Branded card matching
- * the obsidian/violet design system.
+ * the Titanium Cyber Lumina design system (obsidian + electric cyan).
  */
-export const alt = 'AI Manthan 2026 — Flagship AI Hackathon, Acropolis Indore'
+export const alt = 'AI MANTHAN 2.0 — National-Level AI Hackathon, Acropolis Indore'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -20,7 +20,7 @@ export default function OpengraphImage() {
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
-          background: 'linear-gradient(135deg, #06070a 0%, #141722 100%)',
+          background: 'linear-gradient(135deg, #06080d 0%, #162033 100%)',
           color: '#ffffff',
           fontFamily: 'sans-serif',
         }}
@@ -60,7 +60,7 @@ export default function OpengraphImage() {
             maxWidth: 950,
           }}
         >
-          AI Manthan 2026
+          AI MANTHAN 2.0
         </div>
         <div
           style={{
@@ -72,11 +72,11 @@ export default function OpengraphImage() {
             fontFamily: 'monospace',
           }}
         >
-          <span>1,500+ Builders</span>
+          <span>12 Domains</span>
           <span style={{ color: '#52525b' }}>•</span>
-          <span>6 Tracks</span>
+          <span>24-Hour Offline</span>
           <span style={{ color: '#52525b' }}>•</span>
-          <span>₹2,00,000+ Bounty</span>
+          <span>₹1,00,000+ Prize Pool</span>
         </div>
         <div
           style={{
@@ -84,8 +84,8 @@ export default function OpengraphImage() {
             marginTop: 36,
             padding: '12px 32px',
             borderRadius: 999,
-            border: '1px solid rgba(124,58,237,0.5)',
-            background: 'rgba(124,58,237,0.15)',
+            border: '1px solid rgba(0,240,255,0.6)',
+            background: 'rgba(0,240,255,0.15)',
             fontSize: 24,
             fontWeight: 600,
             letterSpacing: 3,

@@ -1,7 +1,7 @@
 /* ── Community Organizing Team (dedicated /team page) ────────────────
    Structure mirrors the Manipal reference: grouped rosters with mono
    pixel-style headings, portrait cards (3:4 photo), name + Instagram &
-   LinkedIn icons below, violet neon border on hover.
+   LinkedIn icons below, cyan neon border on hover.
 
    Photos: drop portraits into `frontend/public/team/` and reference
    them as `/team/<file>.jpg`. Without a photo the card falls back to a
@@ -12,7 +12,7 @@
 export const teamPage = {
   eyebrow: 'THE HUMANS BEHIND THE CHURNING',
   heading: 'Meet the Team',
-  body: 'The community organizing crew powering AI Manthan 2K26 — core leads, technical, SMGD, outreach and the volunteer corps that keeps the arena alive for 36 straight hours.',
+  body: 'The community organizing crew powering AI Manthan 2.0 — core leads, technical, SMGD, outreach and the volunteer corps that keeps the arena alive for 24 straight hours.',
 }
 
 export const teamGroups = [
@@ -26,7 +26,7 @@ export const teamGroups = [
         photo: '', // /team/kavya.jpg
         instagram: 'https://instagram.com',
         linkedin: 'https://linkedin.com',
-        accent: 'violet',
+        accent: 'azure',
       },
       {
         name: 'Rohan Hegde',
@@ -34,7 +34,7 @@ export const teamGroups = [
         photo: '',
         instagram: 'https://instagram.com',
         linkedin: 'https://linkedin.com',
-        accent: 'cyan',
+        accent: 'azure',
       },
       {
         name: 'Tanvi Nair',
@@ -64,7 +64,7 @@ export const teamGroups = [
         photo: '',
         instagram: 'https://instagram.com',
         linkedin: 'https://linkedin.com',
-        accent: 'cyan',
+        accent: 'azure',
       },
       {
         name: 'Lakshay Singla',
@@ -72,7 +72,7 @@ export const teamGroups = [
         photo: '',
         instagram: 'https://instagram.com',
         linkedin: 'https://linkedin.com',
-        accent: 'violet',
+        accent: 'azure',
       },
       {
         name: 'Pragun Kakar',
@@ -110,7 +110,7 @@ export const teamGroups = [
         photo: '',
         instagram: 'https://instagram.com',
         linkedin: 'https://linkedin.com',
-        accent: 'violet',
+        accent: 'azure',
       },
       {
         name: 'Aditya Vyass',
@@ -118,7 +118,7 @@ export const teamGroups = [
         photo: '',
         instagram: 'https://instagram.com',
         linkedin: 'https://linkedin.com',
-        accent: 'cyan',
+        accent: 'azure',
       },
     ],
   },
@@ -140,7 +140,7 @@ export const teamGroups = [
         photo: '',
         instagram: 'https://instagram.com',
         linkedin: 'https://linkedin.com',
-        accent: 'violet',
+        accent: 'azure',
       },
       {
         name: 'Sarah Gupta',
@@ -156,7 +156,7 @@ export const teamGroups = [
         photo: '',
         instagram: 'https://instagram.com',
         linkedin: 'https://linkedin.com',
-        accent: 'cyan',
+        accent: 'azure',
       },
       {
         name: 'Viha Daglia',
@@ -172,15 +172,15 @@ export const teamGroups = [
         photo: '',
         instagram: 'https://instagram.com',
         linkedin: 'https://linkedin.com',
-        accent: 'violet',
+        accent: 'azure',
       },
     ],
   },
 ]
 
 export const teamAccents = {
-  violet: 'from-brand-violet/35 via-indigo-600/15 to-transparent text-brand-violet',
-  cyan: 'from-brand-cyan/35 via-sky-600/15 to-transparent text-brand-cyan',
+  azure: 'from-brand-cyan/35 via-sky-700/15 to-transparent text-brand-cyan',
+  cyan: 'from-brand-cyan/35 via-sky-700/15 to-transparent text-brand-cyan',
   emerald: 'from-emerald-500/35 via-teal-600/15 to-transparent text-emerald-400',
   amber: 'from-amber-500/35 via-orange-600/15 to-transparent text-amber-400',
   pink: 'from-pink-500/35 via-rose-600/15 to-transparent text-pink-400',

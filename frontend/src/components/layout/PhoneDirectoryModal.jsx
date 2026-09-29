@@ -14,7 +14,7 @@ export default function PhoneDirectoryModal({ open, onClose }) {
     <Dialog open={open} onOpenChange={(v) => !v && onClose()}>
       <DialogContent
         data-lenis-prevent
-        className="glass-strong max-h-[85vh] max-w-2xl gap-0 overflow-y-auto overscroll-contain rounded-2xl p-6 shadow-[0_24px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(124,58,237,0.15)] data-[state=open]:animate-fade-up"
+        className="glass-strong max-h-[85vh] max-w-2xl gap-0 overflow-y-auto overscroll-contain rounded-2xl p-6 shadow-[0_24px_60px_rgba(0,0,0,0.8),0_0_40px_rgba(0,168,255,0.15)] data-[state=open]:animate-fade-up"
         showCloseButton={false}
       >
         <DialogHeader className="sr-only">
@@ -27,7 +27,7 @@ export default function PhoneDirectoryModal({ open, onClose }) {
         {/* Header */}
         <div className="flex items-center justify-between pb-4 border-b border-white/[0.08] mb-5">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-brand-violet/20 border border-brand-violet/40 flex items-center justify-center text-brand-violet">
+            <div className="w-8 h-8 rounded-lg bg-brand-cyan/20 border border-brand-cyan/40 flex items-center justify-center text-brand-cyan">
               <Icon name="call" className="text-[18px]" />
             </div>
             <div>
@@ -60,7 +60,7 @@ export default function PhoneDirectoryModal({ open, onClose }) {
                   <a
                     key={member.phone}
                     href={`tel:${member.phone.replace(/\s/g, '')}`}
-                    className="block rounded-xl border border-white/[0.08] bg-white/[0.03] px-3.5 py-2.5 transition-all duration-300 hover:border-brand-violet/50 hover:bg-white/[0.06]"
+                    className="block rounded-xl border border-white/[0.08] bg-white/[0.03] px-3.5 py-2.5 transition-all duration-300 hover:border-brand-cyan/50 hover:bg-white/[0.06]"
                   >
                     <div className="text-xs sm:text-sm font-semibold text-white">
                       {member.name}

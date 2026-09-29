@@ -58,7 +58,7 @@ function AuthGate({ onSignedIn }) {
   return (
     <div className="min-h-screen flex items-center justify-center px-4">
       <form onSubmit={submit} className="glass-strong p-8 rounded-2xl w-full max-w-sm text-center">
-        <div className="w-12 h-12 mx-auto rounded-xl bg-brand-violet/20 border border-brand-violet/40 flex items-center justify-center text-brand-violet mb-4">
+        <div className="w-12 h-12 mx-auto rounded-xl bg-brand-cyan/20 border border-brand-cyan/40 flex items-center justify-center text-brand-cyan mb-4">
           <Icon name="admin_panel_settings" className="text-[26px]" />
         </div>
         <h1 className="text-lg font-bold text-white">Command Desk</h1>
@@ -70,7 +70,7 @@ function AuthGate({ onSignedIn }) {
           placeholder="admin email"
           autoComplete="username"
           required
-          className="w-full text-xs px-3 py-2.5 rounded-lg glass text-white placeholder:text-zinc-600 focus:outline-none focus:border-brand-violet/60 transition-all mb-2"
+          className="w-full text-xs px-3 py-2.5 rounded-lg glass text-white placeholder:text-zinc-600 focus:outline-none focus:border-brand-cyan/60 transition-all mb-2"
         />
         <input
           type="password"
@@ -79,11 +79,11 @@ function AuthGate({ onSignedIn }) {
           placeholder="password"
           autoComplete="current-password"
           required
-          className="w-full text-xs px-3 py-2.5 rounded-lg glass text-white placeholder:text-zinc-600 focus:outline-none focus:border-brand-violet/60 transition-all"
+          className="w-full text-xs px-3 py-2.5 rounded-lg glass text-white placeholder:text-zinc-600 focus:outline-none focus:border-brand-cyan/60 transition-all"
         />
         {error && <p className="text-[11px] font-mono text-red-400 mt-2">{error}</p>}
         <button
-          className="w-full mt-4 py-2.5 rounded-xl bg-brand-violet hover:bg-brand-violet-hover text-white text-xs font-semibold tracking-wide transition-all hover:-translate-y-0.5 disabled:opacity-60"
+          className="w-full mt-4 py-2.5 rounded-xl bg-brand-cyan hover:bg-brand-cyan-hover text-[#06080d] text-xs font-semibold tracking-wide transition-all hover:-translate-y-0.5 disabled:opacity-60"
           type="submit"
           disabled={busy}
         >
@@ -142,7 +142,7 @@ function VisitsPanel({ visits }) {
             </div>
           </div>
           <div className="glass p-4 rounded-xl flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center text-brand-violet bg-brand-violet/10">
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center text-brand-cyan bg-brand-cyan/10">
               <Icon name="person" className="text-[20px]" />
             </div>
             <div>
@@ -175,7 +175,7 @@ function VisitsPanel({ visits }) {
                 {d.date}: {d.total} visits · {d.unique} unique
               </div>
               <div
-                className="w-full rounded-t bg-gradient-to-t from-brand-violet/40 to-brand-cyan/70 transition-all duration-300 hover:from-brand-violet/60 hover:to-brand-cyan"
+                className="w-full rounded-t bg-gradient-to-t from-brand-cyan/40 to-brand-cyan/70 transition-all duration-300 hover:from-brand-cyan/60 hover:to-brand-cyan"
                 style={{ height: `${Math.max(4, (d.total / max) * 76)}px` }}
               />
               <span className="text-[8px] font-mono text-zinc-600">{d.date.slice(8)}</span>
@@ -223,7 +223,7 @@ function Ticket({ t, onAdvance }) {
         {t.status !== 'resolved' && (
           <button
             onClick={() => onAdvance(t)}
-            className="shrink-0 text-[11px] font-mono px-3 py-1.5 rounded-lg bg-white/[0.05] border border-white/[0.1] text-zinc-300 hover:text-white hover:border-brand-violet/50 transition-all"
+            className="shrink-0 text-[11px] font-mono px-3 py-1.5 rounded-lg bg-white/[0.05] border border-white/[0.1] text-zinc-300 hover:text-white hover:border-brand-cyan/50 transition-all"
           >
             → {NEXT_STATUS[t.status]}
           </button>
@@ -325,7 +325,7 @@ export default function AdminPage() {
       {/* header */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-brand-violet/20 border border-brand-violet/40 flex items-center justify-center text-brand-violet">
+          <div className="w-10 h-10 rounded-xl bg-brand-cyan/20 border border-brand-cyan/40 flex items-center justify-center text-brand-cyan">
             <Icon name="admin_panel_settings" className="text-[22px]" />
           </div>
           <div>
@@ -371,7 +371,7 @@ export default function AdminPage() {
             icon="reviews"
             value={stats.avgRating ? `${stats.avgRating}★` : '—'}
             label={`${stats.feedback} feedbacks`}
-            tone="text-brand-violet bg-brand-violet/10"
+            tone="text-brand-cyan bg-brand-cyan/10"
           />
         </div>
       )}
@@ -389,7 +389,7 @@ export default function AdminPage() {
             onClick={() => setStatusFilter(f.v)}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
               statusFilter === f.v
-                ? 'bg-brand-violet/25 border border-brand-violet/50 text-white'
+                ? 'bg-brand-cyan/25 border border-brand-cyan/50 text-white'
                 : 'glass text-zinc-400 hover:text-white'
             }`}
           >
@@ -434,7 +434,7 @@ export default function AdminPage() {
       {/* coordinators */}
       <details className="glass mt-8 rounded-2xl overflow-hidden">
         <summary className="px-5 py-4 cursor-pointer text-sm font-semibold text-white flex items-center gap-2">
-          <Icon name="groups" className="text-[18px] text-brand-violet" />
+          <Icon name="groups" className="text-[18px] text-brand-cyan" />
           Coordinators ({coordinators.length})
         </summary>
         <div className="px-5 pb-5 space-y-2">
