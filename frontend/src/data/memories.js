@@ -14,84 +14,52 @@ export const memories = {
     body: 'Hundreds of passionate builders, founders, and AI enthusiasts coming together in the grand arena.',
   },
 
-  /* Themed collections with real local images */
-  collections: [
+  /* Unified photo list of all 9 past event images */
+  allPhotos: [
     {
-      id: 'moments',
-      title: 'Event Moments & Arena',
-      icon: 'photo_library',
-      accent: 'azure',
-      items: [
-        {
-          img: '/pastaimathan/image.png',
-          title: 'Opening Ceremony & Keynote',
-          body: 'Welcoming country-wide innovators to AI Manthan.',
-        },
-        {
-          img: '/pastaimathan/image copy.png',
-          title: 'High-Energy Hackathon Floor',
-          body: 'Teams collaborating and coding late into the night.',
-        },
-      ],
+      img: '/pastaimathan/image.png',
+      title: 'Grand Finale & Arena',
+      body: 'Opening keynote and national hackathon arena at Acropolis, Indore.',
     },
     {
-      id: 'innovation',
-      title: 'Innovation & Demos',
-      icon: 'lightbulb',
-      accent: 'amber',
-      items: [
-        {
-          img: '/pastaimathan/image copy 2.png',
-          title: 'Live AI Model Demonstration',
-          body: 'Presenting cutting-edge AI & deeptech prototypes to domain experts.',
-        },
-        {
-          img: '/pastaimathan/image copy 3.png',
-          title: 'Jury Evaluation & Pitching',
-          body: 'Defending system architecture and algorithm design.',
-        },
-      ],
+      img: '/pastaimathan/image copy.png',
+      title: 'Hackathon Coding Floor',
+      body: 'Teams collaborating and coding late into the night.',
     },
     {
-      id: 'teams',
-      title: 'Teams & Collaboration',
-      icon: 'groups',
-      accent: 'cyan',
-      items: [
-        {
-          img: '/pastaimathan/image copy 4.png',
-          title: 'Squad Brainstorming Session',
-          body: 'Rapid prototyping and solution architecting.',
-        },
-        {
-          img: '/pastaimathan/image copy 5.png',
-          title: 'Midnight Debugging Squads',
-          body: 'Fixing bugs and optimizing throughput before final submission.',
-        },
-      ],
+      img: '/pastaimathan/image copy 2.png',
+      title: 'Live AI Model Demonstration',
+      body: 'Presenting cutting-edge AI & deeptech prototypes to domain experts.',
     },
     {
-      id: 'finale',
-      title: 'Prize Distribution & Valedictory',
-      icon: 'emoji_events',
-      accent: 'emerald',
-      items: [
-        {
-          img: '/pastaimathan/image copy 6.png',
-          title: 'Winners Cheque Presentation',
-          body: 'Honoring top innovators and cash prize distribution.',
-        },
-        {
-          img: '/pastaimathan/image copy 7.png',
-          title: 'Trophy & Excellence Awards',
-          body: 'Recognizing outstanding achievements in AI engineering.',
-        },
-        {
-          img: '/pastaimathan/IMG_20251109_173152427 (1).jpg.jpeg',
-          title: 'Memorable Valedictory Moments',
-          body: 'Celebrating successful completion of AI Manthan.',
-        },
-      ],
+      img: '/pastaimathan/image copy 3.png',
+      title: 'Jury Evaluation & Pitching',
+      body: 'Defending system architecture and algorithm design.',
+    },
+    {
+      img: '/pastaimathan/image copy 4.png',
+      title: 'Squad Brainstorming Session',
+      body: 'Rapid prototyping and solution architecting.',
+    },
+    {
+      img: '/pastaimathan/image copy 5.png',
+      title: 'Midnight Debugging Squads',
+      body: 'Fixing bugs and optimizing throughput before final submission.',
+    },
+    {
+      img: '/pastaimathan/image copy 6.png',
+      title: 'Winners Cheque Presentation',
+      body: 'Honoring top innovators and cash prize distribution.',
+    },
+    {
+      img: '/pastaimathan/image copy 7.png',
+      title: 'Trophy & Excellence Awards',
+      body: 'Recognizing outstanding achievements in AI engineering.',
+    },
+    {
+      img: '/pastaimathan/IMG_20251109_173152427 (1).jpg.jpeg',
+      title: 'Memorable Valedictory Moments',
+      body: 'Celebrating successful completion of AI Manthan.',
     },
   ],
 
