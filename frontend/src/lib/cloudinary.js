@@ -17,11 +17,9 @@ export function getCloudinaryUrl(src, options = {}) {
     return src
   }
 
-  // If local static path (e.g. /logos/aimathan-logo.png), convert to Cloudinary CDN URL or keep fallback
+  // If local static path (e.g. /pastaimathan/... or /logos/...), return local path directly
   if (typeof src === 'string' && src.startsWith('/')) {
-    const cleanPath = src.replace(/^\//, '')
-    const transformations = options.quality ? `q_${options.quality},f_auto` : 'f_auto,q_auto'
-    return `https://res.cloudinary.com/${CLOUD_NAME}/image/upload/${transformations}/${cleanPath}`
+    return src
   }
 
   // Remote image URL -> Cloudinary Fetch API

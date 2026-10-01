@@ -162,26 +162,31 @@ function PeopleCard({ member }) {
 
 function ConvenerCard({ member }) {
   return (
-    <div className="col-span-full relative w-full overflow-hidden rounded-3xl border border-cyan-500/30 bg-gradient-to-r from-[#0d1627] via-[#090d16] to-[#0d1627] p-5 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.6)] mb-6 sm:mb-8 group hover:border-cyan-400/60 transition-all duration-500">
-      <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-8">
-        {/* Left Side: Inner Image Box */}
-        <div className="relative w-44 h-52 sm:w-56 sm:h-64 shrink-0 rounded-2xl overflow-hidden border-2 border-cyan-400/40 bg-obsidian-950 shadow-2xl">
-          <SmartImage
-            alt={member.name}
-            src={member.img}
-            fill
-            className="object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
-            sizes="(max-width: 768px) 176px, 224px"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
-          <span className="absolute bottom-2 left-2 right-2 text-center text-[10px] font-mono uppercase tracking-[0.16em] text-cyan-300 bg-black/80 py-0.5 rounded backdrop-blur-sm border border-cyan-400/30">
-            CONVENER
-          </span>
+    <div className="col-span-full relative w-full overflow-hidden rounded-3xl border border-cyan-500/30 bg-gradient-to-r from-[#0b1220] via-[#080c16] to-[#0d1627] p-5 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.6)] mb-6 sm:mb-8 group hover:border-cyan-400/60 transition-all duration-500">
+      {/* Background Subtle Ambient Glow */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center relative z-10">
+        {/* Left Side: Photo Frame Box */}
+        <div className="lg:col-span-3 flex justify-center lg:justify-start">
+          <div className="relative w-48 h-56 sm:w-56 sm:h-64 shrink-0 rounded-2xl overflow-hidden border-2 border-cyan-400/40 bg-obsidian-950 shadow-2xl">
+            <SmartImage
+              alt={member.name}
+              src={member.img}
+              fill
+              className="object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
+              sizes="(max-width: 768px) 192px, 224px"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
+            <span className="absolute bottom-2 inset-x-2 text-center text-[10px] font-mono uppercase tracking-[0.16em] font-bold text-cyan-300 bg-black/85 py-1 rounded backdrop-blur-sm border border-cyan-400/30">
+              FACULTY CONVENER
+            </span>
+          </div>
         </div>
 
-        {/* Right Side: Details & Intro */}
-        <div className="flex-1 text-center md:text-left space-y-2 sm:space-y-3">
-          <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
+        {/* Middle Side: Name, Designation & Intro */}
+        <div className="lg:col-span-5 text-center lg:text-left space-y-3">
+          <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold tracking-wider uppercase bg-cyan-500/15 border border-cyan-400/40 text-cyan-300 shadow-md">
               <Icon name="stars" className="text-sm text-cyan-400" />
               CONVENER & HOD
@@ -190,30 +195,59 @@ function ConvenerCard({ member }) {
           </div>
 
           <div>
-            <h3 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight leading-tight">
               {member.name}
             </h3>
-            <p className="text-sm sm:text-lg font-semibold text-cyan-400 mt-1">
+            <p className="text-sm sm:text-base font-semibold text-cyan-400 mt-1">
               {member.title}
             </p>
-            <p className="text-xs sm:text-sm text-zinc-400 font-mono mt-0.5">
+            <p className="text-xs text-zinc-400 font-mono mt-0.5">
               {member.org}
             </p>
           </div>
 
-          <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed max-w-3xl">
+          <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
             {member.bio}
           </p>
 
-          <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-2">
-            {member.bullets?.map((b, i) => (
-              <span
-                key={i}
-                className="px-2.5 py-1 rounded-md bg-white/[0.05] border border-white/10 text-[11px] font-mono text-zinc-300"
-              >
-                {b}
+          <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1">
+            <span className="px-2.5 py-1 rounded-md bg-cyan-500/10 border border-cyan-400/30 text-[11px] font-mono font-semibold text-cyan-300">
+              HOD: IT & Data Science
+            </span>
+            <span className="px-2.5 py-1 rounded-md bg-white/[0.05] border border-white/10 text-[11px] font-mono text-zinc-300">
+              Convener: AI Manthan 2.0
+            </span>
+          </div>
+        </div>
+
+        {/* Right Side: Quote & Leadership Highlights Box */}
+        <div className="lg:col-span-4 w-full">
+          <div className="relative rounded-2xl border border-cyan-400/30 bg-[#060a12]/80 p-5 backdrop-blur-md shadow-xl space-y-4">
+            {/* Quote Icon */}
+            <div className="flex items-center justify-between border-b border-white/10 pb-3">
+              <span className="flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-cyan-300 uppercase">
+                <Icon name="format_quote" className="text-lg text-cyan-400" />
+                Leadership Message
               </span>
-            ))}
+              <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
+            </div>
+
+            {/* Quote Text */}
+            <p className="text-xs text-zinc-300 italic leading-relaxed">
+              "{member.quote || 'Transforming curiosity into innovation through AI & Data Science excellence.'}"
+            </p>
+
+            {/* Department Pillars & Stats Grid */}
+            <div className="grid grid-cols-2 gap-2 pt-1">
+              <div className="p-2.5 rounded-xl border border-white/10 bg-white/[0.03]">
+                <div className="text-[10px] font-mono text-zinc-400 uppercase">Department</div>
+                <div className="text-xs font-bold text-cyan-300 mt-0.5">IT & Data Science</div>
+              </div>
+              <div className="p-2.5 rounded-xl border border-white/10 bg-white/[0.03]">
+                <div className="text-[10px] font-mono text-zinc-400 uppercase">Institution</div>
+                <div className="text-xs font-bold text-white mt-0.5">Acropolis AITR</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -257,7 +291,7 @@ const groups = [
   { id: 'guest', title: 'Guests of Honor' },
   { id: 'jury', title: 'Industry Jury' },
   { id: 'mentors', title: 'Hackathon Mentors' },
-  { id: 'faculty', title: 'Faculty Advisory & Leadership' },
+  { id: 'faculty', title: 'Faculty Convener & Leadership' },
 ]
 
 export default function Mentors() {
