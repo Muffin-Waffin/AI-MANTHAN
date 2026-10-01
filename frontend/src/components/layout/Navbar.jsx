@@ -144,26 +144,9 @@ export default function Navbar() {
           <span className="hidden min-[1100px]:block h-6 w-[1px] bg-white/15" />
         </div>
 
-        {/* Center — Desktop navigation links with smooth sliding active line indicator */}
-        <nav className="hidden 2xl:flex items-center shrink-1">
+        {/* Center — Desktop navigation links displaying all menu items directly */}
+        <nav className="hidden lg:flex items-center shrink-1">
           <SlidingNav items={site.nav} activeId={activeId} />
-        </nav>
-
-        {/* Compact Nav for xl screens (1280px-1535px) */}
-        <nav className="hidden xl:flex 2xl:hidden items-center shrink-1">
-          <SlidingNav
-            items={site.nav.slice(0, 5)}
-            activeId={activeId}
-            extraItem={
-              <button
-                onClick={() => setMenuOpen((v) => !v)}
-                className="px-2.5 py-1.5 rounded-full text-xs font-semibold text-cyan-300 hover:text-white flex items-center gap-0.5 bg-white/[0.05] hover:bg-white/[0.1] transition-colors"
-              >
-                More
-                <span className="material-symbols-outlined text-[15px]">expand_more</span>
-              </button>
-            }
-          />
         </nav>
 
         {/* Right — Actions Cluster */}
@@ -205,9 +188,9 @@ export default function Navbar() {
             <span className="material-symbols-outlined text-[15px] font-extrabold transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5">north_east</span>
           </a>
 
-          {/* Hamburger toggle button (visible on screens below 2xl) */}
+          {/* Hamburger toggle button (visible on screens below lg) */}
           <button
-            className="2xl:hidden inline-flex items-center justify-center w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-full text-zinc-200 bg-white/[0.06] hover:text-white hover:bg-white/[0.12] transition-all"
+            className="lg:hidden inline-flex items-center justify-center w-8.5 h-8.5 sm:w-9.5 sm:h-9.5 rounded-full text-zinc-200 bg-white/[0.06] hover:text-white hover:bg-white/[0.12] transition-all"
             onClick={() => setMenuOpen((v) => !v)}
             aria-expanded={menuOpen}
             aria-controls="mobile-menu"
@@ -220,7 +203,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Responsive Dropdown / Slide-over Menu for Mobile, Tablet & Compact Laptop */}
+      {/* Responsive Dropdown / Slide-over Menu for Mobile & Tablet */}
       {menuOpen && (
         <>
           <div
@@ -230,7 +213,7 @@ export default function Navbar() {
           />
           <div
             id="mobile-menu"
-            className="2xl:hidden fixed top-[78px] right-3 sm:right-6 left-3 sm:left-auto sm:w-[380px] max-h-[calc(100svh-90px)] overflow-y-auto rounded-2xl z-50 p-4 animate-fade-up bg-[#060b16]/95 border border-cyan-500/40 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.95)]"
+            className="lg:hidden fixed top-[78px] right-3 sm:right-6 left-3 sm:left-auto sm:w-[380px] max-h-[calc(100svh-90px)] overflow-y-auto rounded-2xl z-50 p-4 animate-fade-up bg-[#060b16]/95 border border-cyan-500/40 backdrop-blur-2xl shadow-[0_20px_60px_rgba(0,0,0,0.95)]"
           >
             <div className="flex items-center justify-between pb-3 mb-2 border-b border-white/10">
               <span className="text-xs font-mono font-bold tracking-widest text-cyan-300 uppercase">
