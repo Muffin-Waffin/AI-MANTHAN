@@ -176,6 +176,13 @@ export default function Footer() {
           </div>
         </div>
 
+        {/* Giant Edge-to-Edge Typography Banner (matching screenshot style) */}
+        <div className="w-full py-6 sm:py-8 border-t border-white/[0.08] overflow-hidden select-none">
+          <h2 className="text-[7.5vw] md:text-[8.5vw] font-black uppercase tracking-[0.16em] text-center leading-none text-transparent bg-clip-text bg-gradient-to-b from-white/35 via-white/15 to-white/5 drop-shadow-sm whitespace-nowrap">
+            AI MANTHAN 2.0
+          </h2>
+        </div>
+
         {/* Bottom Legal Bar */}
         <div className="pt-6 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-zinc-500">
           <div>{footer.legal}</div>
