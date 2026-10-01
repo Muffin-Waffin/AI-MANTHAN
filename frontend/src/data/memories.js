@@ -20,53 +20,89 @@ export const memories = {
   subheading: 'Event Memories',
   body: 'Moments, minds and milestones from previous editions of the national AI hackathon at Acropolis, Indore.',
 
-  /* Featured memory (hero slot). Set img to a real event photo when
-     available; keep `video` empty unless a real clip exists. */
+  /* Featured memory (hero slot) */
   featured: {
-    img: '',
+    img: '/pastaimathan/IMG_20251109_173152427 (1).jpg.jpeg',
     video: '',
-    tag: 'Grand Finale',
+    tag: 'Grand Finale 2025',
     meta: 'Acropolis Arena • Indore',
-    title: 'Where the churning began',
-    body: 'The arena floor, the midnight builds, the final demo — AI Manthan editions have turned hundreds of ideas into working prototypes.',
+    title: 'Where the Churning Began',
+    body: 'The arena floor, midnight builds, and final presentations — AI Manthan previous editions in action.',
   },
 
-  /* Themed collections. Each renders only when items exist. */
+  /* Themed collections populated with authentic past edition photos */
   collections: [
     {
       id: 'moments',
       title: 'Event Moments',
       icon: 'photo_library',
       accent: 'azure',
-      items: [],
+      items: [
+        {
+          img: '/pastaimathan/image.png',
+          title: 'Opening Ceremony & Keynote',
+          body: 'Welcoming 600+ builders to the national AI Hackathon arena.',
+        },
+        {
+          img: '/pastaimathan/image copy.png',
+          title: 'Hackathon Arena Floor',
+          body: 'Teams setting up workstations for the 36-hour sprint.',
+        },
+      ],
     },
     {
       id: 'innovation',
-      title: 'Innovation',
+      title: 'Innovation & Code',
       icon: 'lightbulb',
       accent: 'amber',
-      items: [],
+      items: [
+        {
+          img: '/pastaimathan/image copy 2.png',
+          title: 'Deep Tech & AI Prototyping',
+          body: 'Building multimodal ML models and autonomous agents.',
+        },
+        {
+          img: '/pastaimathan/image copy 3.png',
+          title: 'Midnight Coding Sessions',
+          body: 'Late night problem solving, coffee, and rapid iteration.',
+        },
+      ],
     },
     {
       id: 'teams',
-      title: 'Teams',
+      title: 'Builder Teams',
       icon: 'groups',
       accent: 'azure',
-      items: [],
+      items: [
+        {
+          img: '/pastaimathan/image copy 4.png',
+          title: 'Collaborative Squads',
+          body: 'Cross-functional student teams working together.',
+        },
+        {
+          img: '/pastaimathan/image copy 5.png',
+          title: 'Brainstorming & Architecture',
+          body: 'Mapping system designs and AI pipeline workflows.',
+        },
+      ],
     },
     {
       id: 'mentorship',
-      title: 'Mentorship',
+      title: 'Mentorship & Finale',
       icon: 'psychology',
       accent: 'pink',
-      items: [],
-    },
-    {
-      id: 'finale',
-      title: 'Finale',
-      icon: 'emoji_events',
-      accent: 'emerald',
-      items: [],
+      items: [
+        {
+          img: '/pastaimathan/image copy 6.png',
+          title: 'Jury Evaluation',
+          body: 'Industry experts and mentors reviewing live prototypes.',
+        },
+        {
+          img: '/pastaimathan/image copy 7.png',
+          title: 'Award Ceremony & Celebrations',
+          body: 'Honoring top innovators and winning project teams.',
+        },
+      ],
     },
   ],
 

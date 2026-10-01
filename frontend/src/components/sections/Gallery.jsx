@@ -100,14 +100,14 @@ export default function Gallery() {
         <button
           type="button"
           onClick={() => openLightbox(0)}
-          className="gallery-frame group relative block w-full overflow-hidden rounded-3xl border border-white/[0.08] bg-obsidian-900 text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-cyan"
+          className="gallery-frame group relative block w-full overflow-hidden rounded-3xl border border-white/10 bg-obsidian-900 text-left transition-all duration-500 hover:border-cyan-400/40 hover:shadow-[0_12px_40px_rgba(0,240,255,0.15)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-cyan"
           aria-label={`Open featured memory: ${memories.featured.title}`}
         >
-          <div className="gallery-ambient relative aspect-[16/9] md:aspect-[21/9]">
+          <div className="gallery-ambient relative aspect-[16/9] md:aspect-[21/9] overflow-hidden">
             {memories.featured.video ? (
               <video
                 src={memories.featured.video}
-                className="absolute inset-0 h-full w-full object-cover"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 autoPlay
                 muted
                 loop
@@ -118,22 +118,22 @@ export default function Gallery() {
               <img
                 src={memories.featured.img}
                 alt={memories.featured.title}
-                className="absolute inset-0 h-full w-full object-cover"
+                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 loading="lazy"
               />
             )}
           </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-obsidian-950/90 via-obsidian-950/25 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-obsidian-950/95 via-obsidian-950/40 to-transparent" />
           <div className="absolute inset-x-0 bottom-0 p-5 sm:p-8">
             <div className="flex items-center gap-2 mb-2">
-              <span className="px-2 py-0.5 rounded border border-brand-cyan/50 bg-brand-cyan/25 font-mono text-[9px] uppercase tracking-[0.14em] font-semibold text-white backdrop-blur-sm">
+              <span className="px-2.5 py-0.5 rounded-full border border-cyan-400/40 bg-cyan-500/20 font-mono text-[9px] uppercase tracking-[0.14em] font-semibold text-cyan-200 backdrop-blur-md">
                 {memories.featured.tag}
               </span>
               <span className="text-[9px] font-mono uppercase tracking-[0.14em] text-zinc-400">
                 {memories.featured.meta}
               </span>
             </div>
-            <h3 className="text-xl sm:text-3xl font-extrabold tracking-tight text-white">
+            <h3 className="text-xl sm:text-3xl font-extrabold tracking-tight text-white group-hover:text-cyan-300 transition-colors">
               {memories.featured.title}
             </h3>
             <p className="mt-1.5 max-w-xl text-[11px] sm:text-sm text-zinc-300/90 leading-relaxed">
@@ -176,11 +176,11 @@ export default function Gallery() {
                   {col.title}
                 </h3>
                 <span className="h-px flex-1 bg-white/[0.07]" />
-                <span className="font-mono text-[10px] text-zinc-600">
+                <span className="font-mono text-[10px] text-zinc-500">
                   {col.items.length} ITEMS
                 </span>
               </div>
-              <div className="memories-grid grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3.5">
+              <div className="memories-grid grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                 {col.items.map((item, i) => {
                   const idx = allMedia.findIndex(
                     (m) => m.title === item.title && m.img === item.img,
@@ -190,14 +190,14 @@ export default function Gallery() {
                       key={`${item.title}-${i}`}
                       type="button"
                       onClick={() => openLightbox(idx)}
-                      className="gallery-frame group relative overflow-hidden rounded-2xl border border-white/[0.07] bg-obsidian-900 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-cyan"
+                      className="gallery-frame group relative overflow-hidden rounded-2xl border border-white/10 bg-obsidian-900 text-left transition-all duration-300 hover:border-cyan-400/50 hover:shadow-[0_8px_25px_rgba(0,240,255,0.18)] hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-cyan"
                       aria-label={`Open memory: ${item.title}`}
                     >
-                      <div className="gallery-ambient relative aspect-[4/3]">
+                      <div className="gallery-ambient relative aspect-[4/3] w-full overflow-hidden">
                         {item.video ? (
                           <video
                             src={item.video}
-                            className="absolute inset-0 h-full w-full object-cover"
+                            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                             muted
                             loop
                             playsInline
@@ -207,17 +207,17 @@ export default function Gallery() {
                           <img
                             src={item.img}
                             alt={item.title}
-                            className="absolute inset-0 h-full w-full object-cover"
+                            className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
                             loading="lazy"
                           />
                         )}
                       </div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-obsidian-950/85 via-transparent to-transparent" />
-                      <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
-                        <div className="text-[8px] sm:text-[9px] font-mono font-semibold uppercase tracking-[0.16em] text-zinc-400 mb-0.5 sm:mb-1 truncate">
+                      <div className="absolute inset-0 bg-gradient-to-t from-obsidian-950/90 via-obsidian-950/30 to-transparent transition-opacity duration-300 group-hover:opacity-90" />
+                      <div className="absolute inset-x-0 bottom-0 p-3 sm:p-3.5">
+                        <div className="text-[8px] sm:text-[9px] font-mono font-semibold uppercase tracking-[0.16em] text-cyan-400/90 mb-0.5 truncate">
                           {col.title}
                         </div>
-                        <h4 className="gallery-title inline-block text-xs sm:text-sm font-bold text-white tracking-tight leading-snug line-clamp-1">
+                        <h4 className="gallery-title inline-block text-xs sm:text-sm font-bold text-white tracking-tight leading-snug line-clamp-1 group-hover:text-cyan-300 transition-colors">
                           {item.title}
                         </h4>
                       </div>
