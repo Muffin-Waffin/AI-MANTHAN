@@ -36,44 +36,49 @@ function MagnifierImageCard({ item }) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       onMouseMove={handleMouseMove}
-      className="group relative aspect-[4/3] w-full overflow-hidden rounded-xl border border-white/10 bg-[#090d16] cursor-crosshair select-none transition-all duration-300 hover:border-cyan-400/80 hover:shadow-[0_12px_30px_rgba(0,240,255,0.25)]"
+      className="group relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-white/10 bg-[#090d16] cursor-crosshair select-none transition-all duration-300 hover:border-cyan-400 hover:shadow-[0_12px_35px_rgba(0,240,255,0.35)]"
     >
-      {/* Background Image - Magnifies dynamically at mouse position */}
+      {/* Background Image - Instant 60fps tracking without CSS transition lag */}
       <img
         src={item.img}
         alt={item.title}
         style={{
           transformOrigin: `${pos.x}% ${pos.y}%`,
-          transform: hovered ? 'scale(2.8)' : 'scale(1)',
+          transform: hovered ? 'scale(2.5)' : 'scale(1)',
+          transition: hovered ? 'transform 0.04s linear' : 'transform 0.3s ease-out',
         }}
-        className="absolute inset-0 h-full w-full object-cover transition-transform duration-150 ease-out pointer-events-none"
+        className="absolute inset-0 h-full w-full object-cover pointer-events-none"
         loading="lazy"
       />
 
-      {/* Floating Magnifier Blue Lens Box (follows mouse) */}
+      {/* Floating Blue Magnifier Lens Box (follows mouse) */}
       {hovered && (
         <div
           style={{
-            left: `${pos.px - 36}px`,
-            top: `${pos.py - 36}px`,
+            left: `${pos.px - 40}px`,
+            top: `${pos.py - 40}px`,
           }}
-          className="absolute w-18 h-18 border-2 border-cyan-400 bg-cyan-400/25 rounded-lg shadow-[0_0_20px_rgba(0,240,255,0.6)] pointer-events-none z-20 backdrop-blur-[1px] animate-fade-in"
+          className="absolute w-20 h-20 border-2 border-cyan-400 bg-cyan-400/30 rounded-xl shadow-[0_0_20px_rgba(0,240,255,0.7)] pointer-events-none z-20 backdrop-blur-[1px]"
         />
       )}
 
-      {/* Hover Lens Indicator Badge */}
+      {/* Floating HD Zoom Lens Badge */}
       {hovered && (
-        <div className="absolute top-2.5 right-2.5 z-30 px-2 py-0.5 rounded border border-cyan-400/50 bg-black/80 font-mono text-[9px] uppercase tracking-[0.14em] font-bold text-cyan-300 backdrop-blur-md shadow-lg pointer-events-none">
-          2.8X HD LENS
+        <div className="absolute top-2.5 right-2.5 z-30 px-2.5 py-1 rounded-md border border-cyan-400/60 bg-black/85 text-[10px] font-mono font-bold text-cyan-300 pointer-events-none shadow-lg backdrop-blur-md">
+          🔍 2.5X MAGNIFIER
         </div>
       )}
 
-      {/* Gradient & Title overlay at bottom */}
-      <div className="absolute inset-x-0 bottom-0 z-20 p-2.5 sm:p-3 bg-gradient-to-t from-black/95 via-black/40 to-transparent pointer-events-none transition-opacity duration-300">
-        <h4 className="text-[11px] sm:text-xs font-bold text-white tracking-tight truncate group-hover:text-cyan-300 transition-colors">
+      {/* Title overlay at bottom */}
+      <div
+        className={`absolute inset-x-0 bottom-0 z-20 p-3 bg-gradient-to-t from-black/95 via-black/50 to-transparent pointer-events-none transition-opacity duration-300 ${
+          hovered ? 'opacity-40' : 'opacity-100'
+        }`}
+      >
+        <h4 className="text-xs sm:text-sm font-bold text-white tracking-tight truncate group-hover:text-cyan-300">
           {item.title}
         </h4>
-        <p className="text-[9px] text-zinc-400 line-clamp-1 hidden sm:block mt-0.5">
+        <p className="text-[10px] text-zinc-400 line-clamp-1 hidden sm:block mt-0.5">
           {item.body}
         </p>
       </div>
@@ -114,7 +119,7 @@ export default function Gallery() {
           </div>
           <span className="text-[11px] font-mono text-cyan-300 font-semibold flex items-center gap-1.5 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-400/30">
             <span className="material-symbols-outlined text-[15px] text-cyan-400">search</span>
-            Roll over image to zoom in (2.8X HD Resolution)
+            Roll over image to zoom in (Full HD Resolution)
           </span>
         </div>
 
