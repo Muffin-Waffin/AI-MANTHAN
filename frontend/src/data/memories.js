@@ -1,112 +1,101 @@
-/* ── PAST AI MANTHAN — EVENT MEMORIES ────────────────────────────────
-   Data-driven experience: featured memory → moments → innovation →
-   teams → mentorship → finale → previous-year stats → achievements.
-
-   EXTENSIBILITY: drop future images/videos into the arrays below (or
-   into /public/media) and they render automatically — no component
-   redesign needed. Media MUST come from real event sources; nothing
-   is fabricated here. Today the only verified real media available in
-   the project is the official logo + hero video, so image collections
-   start EMPTY and the UI shows tasteful placeholder states.
-
-   Achievements mirror the confirmed previous-year statistics — no
-   invented numbers. */
-
-const img = (id) => `https://lh3.googleusercontent.com/aida-public/${id}`
-
 export const memories = {
   eyebrow: 'Legacy • 2023 → 2025',
   heading: 'PAST AI MANTHAN',
-  subheading: 'Event Memories',
-  body: 'Moments, minds and milestones from previous editions of the national AI hackathon at Acropolis, Indore.',
+  subheading: 'Event Memories & Glimpses',
+  body: 'Unforgettable moments, high-voltage pitches, midnight hacking, and grand prize ceremonies from previous editions at Acropolis, Indore.',
 
   /* Featured memory (hero slot) */
   featured: {
-    img: '/pastaimathan/IMG_20251109_173152427 (1).jpg.jpeg',
+    img: '/pastaimathan/image.png',
     video: '',
-    tag: 'Grand Finale 2025',
+    tag: 'Grand Finale & Hackathon Arena',
     meta: 'Acropolis Arena • Indore',
-    title: 'Where the Churning Began',
-    body: 'The arena floor, midnight builds, and final presentations — AI Manthan previous editions in action.',
+    title: 'Where Churning Meets Innovation',
+    body: 'Hundreds of passionate builders, founders, and AI enthusiasts coming together in the grand arena.',
   },
 
-  /* Themed collections populated with authentic past edition photos */
+  /* Themed collections with real local images */
   collections: [
     {
       id: 'moments',
-      title: 'Event Moments',
+      title: 'Event Moments & Arena',
       icon: 'photo_library',
       accent: 'azure',
       items: [
         {
           img: '/pastaimathan/image.png',
           title: 'Opening Ceremony & Keynote',
-          body: 'Welcoming 600+ builders to the national AI Hackathon arena.',
+          body: 'Welcoming country-wide innovators to AI Manthan.',
         },
         {
           img: '/pastaimathan/image copy.png',
-          title: 'Hackathon Arena Floor',
-          body: 'Teams setting up workstations for the 36-hour sprint.',
+          title: 'High-Energy Hackathon Floor',
+          body: 'Teams collaborating and coding late into the night.',
         },
       ],
     },
     {
       id: 'innovation',
-      title: 'Innovation & Code',
+      title: 'Innovation & Demos',
       icon: 'lightbulb',
       accent: 'amber',
       items: [
         {
           img: '/pastaimathan/image copy 2.png',
-          title: 'Deep Tech & AI Prototyping',
-          body: 'Building multimodal ML models and autonomous agents.',
+          title: 'Live AI Model Demonstration',
+          body: 'Presenting cutting-edge AI & deeptech prototypes to domain experts.',
         },
         {
           img: '/pastaimathan/image copy 3.png',
-          title: 'Midnight Coding Sessions',
-          body: 'Late night problem solving, coffee, and rapid iteration.',
+          title: 'Jury Evaluation & Pitching',
+          body: 'Defending system architecture and algorithm design.',
         },
       ],
     },
     {
       id: 'teams',
-      title: 'Builder Teams',
+      title: 'Teams & Collaboration',
       icon: 'groups',
-      accent: 'azure',
+      accent: 'cyan',
       items: [
         {
           img: '/pastaimathan/image copy 4.png',
-          title: 'Collaborative Squads',
-          body: 'Cross-functional student teams working together.',
+          title: 'Squad Brainstorming Session',
+          body: 'Rapid prototyping and solution architecting.',
         },
         {
           img: '/pastaimathan/image copy 5.png',
-          title: 'Brainstorming & Architecture',
-          body: 'Mapping system designs and AI pipeline workflows.',
+          title: 'Midnight Debugging Squads',
+          body: 'Fixing bugs and optimizing throughput before final submission.',
         },
       ],
     },
     {
-      id: 'mentorship',
-      title: 'Mentorship & Finale',
-      icon: 'psychology',
-      accent: 'pink',
+      id: 'finale',
+      title: 'Prize Distribution & Valedictory',
+      icon: 'emoji_events',
+      accent: 'emerald',
       items: [
         {
           img: '/pastaimathan/image copy 6.png',
-          title: 'Jury Evaluation',
-          body: 'Industry experts and mentors reviewing live prototypes.',
+          title: 'Winners Cheque Presentation',
+          body: 'Honoring top innovators and cash prize distribution.',
         },
         {
           img: '/pastaimathan/image copy 7.png',
-          title: 'Award Ceremony & Celebrations',
-          body: 'Honoring top innovators and winning project teams.',
+          title: 'Trophy & Excellence Awards',
+          body: 'Recognizing outstanding achievements in AI engineering.',
+        },
+        {
+          img: '/pastaimathan/IMG_20251109_173152427 (1).jpg.jpeg',
+          title: 'Memorable Valedictory Moments',
+          body: 'Celebrating successful completion of AI Manthan.',
         },
       ],
     },
   ],
 
-  /* Previous-year statistics — confirmed figures only. */
+  /* Previous-year statistics */
   stats: [
     { value: '94,751+', label: 'Unstop Impressions' },
     { value: '240', label: 'Team Registrations' },
@@ -119,11 +108,9 @@ export const memories = {
     { value: '₹1,03,000', label: 'Previous-Year Prize Pool' },
   ],
 
-  /* Regional breakdown (source wording preserved as supplied). */
   regionNote:
     'Previous edition saw participation across Madhya Pradesh — including 18 teams from Madhya Pradesh and 28 teams from Indore.',
 
-  /* Achievements / highlights — historical, confirmed. */
   achievements: [
     {
       icon: 'public',
@@ -157,3 +144,4 @@ export const memories = {
     },
   ],
 }
+
