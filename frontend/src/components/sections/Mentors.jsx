@@ -291,7 +291,7 @@ const groups = [
   { id: 'guest', title: 'Guests of Honor' },
   { id: 'jury', title: 'Industry Jury' },
   { id: 'mentors', title: 'Hackathon Mentors' },
-  { id: 'faculty', title: 'Faculty Convener & Leadership' },
+  { id: 'faculty', title: 'Convener' },
 ]
 
 export default function Mentors() {
