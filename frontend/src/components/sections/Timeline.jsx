@@ -164,12 +164,7 @@ export default function Timeline() {
   }, [])
 
   return (
-    <Section id="timeline" className="scroll-mt-[72px]">
-      {/* ── background ── */}
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="ripple-grid absolute -inset-x-40 -top-24 bottom-0 opacity-[0.07]" />
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[560px] w-[900px] rounded-full bg-cyan-800/15 blur-[120px]" />
-      </div>
+    <Section id="timeline" className="scroll-mt-[72px] !bg-[#06080d]">
 
       {/* ── heading ── */}
       <div className="relative text-center max-w-3xl mx-auto mb-10 sm:mb-14">

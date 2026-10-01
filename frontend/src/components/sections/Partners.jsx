@@ -1,55 +1,49 @@
 'use client'
 
 import { platinumSponsors, goldSponsors, partnerRows } from '../../data/site'
-import SectionBackdrop from '../ui/SectionBackdrop'
 
 /**
- * Sponsors & Partners — reference layout (screenshot + motion video):
- *   PLATINUM SPONSORS → one moving marquee row of 4 large landscape cards
- *   GOLD SPONSORS     → one moving marquee row of 5 compact cards, opposite dir
- *   OUR PARTNERS      → 3 full-bleed rows of SMALL SQUARE tiles, tightly
- *                       packed; rows 1 & 3 slide left→right, row 2 opposite.
- * Theme stays ours (brand-tile glass); geometry is from the reference.
+ * Sponsors & Partners
+ *  - Dark solid background (#06080d), no glows
+ *  - Platinum  → slow marquee left→right
+ *  - Gold      → slow marquee right→left
+ *  - Partners  → 3 rows: row1 left, row2 right, row3 left
+ *  - Cards pause on hover, no box-shadow glow
  */
 
 const toneCls = {
-  dark: 'text-zinc-100',
-  azure: 'text-brand-cyan',
-  sky: 'text-brand-cyan',
-  green: 'text-emerald-400',
-  red: 'text-rose-400',
+  dark:   'text-zinc-100',
+  azure:  'text-cyan-300',
+  sky:    'text-sky-300',
+  green:  'text-emerald-400',
+  red:    'text-rose-400',
   orange: 'text-amber-400',
-  cyan: 'text-brand-cyan',
+  cyan:   'text-cyan-300',
 }
 
-/* Shared heading style so all three tier titles line up identically. */
 const tierHeading =
-  'text-center text-[10px] sm:text-xs md:text-sm font-bold tracking-[0.35em] text-brand-cyan uppercase mb-4 sm:mb-6 md:mb-8'
+  'text-center text-[10px] sm:text-xs font-bold tracking-[0.35em] text-zinc-400 uppercase mb-6 sm:mb-8'
 
-function SponsorCard({ item, compact = false }) {
+/* ── Platinum sponsor card ── */
+function PlatinumCard({ item }) {
   const nameCls = item.script
-    ? `font-script ${compact ? 'text-[13px] sm:text-lg md:text-xl' : 'text-lg sm:text-2xl md:text-3xl'}`
-    : `${compact ? 'text-[10px] sm:text-sm md:text-base' : 'text-sm sm:text-lg md:text-2xl'} ${
-        item.tracking === 'wide' ? 'tracking-[0.18em]' : ''
-      }`
+    ? 'font-script text-2xl sm:text-3xl md:text-4xl'
+    : 'text-base sm:text-2xl md:text-3xl font-extrabold' +
+      (item.tracking === 'wide' ? ' tracking-[0.18em]' : '')
 
   return (
     <div
-      className={`brand-tile brand-tile-hover rounded-xl flex flex-col items-center justify-center gap-1 sm:gap-1.5 px-3 sm:px-4 text-center min-w-0 shrink-0 ${
-        compact
-          ? 'h-[165px] w-[230px] max-w-[78vw]'
-          : 'aspect-[3/2] w-[190px] sm:w-[260px] md:w-[320px]'
-      }`}
+      className="group shrink-0 flex flex-col items-center justify-center gap-1.5
+        bg-[#0c1018] border border-white/[0.08] rounded-2xl
+        aspect-[3/2] w-[200px] sm:w-[280px] md:w-[340px] px-4
+        transition-all duration-400 hover:bg-[#111820] hover:border-white/20
+        hover:[animation-play-state:paused]"
     >
-      <span
-        className={`${toneCls[item.tone] || toneCls.dark} ${nameCls} ${
-          item.bold ? 'font-extrabold' : 'font-bold'
-        } leading-tight sm:leading-none break-words`}
-      >
+      <span className={`${toneCls[item.tone] || toneCls.dark} ${nameCls} leading-tight text-center break-words`}>
         {item.name}
       </span>
       {item.sub && (
-        <span className="text-[6px] sm:text-[9px] font-semibold tracking-[0.2em] text-zinc-500">
+        <span className="text-[7px] sm:text-[9px] font-semibold tracking-[0.22em] text-zinc-500 text-center">
           {item.sub}
         </span>
       )}
@@ -57,12 +51,44 @@ function SponsorCard({ item, compact = false }) {
   )
 }
 
+/* ── Gold sponsor card ── */
+function GoldCard({ item }) {
+  const nameCls = item.script
+    ? 'font-script text-base sm:text-xl md:text-2xl'
+    : 'text-xs sm:text-sm md:text-base font-bold' +
+      (item.tracking === 'wide' ? ' tracking-[0.14em]' : '')
+
+  return (
+    <div
+      className="group shrink-0 flex flex-col items-center justify-center gap-1
+        bg-[#0c1018] border border-white/[0.08] rounded-xl
+        h-[140px] sm:h-[160px] w-[190px] sm:w-[230px] px-3
+        transition-all duration-400 hover:bg-[#111820] hover:border-white/20"
+    >
+      <span className={`${toneCls[item.tone] || toneCls.dark} ${nameCls} leading-tight text-center break-words`}>
+        {item.name}
+      </span>
+      {item.sub && (
+        <span className="text-[6px] sm:text-[8px] font-semibold tracking-[0.2em] text-zinc-500 text-center">
+          {item.sub}
+        </span>
+      )}
+    </div>
+  )
+}
+
+/* ── Partner square tile ── */
 function PartnerCard({ item }) {
   return (
-    <div className="brand-tile rounded-lg aspect-square w-[clamp(84px,8.5vw,240px)] shrink-0 flex items-center justify-center p-2 sm:p-2.5 text-center transition-transform duration-650 hover:scale-[1.06]">
+    <div
+      className="shrink-0 flex items-center justify-center
+        bg-[#0c1018] border border-white/[0.07] rounded-lg
+        aspect-square w-[clamp(80px,8vw,160px)] p-2 text-center
+        transition-all duration-300 hover:bg-[#111820] hover:border-white/15"
+    >
       <span
         className={`${toneCls[item.tone] || toneCls.dark} ${
-          item.script ? 'font-script text-[13px] sm:text-xl' : 'text-[10px] sm:text-xs md:text-sm'
+          item.script ? 'font-script text-sm sm:text-lg' : 'text-[9px] sm:text-xs'
         } ${item.bold ? 'font-extrabold' : 'font-semibold'} leading-tight break-words`}
       >
         {item.name}
@@ -71,25 +97,30 @@ function PartnerCard({ item }) {
   )
 }
 
-function MarqueeRow({ items, direction, duration, variant = 'square' }) {
-  // Few items per row (sponsors) → repeat 4× so the belt never shows a gap;
-  // even count keeps the two halves identical for the -50% loop.
-  const repeated = variant === 'square' ? [...items, ...items] : [...items, ...items, ...items, ...items]
+/* ── Marquee row — pauses whole belt on hover ── */
+function MarqueeRow({ items, direction = 'left', duration = '40s', variant = 'square' }) {
+  const repeated =
+    variant === 'square'
+      ? [...items, ...items]
+      : [...items, ...items, ...items, ...items]
+
+  const animClass =
+    direction === 'left' ? 'animate-marquee-left' : 'animate-marquee-right'
+
+  const CardComponent =
+    variant === 'platinum' ? PlatinumCard
+    : variant === 'gold'    ? GoldCard
+    :                         PartnerCard
+
   return (
-    <div className="marquee-fade overflow-hidden">
+    <div className="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]">
       <div
-        className={`flex w-max items-center gap-4 ${
-          direction === 'left' ? 'animate-marquee-left' : 'animate-marquee-right'
-        }`}
+        className={`flex w-max items-center gap-3 sm:gap-4 ${animClass} hover:[animation-play-state:paused]`}
         style={{ '--marquee-duration': duration }}
       >
-        {repeated.map((item, i) =>
-          variant === 'square' ? (
-            <PartnerCard key={`${item.name}-${i}`} item={item} />
-          ) : (
-            <SponsorCard key={`${item.name}-${i}`} item={item} compact={variant === 'gold'} />
-          )
-        )}
+        {repeated.map((item, i) => (
+          <CardComponent key={`${item.name}-${i}`} item={item} />
+        ))}
       </div>
     </div>
   )
@@ -97,29 +128,40 @@ function MarqueeRow({ items, direction, duration, variant = 'square' }) {
 
 export default function Partners() {
   return (
-    <section id="partners" className="relative w-full overflow-x-clip py-20 border-t border-white/[0.06]">
-      <SectionBackdrop variant="flow" />
-      {/* Everything stays inside the site content container */}
-      <div className="site-container">
-        {/* ── PLATINUM SPONSORS — one moving row (partners-style marquee) ── */}
-        <h2 className={tierHeading}>Platinum Sponsors</h2>
-        <MarqueeRow items={platinumSponsors} direction="left" duration="24s" variant="platinum" />
+    <section
+      id="partners"
+      className="relative w-full overflow-x-clip bg-[#06080d] py-20 sm:py-24 border-t border-white/[0.06]"
+    >
+      <div className="site-container space-y-14 sm:space-y-18">
 
-        {/* ── GOLD SPONSORS — one moving row, opposite direction ── */}
-        <h2 className={`${tierHeading} mt-10 sm:mt-12 md:mt-16`}>
-          Gold Sponsors
-        </h2>
-        <MarqueeRow items={goldSponsors} direction="right" duration="26s" variant="gold" />
-
-        {/* ── OUR PARTNERS — square-tile marquees, inside the container ── */}
-        <h2 className={`${tierHeading} mt-10 sm:mt-12 md:mt-16`}>
-          Our Partners
-        </h2>
-        <div className="space-y-3 sm:space-y-4">
-          {partnerRows.map((row, i) => (
-            <MarqueeRow key={i} {...row} />
-          ))}
+        {/* ── PLATINUM SPONSORS → left ── */}
+        <div>
+          <p className={tierHeading}>Platinum Sponsors</p>
+          <MarqueeRow items={platinumSponsors} direction="left" duration="50s" variant="platinum" />
         </div>
+
+        {/* ── GOLD SPONSORS → right ── */}
+        <div>
+          <p className={tierHeading}>Gold Sponsors</p>
+          <MarqueeRow items={goldSponsors} direction="right" duration="45s" variant="gold" />
+        </div>
+
+        {/* ── OUR PARTNERS → alternating per row ── */}
+        <div>
+          <p className={tierHeading}>Our Partners</p>
+          <div className="space-y-3 sm:space-y-4">
+            {partnerRows.map((row, i) => (
+              <MarqueeRow
+                key={i}
+                items={row.items}
+                direction={i % 2 === 0 ? 'left' : 'right'}
+                duration={`${55 + i * 5}s`}
+                variant="square"
+              />
+            ))}
+          </div>
+        </div>
+
       </div>
     </section>
   )

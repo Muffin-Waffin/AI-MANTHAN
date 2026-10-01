@@ -8,8 +8,6 @@ const layers = {
   ),
   circuit: (
     <>
-      <div className="absolute inset-0 bg-glow-grid [background-size:28px_28px] opacity-50" />
-      <div className="absolute inset-0 bg-[repeating-linear-gradient(90deg,rgba(0,168,255,0.05)_0_1px,transparent_1px_140px)]" />
       <div className="absolute left-[14%] top-[18%] h-56 w-56 rounded-full bg-cyan-500/20 blur-[100px]" />
       <div className="absolute left-[42%] bottom-[12%] h-52 w-52 rounded-full bg-emerald-500/15 blur-[100px]" />
       <div className="absolute right-[28%] top-[8%] h-48 w-48 rounded-full bg-sky-500/20 blur-[100px]" />
@@ -18,7 +16,6 @@ const layers = {
   ),
   ripple: (
     <>
-      <div className="absolute left-1/2 top-[42%] h-[940px] w-[940px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[repeating-radial-gradient(circle,rgba(0,168,255,0.075)_0_1px,transparent_1px_112px)] animate-ripple-out" />
       <div className="absolute left-1/2 top-[42%] h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-cyan/15 blur-[110px]" />
     </>
   ),
@@ -59,12 +56,10 @@ const layers = {
     <>
       <div className="absolute inset-x-[-18%] top-[16%] h-60 bg-gradient-to-r from-transparent via-brand-cyan/20 to-transparent blur-[80px] animate-float-y" />
       <div className="absolute inset-x-[-12%] top-[56%] h-52 bg-gradient-to-r from-transparent via-brand-cyan/15 to-transparent blur-[80px] animate-float-y [animation-delay:2.8s]" />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_28%,rgba(255,255,255,0.5)_1px,transparent_1.5px),radial-gradient(circle_at_72%_62%,rgba(255,255,255,0.4)_1px,transparent_1.5px)] [background-size:360px_360px,460px_460px] opacity-30" />
     </>
   ),
   pillars: (
     <>
-      <div className="absolute inset-0 bg-[repeating-linear-gradient(90deg,rgba(0,168,255,0.07)_0_2px,transparent_2px_148px)] opacity-80" />
       <div className="absolute inset-x-0 top-0 h-56 bg-gradient-to-b from-brand-cyan/10 to-transparent blur-2xl" />
       <div className="absolute right-[12%] bottom-[16%] h-56 w-56 rounded-full bg-brand-cyan/[0.12] blur-[100px]" />
     </>
@@ -77,8 +72,6 @@ const layers = {
   ),
   topo: (
     <>
-      <div className="absolute -left-44 -bottom-56 h-[760px] w-[760px] rounded-full bg-[repeating-radial-gradient(circle,rgba(56,189,248,0.09)_0_1px,transparent_1px_72px)]" />
-      <div className="absolute -right-32 -top-40 h-[480px] w-[480px] rounded-full bg-[repeating-radial-gradient(circle,rgba(0,168,255,0.07)_0_1px,transparent_1px_56px)]" />
       <div className="absolute left-[34%] top-[38%] h-64 w-64 rounded-full bg-brand-cyan/10 blur-[100px]" />
     </>
   ),

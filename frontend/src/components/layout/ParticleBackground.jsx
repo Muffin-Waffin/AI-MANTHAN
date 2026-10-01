@@ -144,11 +144,7 @@ export default function ParticleBackground() {
       >
         <span className="material-symbols-outlined select-none text-[22px]">star_4pt</span>
       </span>
-      <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[900px] h-[540px] bg-gradient-to-b from-brand-cyan/25 via-sky-700/15 to-transparent blur-[140px]"></div>
-      <div className="absolute top-[30%] -right-40 w-[550px] h-[550px] bg-cyan-500/10 blur-[150px]"></div>
-      <div className="absolute top-[55%] -left-36 w-[580px] h-[580px] bg-cyan-600/15 blur-[160px]"></div>
-      <div className="absolute top-[80%] right-1/4 w-[650px] h-[450px] bg-sky-900/15 blur-[150px]"></div>
-      <div className="absolute inset-0 bg-glow-grid [background-size:36px_36px] opacity-40"></div>
+      <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-full h-[540px] bg-gradient-to-b from-brand-cyan/15 via-transparent to-transparent blur-[120px]"></div>
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-obsidian-950/30 to-obsidian-950 pointer-events-none"></div>
     </div>
   )

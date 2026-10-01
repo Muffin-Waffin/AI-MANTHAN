@@ -1,15 +1,16 @@
-import { footer } from '../../data/site'
+import { site, footer } from '../../data/site'
 import Link from 'next/link'
 import VisitorCounter from './VisitorCounter'
+import Icon from '../ui/Icon'
 
-/* ── Footer action button (ref: Manipal — rounded-rect, hairline) ──── */
+/* ── Sleek Action Button ──── */
 function FooterAction({ icon, children, href, external = false, onClick }) {
   const cls =
-    'group inline-flex items-center gap-2 rounded-xl border border-white/[0.14] bg-white/[0.04] px-4 sm:px-5 py-2.5 text-xs sm:text-[13px] font-semibold text-zinc-200 backdrop-blur-md transition-all duration-300 hover:border-cyan-400/60 hover:bg-white/[0.08] hover:text-white hover:-translate-y-0.5 hover:shadow-[0_0_22px_-4px_rgba(0,240,255,0.5)] focus-visible:outline-2 focus-visible:outline-cyan-400/70'
+    'group inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-2.5 text-xs sm:text-sm font-semibold text-zinc-200 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.08] hover:text-white hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-white/40'
 
   const inner = (
     <>
-      <span className="material-symbols-outlined text-[15px] select-none">{icon}</span>
+      <Icon name={icon} className="text-[16px] text-zinc-400 group-hover:text-white transition-colors" />
       {children}
     </>
   )
@@ -33,48 +34,27 @@ function FooterAction({ icon, children, href, external = false, onClick }) {
   )
 }
 
-/* ── Giant ghost watermark ────────────────────────────────────────────
-   Implementation note (why SVG, not font-size tricks):
-   A plain <span> at 11vw/13rem can overflow the band on odd viewports
-   and get clipped mid-glyph. Instead we set the wordmark inside an SVG
-   viewBox and force it to exactly the viewBox width with `textLength` +
-   `lengthAdjust` — the text then scales fluidly with the container and
-   mathematically can never overflow. Bottom-anchored so the baseline
-   kisses the footer's bottom edge (the deliberate Manipal-style crop),
-   with a vertical gradient fade so it dissolves into the dark instead
-   of ending on a hard line. */
+/* ── Crisp, large background watermark ──── */
 function Watermark() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none absolute inset-x-0 bottom-0 select-none"
+      className="pointer-events-none absolute inset-x-0 top-1/2 -translate-y-1/2 select-none z-0 overflow-hidden"
     >
-      {/* soft radial depth blob behind the wordmark */}
-      <div className="absolute left-1/2 bottom-[-30%] -translate-x-1/2 w-[70vw] h-[40vw] max-w-[1100px] rounded-full bg-[radial-gradient(ellipse_at_center,rgba(0,168,255,0.14),transparent_65%)] blur-3xl" />
-
       <svg
-        viewBox="0 0 1500 190"
-        preserveAspectRatio="xMidYMax meet"
-        className="relative block w-full h-auto"
+        viewBox="0 0 1500 220"
+        preserveAspectRatio="xMidYMid meet"
+        className="relative block w-full h-auto opacity-60"
       >
-        <defs>
-          {/* near-uniform wash like the ref — faint dissolve only at the very
-              bottom so the band edge stays clean */}
-          <linearGradient id="footer-wm-fade" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.075" />
-            <stop offset="70%" stopColor="#ffffff" stopOpacity="0.065" />
-            <stop offset="100%" stopColor="#ffffff" stopOpacity="0.035" />
-          </linearGradient>
-        </defs>
-        {/* textLength 1496/1500 → true edge-to-edge letter bleed (ref) */}
         <text
           x="750"
-          y="158"
+          y="150"
           textAnchor="middle"
           textLength="1496"
           lengthAdjust="spacingAndGlyphs"
-          fontSize="176"
-          fill="url(#footer-wm-fade)"
+          fontSize="220"
+          fill="#ffffff"
+          fillOpacity="0.04"
           className="font-mono font-bold"
         >
           {footer.watermark}
@@ -84,82 +64,127 @@ function Watermark() {
   )
 }
 
-/**
- * Manipal-style footer band:
- *   • Left   — logo + wordmark "AI MANTHAN // 2K26"
- *   • Center — location pin + institute address
- *   • Right  — Rulebook + Meet the Team pills
- *   • Full-bleed gradient-faded watermark hugging the bottom edge
- */
 export default function Footer() {
   const openRulebook = () => window.dispatchEvent(new Event('open-rulebook-modal'))
 
   return (
     <footer
       id="contact"
-      className="relative w-full overflow-hidden bg-obsidian-950 text-zinc-400"
+      className="relative w-full overflow-hidden bg-[#06080d] text-zinc-400 py-12 sm:py-16 border-t border-white/10"
     >
-      {/* top hairline — cyan glow leaking through the seam */}
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-brand-cyan/50 to-transparent" />
-      <div className="absolute top-0 inset-x-0 h-16 bg-gradient-to-b from-brand-cyan/[0.06] to-transparent" />
-
       <Watermark />
 
-      {/* ── Content ─────────────────────────────────────────────────── */}
-      <div className="site-container relative z-10 pt-12 sm:pt-14 pb-7 sm:pb-9">
-        <div className="flex flex-col items-center gap-7 text-center lg:flex-row lg:items-center lg:justify-between lg:gap-8 lg:text-left">
-          {/* Brand */}
-          <Link href="/" className="group flex items-center gap-3 shrink-0">
-            <span className="relative flex items-center justify-center">
-              <span
-                aria-hidden="true"
-                className="absolute w-9 h-9 rounded-full bg-cyan-600/25 blur-lg opacity-80 group-hover:opacity-100 transition-opacity duration-500"
-              />
+      <div className="site-container relative z-10 space-y-12">
+        {/* Top Section — 4 Columns */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10">
+          {/* Col 1: Brand & Bio */}
+          <div className="lg:col-span-4 space-y-4">
+            <Link href="/" className="inline-block group">
               <img
                 src="/logos/aimathan-logo.png"
-                alt="AI Manthan 2.0 logo"
+                alt="AI Manthan 2.0"
                 width={1599}
                 height={966}
-                className="relative h-9 w-14 object-contain transition-transform duration-500 group-hover:scale-110"
+                className="h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
               />
-            </span>
-            <span className="font-mono text-sm sm:text-base font-bold tracking-[0.22em] text-white whitespace-nowrap">
-              {footer.brand}
-              <span className="text-zinc-600"> // </span>
-              <span className="text-cyan-300 [text-shadow:0_0_12px_rgba(103,232,249,0.5)]">
-                {footer.brandAccent}
-              </span>
-            </span>
-          </Link>
-
-          {/* Address */}
-          <div className="flex max-w-md items-start sm:items-center gap-2 text-xs sm:text-[13px] leading-relaxed text-zinc-400">
-            <span className="material-symbols-outlined text-[16px] sm:text-[18px] text-zinc-500 select-none shrink-0 mt-0.5 sm:mt-0">
-              location_on
-            </span>
-            <span>{footer.address}</span>
+            </Link>
+            <p className="text-xs sm:text-sm text-zinc-400 leading-relaxed max-w-sm">
+              The flagship national AI hackathon at Acropolis Institute of Technology & Research, Indore — bringing together builders, innovators and creators for a 24-hour sprint.
+            </p>
+            {/* Social & Contact */}
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              <a
+                href={`mailto:${site.email}`}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 bg-white/[0.03] text-xs font-mono text-zinc-300 hover:text-cyan-300 hover:border-cyan-400/40 transition-colors"
+              >
+                <Icon name="mail" className="text-sm text-cyan-400" />
+                {site.email}
+              </a>
+              <a
+                href={site.community.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 bg-white/[0.03] text-xs font-mono text-zinc-300 hover:text-emerald-300 hover:border-emerald-400/40 transition-colors"
+              >
+                <Icon name="forum" className="text-sm text-emerald-400" />
+                Community
+              </a>
+            </div>
           </div>
 
-          {/* Actions */}
-          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
-            <FooterAction icon="download" onClick={openRulebook}>
-              Rulebook
-            </FooterAction>
-            <FooterAction icon="group" href="/team">
-              Meet the Team
-            </FooterAction>
+          {/* Col 2: Quick Navigation */}
+          <div className="lg:col-span-3 space-y-3">
+            <h4 className="text-xs font-mono font-bold uppercase tracking-[0.2em] text-white">
+              Navigation
+            </h4>
+            <ul className="grid grid-cols-2 gap-2 text-xs font-medium text-zinc-400">
+              {site.nav.map((item) => (
+                <li key={item.label}>
+                  <Link
+                    href={item.href}
+                    className="hover:text-cyan-300 transition-colors inline-block py-0.5"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Col 3: Highlights */}
+          <div className="lg:col-span-2 space-y-3">
+            <h4 className="text-xs font-mono font-bold uppercase tracking-[0.2em] text-white">
+              Highlights
+            </h4>
+            <ul className="space-y-2 text-xs font-medium text-zinc-400">
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
+                24-Hour Sprint
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
+                12 AI Domains
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
+                ₹1,00,000+ Prizes
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
+                Acropolis Indore
+              </li>
+            </ul>
+          </div>
+
+          {/* Col 4: Quick Actions & Location */}
+          <div className="lg:col-span-3 space-y-4">
+            <h4 className="text-xs font-mono font-bold uppercase tracking-[0.2em] text-white">
+              Quick Actions & Venue
+            </h4>
+            <div className="flex flex-wrap gap-2.5">
+              <FooterAction icon="download" onClick={openRulebook}>
+                Rulebook
+              </FooterAction>
+              <FooterAction icon="group" href="/team">
+                Meet Team
+              </FooterAction>
+            </div>
+            <div className="flex items-start gap-2 text-xs text-zinc-400 leading-relaxed pt-1">
+              <Icon name="location_on" className="text-base text-cyan-400 shrink-0 mt-0.5" />
+              <span>{footer.address}</span>
+            </div>
           </div>
         </div>
 
-        {/* ── Legal strip ─────────────────────────────────────────────── */}
-        <div className="mt-10 sm:mt-12 pt-5 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-3 text-[10px] sm:text-[11px] font-mono text-zinc-600">
+        {/* Bottom Legal Bar */}
+        <div className="pt-6 border-t border-white/[0.08] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-zinc-500">
           <div>{footer.legal}</div>
-          <div className="flex items-center gap-3 sm:gap-4">
+          <div className="flex items-center gap-4 sm:gap-5">
             <VisitorCounter />
             {footer.meta.map((item, i) => (
-              <span key={item} className="flex items-center gap-3 sm:gap-4">
+              <span key={item} className="flex items-center gap-4 sm:gap-5">
                 {i > 0 && <span className="text-zinc-700">•</span>}
-                <span className="hover:text-zinc-400 transition-colors">{item}</span>
+                <span className="hover:text-zinc-300 transition-colors">{item}</span>
               </span>
             ))}
           </div>

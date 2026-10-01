@@ -1,5 +1,5 @@
 export const site = {
-  title: 'AI MANTHAN',
+  title: 'AI मंथन',
   titleAccent: '2.0',
   subtitle: 'ACROPOLIS • INDORE',
   description:
@@ -34,20 +34,19 @@ export const site = {
     { label: 'Faculty', href: '/#faculty' },
     { label: 'Sponsors', href: '/#partners' },
     { label: 'Venue & FAQ', href: '/#venue' },
-    { label: 'Contact', href: '/#contact' },
   ],
   /* Previous-year (AI Manthan 1.0) headline statistics — historical only.
      Source: confirmed figures from the previous edition. */
   stats: [
-    { value: '94,751+', label: 'Unstop Impressions', highlight: true },
-    { value: '240', label: 'Team Registrations' },
-    { value: '671', label: 'Participants' },
-    { value: '12', label: 'States Represented' },
+    { value: '1,50,000+', label: 'Unstop Impressions', sublabel: 'National Reach', highlight: true, icon: 'visibility' },
+    { value: '240+', label: 'Team Registrations', sublabel: 'Innovator Squads', icon: 'groups' },
+    { value: '671+', label: 'Participants', sublabel: 'Active Builders', icon: 'person_play' },
+    { value: '12+', label: 'States Represented', sublabel: 'Pan-India Footprint', icon: 'map' },
   ],
 }
 
 export const hero = {
-  badge: ['AI Manthan 2.0', 'Acropolis • Indore'],
+  badge: ['AI मंथन 2.0', 'Acropolis • Indore'],
   headlineA: 'Build the Future',
   headlineB: 'with AI.',
   bodyStrong: null,
@@ -65,12 +64,12 @@ export const hero = {
 }
 
 export const story = {
-  eyebrow: 'Introduction — What is AI Manthan 2.0?',
+  eyebrow: 'Introduction — What is AI मंथन 2.0?',
   heading: 'The national arena where minds churn ideas into intelligence.',
-  body: 'AI-Manthan 2.0 is a National-Level Hackathon centered on Artificial Intelligence & Emerging Technologies, bringing together innovators, developers, and problem-solvers from across India. Participants will tackle real-world challenges, transform ideas into impactful solutions, and build functional prototypes. With an intense 24-hour offline hackathon, expert mentorship, collaboration, and hands-on innovation, AI-Manthan 2.0 is where ideas turn into action. Join us, innovate boldly, and build solutions that make a difference.',
+  body: 'AI-मंथन 2.0 is a National-Level Hackathon centered on Artificial Intelligence & Emerging Technologies, bringing together innovators, developers, and problem-solvers from across India. Participants will tackle real-world challenges, transform ideas into impactful solutions, and build functional prototypes. With an intense 24-hour offline hackathon, expert mentorship, collaboration, and hands-on innovation, AI-मंथन 2.0 is where ideas turn into action. Join us, innovate boldly, and build solutions that make a difference.',
   quote: {
-    text: '“Manthan — the sacred churning of ideas. What emerges is intelligence.”',
-    author: '— Team AI Manthan, Acropolis Indore',
+    text: '“मंथन — the sacred churning of ideas. What emerges is intelligence.”',
+    author: '— Team AI मंथन, Acropolis Indore',
   },
   pillars: [
     {
@@ -176,15 +175,15 @@ export const partnerRows = [
 export const footer = {
   brand: site.title,
   brandAccent: site.titleAccent,
-  watermark: 'AI MANTHAN 2.0',
+  watermark: 'AI मंथन 2.0',
   address: site.address,
-  legal: '© 2026 AI Manthan 2.0 • Acropolis Institute of Technology & Research. All rights reserved.',
+  legal: '© 2026 AI मंथन 2.0 • Acropolis Institute of Technology & Research. All rights reserved.',
   meta: ['Organized by Acropolis', 'Built with craft'],
 }
 
 /* ── Official Rulebook (opened from the footer "Rulebook" button) ── */
 export const rulebook = {
-  version: 'AI MANTHAN 2.0 • ROUND 1 → GRAND FINALE',
+  version: 'AI मंथन 2.0 • ROUND 1 → GRAND FINALE',
   sections: [
     {
       title: 'Eligibility & Teams',

@@ -7,6 +7,7 @@ import Footer from './Footer'
 import SupportModal from './SupportModal'
 import RulebookModal from './RulebookModal'
 import PhoneDirectoryModal from './PhoneDirectoryModal'
+import UnstopEventModal from './UnstopEventModal'
 import SmoothScroll from './SmoothScroll'
 import Preloader from './Preloader'
 
@@ -50,6 +51,7 @@ export default function AppShell({ children }) {
       <SupportModal open={supportOpen} onClose={() => setSupportOpen(false)} />
       <RulebookModal open={rulebookOpen} onClose={() => setRulebookOpen(false)} />
       <PhoneDirectoryModal open={directoryOpen} onClose={() => setDirectoryOpen(false)} />
+      <UnstopEventModal />
     </div>
   )
 }

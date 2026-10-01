@@ -6,18 +6,9 @@ import Section from '../ui/Section'
 import SectionBackdrop from '../ui/SectionBackdrop'
 import { story } from '../../data/site'
 
-const textTone = {
-  azure: 'text-brand-cyan',
-  cyan: 'text-brand-cyan',
-  emerald: 'text-emerald-400',
-  amber: 'text-amber-400',
-  pink: 'text-pink-400',
-}
-
 /**
  * 3D Tilt Image Component
- * Tilts dynamically with 3D perspective based on mouse cursor position
- * and renders a realistic ambient glare follow effect.
+ * Tilts dynamically with 3D perspective based on mouse cursor position.
  */
 function TiltImage({ src, alt, width, height, className }) {
   const cardRef = useRef(null)
@@ -39,7 +30,7 @@ function TiltImage({ src, alt, width, height, className }) {
     setGlarePos({
       x: (x / rect.width) * 100,
       y: (y / rect.height) * 100,
-      opacity: 0.4,
+      opacity: 0.3,
     })
   }
 
@@ -56,11 +47,6 @@ function TiltImage({ src, alt, width, height, className }) {
       className="relative cursor-pointer transition-transform duration-200 ease-out"
       style={{ transform, transformStyle: 'preserve-3d' }}
     >
-      {/* Ambient glowing aura behind logo */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-4 bg-cyan-500/25 blur-[65px] rounded-full pointer-events-none"
-      />
       {/* Dynamic 3D glare shine */}
       <div
         className="pointer-events-none absolute inset-0 rounded-full transition-opacity duration-300 z-20"
@@ -75,34 +61,6 @@ function TiltImage({ src, alt, width, height, className }) {
         height={height}
         className={className}
       />
-    </div>
-  )
-}
-
-function PillarCard({ pillar, index, isVisible }) {
-  return (
-    <div
-      className={`glass glass-hover sheen p-4 sm:p-5 md:p-6 rounded-2xl flex flex-col justify-between group/pillar transition-all duration-700 ease-out ${
-        isVisible
-          ? 'opacity-100 translate-y-0 filter-none'
-          : 'opacity-0 translate-y-12 blur-sm'
-      }`}
-      style={{ transitionDelay: `${250 + index * 120}ms` }}
-    >
-      <div>
-        <div
-          className={`w-8 sm:w-10 h-8 sm:h-10 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center mb-2.5 sm:mb-4 transition-all duration-500 group-hover/pillar:scale-110 group-hover/pillar:border-cyan-400/40 ${
-            textTone[pillar.color] || 'text-brand-cyan'
-          }`}
-        >
-          <Icon name={pillar.icon} className="text-[18px] sm:text-[22px]" />
-        </div>
-        <h3 className="text-sm sm:text-base font-semibold text-white tracking-tight leading-snug">{pillar.title}</h3>
-        <p className="text-[10px] sm:text-xs text-zinc-400 mt-1.5 sm:mt-2 leading-relaxed">{pillar.body}</p>
-      </div>
-      <div className="mt-3 sm:mt-3.5 pt-2 sm:pt-3 border-t border-white/[0.05] font-mono text-[9px] sm:text-[11px] text-zinc-500">
-        {pillar.footnote}
-      </div>
     </div>
   )
 }
@@ -129,56 +87,83 @@ export default function Story() {
   }, [])
 
   return (
-    <Section id="story" className="!py-10 sm:!py-12 overflow-hidden" ref={sectionRef}>
-      <SectionBackdrop variant="churn" />
-      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,500px)] lg:items-start gap-6 sm:gap-8 lg:gap-8 mb-8 sm:mb-10">
-        {/* Left Text Column — Reveal from Left */}
+    <Section id="story" className="!py-24 sm:!py-32 lg:!py-40 min-h-[70vh] flex flex-col justify-center overflow-hidden !bg-[#06080d]" ref={sectionRef}>
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,480px)] lg:items-center gap-10 sm:gap-14 lg:gap-16">
+        {/* Left Text Column */}
         <div
-          className={`max-w-2xl pl-[3%] transition-all duration-900 ease-out ${
+          className={`max-w-2xl transition-all duration-900 ease-out ${
             isVisible
-              ? 'opacity-100 translate-x-0 filter-none'
-              : 'opacity-0 -translate-x-16 blur-sm'
+              ? 'opacity-100 translate-x-0'
+              : 'opacity-0 -translate-x-12'
           }`}
         >
-          <span className="text-[10px] sm:text-xs font-mono font-medium tracking-wider text-brand-cyan uppercase">
+          {/* Eyebrow badge */}
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/5 border border-white/10 text-[11px] font-mono font-semibold tracking-wider text-zinc-300 uppercase mb-5">
+            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
             {story.eyebrow}
-          </span>
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight text-white mt-1.5 leading-tight">
-            {story.heading}
+          </div>
+
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-light tracking-tight text-white leading-[1.18]">
+            The national arena where minds churn ideas into{' '}
+            <span className="italic font-serif text-zinc-300">
+              intelligence.
+            </span>
           </h2>
-          <p className="text-xs sm:text-sm md:text-base text-zinc-400 mt-2 sm:mt-3 leading-relaxed">{story.body}</p>
+
+          <p className="text-sm sm:text-base text-zinc-400 mt-6 leading-relaxed font-sans max-w-xl">
+            {story.body}
+          </p>
+
+          {/* Quick highlight points */}
+          <div className="mt-8 flex flex-wrap items-center gap-4 text-xs font-mono text-zinc-300">
+            <div className="flex items-center gap-2 bg-[#090d14] border border-white/10 px-3.5 py-2 rounded-lg">
+              <Icon name="bolt" className="text-sm text-white" />
+              <span>24-Hour Offline Sprint</span>
+            </div>
+            <div className="flex items-center gap-2 bg-[#090d14] border border-white/10 px-3.5 py-2 rounded-lg">
+              <Icon name="military_tech" className="text-sm text-white" />
+              <span>9 AI Domains</span>
+            </div>
+            <div className="flex items-center gap-2 bg-[#090d14] border border-white/10 px-3.5 py-2 rounded-lg">
+              <Icon name="location_on" className="text-sm text-white" />
+              <span>Acropolis Indore</span>
+            </div>
+          </div>
         </div>
 
-        {/* Right Rail — Center Zoom Reveal + 3D Cursor Tilt Parallax */}
+        {/* Right Rail — Logo & Quote */}
         <div
-          className={`w-full flex flex-col gap-3 sm:gap-4 transition-all duration-1000 ease-out ${
+          className={`w-full flex flex-col gap-6 transition-all duration-1000 ease-out ${
             isVisible
-              ? 'opacity-100 scale-100 filter-none'
-              : 'opacity-0 scale-75 blur-md'
+              ? 'opacity-100 scale-100'
+              : 'opacity-0 scale-90'
           }`}
           style={{ transitionDelay: '150ms' }}
         >
-          <div className="relative w-full flex items-center justify-center">
-            <TiltImage
+          <div className="relative w-full flex items-center justify-center p-4">
+            <img
               src="/logos/aimathan-logo.png"
               alt="AI Manthan 2.0 — official event logo"
               width={1599}
               height={966}
-              className="relative w-full max-w-[460px] h-auto object-contain drop-shadow-[0_0_50px_rgba(0,240,255,0.5)]"
+              className="relative w-full max-w-[360px] sm:max-w-[440px] h-auto object-contain"
             />
           </div>
-          <div className="glass p-3 sm:p-3.5 rounded-xl text-[10px] sm:text-xs font-mono text-zinc-400">
-            <div className="text-zinc-200 font-semibold text-xs sm:text-sm mb-0.5 sm:mb-1">{story.quote.text}</div>
-            <div className="text-[10px] sm:text-xs text-zinc-500">{story.quote.author}</div>
+
+          <div className="bg-[#090d14] p-5 sm:p-6 rounded-2xl border border-white/10">
+            <div className="flex items-start gap-3.5">
+              <Icon name="format_quote" className="text-zinc-500 text-2xl shrink-0 rotate-180 opacity-80" />
+              <div>
+                <div className="text-zinc-300 font-serif italic text-sm sm:text-base leading-snug">
+                  {story.quote.text}
+                </div>
+                <div className="text-xs font-mono text-zinc-500 mt-2.5 font-semibold">
+                  {story.quote.author}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-
-      {/* Bottom 4 Pillar Cards — Reveal from Bottom with Stagger */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-        {story.pillars.map((pillar, idx) => (
-          <PillarCard key={pillar.title} pillar={pillar} index={idx} isVisible={isVisible} />
-        ))}
       </div>
     </Section>
   )

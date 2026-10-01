@@ -80,20 +80,15 @@ export default function Gallery() {
   const current = lightbox != null ? allMedia[lightbox] : null
 
   return (
-    <Section id="gallery">
-      {/* ambient haze behind the header */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 -top-10 -translate-x-1/2 w-[560px] h-[300px] rounded-full bg-cyan-800/[0.1] blur-[110px]"
-      />
-
+    <Section id="gallery" className="!bg-[#06080d]">
       {/* ── header ── */}
-      <div className="relative text-center max-w-2xl mx-auto mb-9 sm:mb-12">          <span className="text-[11px] font-mono font-medium tracking-[0.28em] text-brand-cyan uppercase">
+      <div className="relative text-center max-w-2xl mx-auto mb-9 sm:mb-12">
+        <span className="text-[11px] font-mono font-medium tracking-[0.28em] text-cyan-400 uppercase">
           {memories.eyebrow}
         </span>
         <h2 className="text-2xl sm:text-3xl md:text-5xl font-extrabold tracking-tight text-white mt-2 leading-tight">
           {memories.heading}
-          <span className="block text-lg sm:text-xl md:text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-100 to-cyan-300 mt-1">
+          <span className="block text-lg sm:text-xl md:text-2xl font-bold text-zinc-300 mt-1">
             {memories.subheading}
           </span>
         </h2>
@@ -185,7 +180,7 @@ export default function Gallery() {
                   {col.items.length} ITEMS
                 </span>
               </div>
-              <div className="memories-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+              <div className="memories-grid grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-3.5">
                 {col.items.map((item, i) => {
                   const idx = allMedia.findIndex(
                     (m) => m.title === item.title && m.img === item.img,
@@ -218,11 +213,11 @@ export default function Gallery() {
                         )}
                       </div>
                       <div className="absolute inset-0 bg-gradient-to-t from-obsidian-950/85 via-transparent to-transparent" />
-                      <div className="absolute inset-x-0 bottom-0 p-4">
-                        <div className="text-[9px] font-mono font-semibold uppercase tracking-[0.16em] text-zinc-400 mb-1">
+                      <div className="absolute inset-x-0 bottom-0 p-3 sm:p-4">
+                        <div className="text-[8px] sm:text-[9px] font-mono font-semibold uppercase tracking-[0.16em] text-zinc-400 mb-0.5 sm:mb-1 truncate">
                           {col.title}
                         </div>
-                        <h4 className="gallery-title inline-block text-sm font-bold text-white tracking-tight leading-snug">
+                        <h4 className="gallery-title inline-block text-xs sm:text-sm font-bold text-white tracking-tight leading-snug line-clamp-1">
                           {item.title}
                         </h4>
                       </div>
@@ -235,39 +230,7 @@ export default function Gallery() {
         </div>
       )}
 
-      {/* ── previous-year statistics — dedicated subsection ── */}
-      <div className="mt-14 sm:mt-16">
-        <div className="flex items-center gap-3 mb-5 sm:mb-6">
-          <span className="grid h-8 w-8 place-items-center rounded-lg border border-white/[0.1] bg-white/[0.04] text-brand-cyan">
-            <span className="material-symbols-outlined text-[16px]">insights</span>
-          </span>
-          <h3 className="text-sm font-mono font-bold tracking-[0.22em] text-white uppercase">
-            Previous-Year Stats
-          </h3>
-          <span className="h-px flex-1 bg-gradient-to-r from-white/15 to-transparent" />
-        </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-2.5 sm:gap-3.5">
-          {memories.stats.map((stat) => (
-            <div
-              key={stat.label}
-              className="rounded-2xl border border-white/[0.07] bg-white/[0.025] px-4 py-5 sm:px-5 sm:py-6 text-center transition-colors duration-300 hover:border-white/[0.14] hover:bg-white/[0.04]"
-            >
-              <div className="text-lg sm:text-2xl md:text-[28px] font-extrabold tracking-tight text-white leading-none tabular-nums">
-                {stat.value}
-              </div>
-              <div className="mt-2 text-[9px] sm:text-[10px] font-mono font-semibold uppercase tracking-[0.14em] text-zinc-500 leading-snug">
-                {stat.label}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* regional note — source wording preserved */}
-        <p className="mt-4 text-center text-[10px] sm:text-xs text-zinc-500 leading-relaxed max-w-2xl mx-auto">
-          {memories.regionNote}
-        </p>
-      </div>
 
       {/* ── achievements / highlights ── */}
       <div className="mt-12 sm:mt-14">
@@ -281,18 +244,18 @@ export default function Gallery() {
           <span className="h-px flex-1 bg-gradient-to-r from-white/15 to-transparent" />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-2.5 sm:gap-4">
           {memories.achievements.map((a) => (
             <div
               key={a.title}
-              className="group flex items-start gap-3.5 rounded-2xl border border-white/[0.07] bg-white/[0.025] p-4 sm:p-5 transition-all duration-300 hover:-translate-y-1 hover:border-white/[0.16] hover:bg-white/[0.045]"
+              className="group flex flex-col sm:flex-row items-start gap-2.5 sm:gap-4 rounded-2xl border border-white/10 bg-[#090d14] p-3.5 sm:p-5 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-400/40 hover:bg-[#0e1420] hover:shadow-[0_12px_28px_rgba(0,240,255,0.12)]"
             >
-              <span className="grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-white/[0.09] bg-white/[0.04] text-brand-cyan transition-transform duration-300 group-hover:scale-110">
-                <span className="material-symbols-outlined text-[18px]">{a.icon}</span>
+              <span className="grid h-8 w-8 sm:h-10 sm:w-10 shrink-0 place-items-center rounded-xl border border-white/10 bg-cyan-500/10 text-cyan-300 transition-transform duration-300 group-hover:scale-110">
+                <span className="material-symbols-outlined text-[16px] sm:text-[20px]">{a.icon}</span>
               </span>
               <div className="min-w-0">
-                <h4 className="text-sm font-bold text-white tracking-tight leading-snug">{a.title}</h4>
-                <p className="mt-1 text-[11px] sm:text-xs text-zinc-500 leading-relaxed">{a.body}</p>
+                <h4 className="text-xs sm:text-base font-bold text-white tracking-tight leading-snug font-serif">{a.title}</h4>
+                <p className="mt-1 text-[11px] sm:text-xs text-zinc-400 leading-relaxed line-clamp-3 sm:line-clamp-none">{a.body}</p>
               </div>
             </div>
           ))}

@@ -98,39 +98,10 @@ export const domains = [
     blurb: 'Guiding students and professionals to the right futures.',
     statements: [],
   },
-  {
-    id: 'tourism',
-    number: '10',
-    label: 'AI for Tourism',
-    shortLabel: 'Tourism',
-    icon: 'travel_explore',
-    accent: 'indigo',
-    blurb: 'Reimagining exploration, heritage and travel experiences.',
-    statements: [],
-  },
-  {
-    id: 'food-redistribution',
-    number: '11',
-    label: 'AI for Food Redistribution',
-    shortLabel: 'Food Redistribution',
-    icon: 'restaurant',
-    accent: 'red',
-    blurb: 'Moving surplus food to the people who need it most.',
-    statements: [],
-  },
-  {
-    id: 'urban-monitoring',
-    number: '12',
-    label: 'AI for Urban Monitoring',
-    shortLabel: 'Urban Monitoring',
-    icon: 'radar',
-    accent: 'azure',
-    blurb: 'Eyes on the city — civic oversight at scale.',
-    statements: [],
-  },
 ]
 
 export const tracks = domains
 
 /* Kept for compatibility with any legacy consumer. */
 export const trackFilters = domains.map((t) => ({ id: t.id, label: t.label }))
+
