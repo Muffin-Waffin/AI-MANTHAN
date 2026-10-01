@@ -178,7 +178,7 @@ export const footer = {
   watermark: 'AI मंथन 2.0',
   address: site.address,
   legal: '© 2026 AI मंथन 2.0 • Acropolis Institute of Technology & Research. All rights reserved.',
-  meta: ['Organized by Acropolis', 'Built with craft'],
+  meta: ['Organized by Team AI-Manthan, Acropolis', 'Built with craft'],
 }
 
 /* ── Official Rulebook (opened from the footer "Rulebook" button) ── */
