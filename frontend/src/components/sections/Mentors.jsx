@@ -160,7 +160,71 @@ function PeopleCard({ member }) {
   )
 }
 
+function ConvenerCard({ member }) {
+  return (
+    <div className="col-span-full relative w-full overflow-hidden rounded-3xl border border-cyan-500/30 bg-gradient-to-r from-[#0d1627] via-[#090d16] to-[#0d1627] p-5 sm:p-8 shadow-[0_20px_50px_rgba(0,0,0,0.6)] mb-6 sm:mb-8 group hover:border-cyan-400/60 transition-all duration-500">
+      <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-8">
+        {/* Left Side: Inner Image Box */}
+        <div className="relative w-44 h-52 sm:w-56 sm:h-64 shrink-0 rounded-2xl overflow-hidden border-2 border-cyan-400/40 bg-obsidian-950 shadow-2xl">
+          <SmartImage
+            alt={member.name}
+            src={member.img}
+            fill
+            className="object-cover object-top group-hover:scale-105 transition-transform duration-700 ease-out"
+            sizes="(max-width: 768px) 176px, 224px"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none" />
+          <span className="absolute bottom-2 left-2 right-2 text-center text-[10px] font-mono uppercase tracking-[0.16em] text-cyan-300 bg-black/80 py-0.5 rounded backdrop-blur-sm border border-cyan-400/30">
+            CONVENER
+          </span>
+        </div>
+
+        {/* Right Side: Details & Intro */}
+        <div className="flex-1 text-center md:text-left space-y-2 sm:space-y-3">
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold tracking-wider uppercase bg-cyan-500/15 border border-cyan-400/40 text-cyan-300 shadow-md">
+              <Icon name="stars" className="text-sm text-cyan-400" />
+              CONVENER & HOD
+            </span>
+            <span className="text-xs font-mono text-zinc-400">AI Manthan 2.0</span>
+          </div>
+
+          <div>
+            <h3 className="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
+              {member.name}
+            </h3>
+            <p className="text-sm sm:text-lg font-semibold text-cyan-400 mt-1">
+              {member.title}
+            </p>
+            <p className="text-xs sm:text-sm text-zinc-400 font-mono mt-0.5">
+              {member.org}
+            </p>
+          </div>
+
+          <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed max-w-3xl">
+            {member.bio}
+          </p>
+
+          <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 pt-2">
+            {member.bullets?.map((b, i) => (
+              <span
+                key={i}
+                className="px-2.5 py-1 rounded-md bg-white/[0.05] border border-white/10 text-[11px] font-mono text-zinc-300"
+              >
+                {b}
+              </span>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function MemberGridGroup({ title, members }) {
+  const convener = members.find((m) => m.isConvener)
+  const regularMembers = members.filter((m) => !m.isConvener)
+
   return (
     <div className="mb-12 sm:mb-14 last:mb-0">
       {/* Group heading */}
@@ -174,9 +238,12 @@ function MemberGridGroup({ title, members }) {
         </span>
       </div>
 
-      {/* Grid track */}
+      {/* Render Convener card first if exists */}
+      {convener && <ConvenerCard member={convener} />}
+
+      {/* Grid track for regular members */}
       <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-        {members.map((member) => (
+        {regularMembers.map((member) => (
           <PeopleCard key={member.slug} member={member} />
         ))}
       </div>
@@ -212,3 +279,4 @@ export default function Mentors() {
     </Section>
   )
 }
+

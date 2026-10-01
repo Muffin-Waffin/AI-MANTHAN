@@ -594,7 +594,35 @@ export const peopleDirectory = [
     ],
   },
 
-  /* ---------------- Faculty Advisory & Leadership (3) ---------------- */
+  /* ---------------- Faculty Advisory & Leadership (4) ---------------- */
+  {
+    slug: 'dr-prashant-lakkadwal',
+    group: 'faculty',
+    isConvener: true,
+    name: 'Dr. Prashant Lakkadwal',
+    role: 'Convener',
+    title: 'HOD, Information Technology and Data Science',
+    org: 'Acropolis Institute of Technology & Research',
+    img: '/pastaimathan/image copy 8.png',
+    initials: 'PL',
+    bio: 'Head of Department (HOD) - Information Technology and Data Science at Acropolis Institute of Technology & Research. Leading academic research, department innovation, and serving as Convener for AI Manthan 2.0.',
+    tag: 'Convener & HOD',
+    footerTag: 'AI MANTHAN CONVENER',
+    bullets: ['HOD: IT & Data Science', 'Convener: AI Manthan 2.0'],
+    quote: '“Transforming curiosity into innovation through AI & Data Science excellence.”',
+    location: 'Indore, Madhya Pradesh',
+    badge: 'Convener',
+    hackathons: 'Convener, AI Manthan 2.0',
+    email: 'prashant.lakkadwal@acropolis.in',
+    about:
+      'Dr. Prashant Lakkadwal is the HOD of Information Technology and Data Science at Acropolis Institute of Technology & Research. As Convener for AI Manthan 2.0, he leads strategic organization, technical mentorship, and institutional guidance.',
+    expertise: ['Information Technology', 'Data Science', 'Academic Leadership', 'AI Research'],
+    stats: [
+      { value: 'HOD', label: 'IT & Data Science' },
+      { value: 'Convener', label: 'AI Manthan 2.0' },
+      { value: 'AITR', label: 'Acropolis Indore' },
+    ],
+  },
   {
     slug: 'anil-rana',
     group: 'faculty',
