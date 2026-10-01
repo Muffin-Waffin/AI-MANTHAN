@@ -5,20 +5,18 @@ import { useState, useEffect } from 'react'
 const UNSTOP_URL =
   'https://unstop.com/hackathons/ai-manthan-20-acropolis-institute-of-technology-and-research-indore-1751106'
 
+/**
+ * UnstopEventModal
+ * Auto-popup on page load has been disabled so the site loads cleanly
+ * without any intrusive modal popups jumping up when opening the URL.
+ */
 export default function UnstopEventModal() {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    // Check if user has already seen or closed the popup in this session
-    const seen = sessionStorage.getItem('aimanthan_unstop_popup_seen')
-    if (!seen) {
-      // Small delay after page load so preloader/render completes smoothly
-      const timer = setTimeout(() => {
-        setOpen(true)
-        sessionStorage.setItem('aimanthan_unstop_popup_seen', '1')
-      }, 700)
-      return () => clearTimeout(timer)
-    }
+    const handleOpen = () => setOpen(true)
+    window.addEventListener('open-unstop-modal', handleOpen)
+    return () => window.removeEventListener('open-unstop-modal', handleOpen)
   }, [])
 
   if (!open) return null
@@ -99,7 +97,7 @@ export default function UnstopEventModal() {
               onClick={handleClose}
               className="px-3.5 py-2 rounded-xl text-xs font-semibold text-zinc-300 hover:text-white bg-white/5 hover:bg-white/10 transition-colors"
             >
-              Skip
+              Close
             </button>
             <a
               href={UNSTOP_URL}
