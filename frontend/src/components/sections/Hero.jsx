@@ -1,12 +1,80 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import Button from '../ui/Button'
 import { NeonCountdown } from '../ui/NeonCountdown'
 import { hero, site } from '../../data/site'
 
 function pad(n) {
   return String(n).padStart(2, '0')
+}
+
+/**
+ * Animated count up transition — runs ONCE on page load / scroll into view.
+ */
+function CountUpNumber({ targetValue, duration = 1800 }) {
+  const [currentVal, setCurrentVal] = useState(0)
+  const [hasAnimated, setHasAnimated] = useState(false)
+  const elementRef = useRef(null)
+
+  const strVal = String(targetValue)
+  const numericStr = strVal.replace(/[^0-9]/g, '')
+  const targetNum = numericStr ? parseInt(numericStr, 10) : 0
+
+  const hasComma = strVal.includes(',')
+  const hasPlus = strVal.includes('+')
+
+  useEffect(() => {
+    const node = elementRef.current
+    if (!node || hasAnimated) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setHasAnimated(true)
+          observer.disconnect()
+        }
+      },
+      { threshold: 0.2 }
+    )
+
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [hasAnimated])
+
+  useEffect(() => {
+    if (!hasAnimated) return
+
+    let startTime = null
+    let animationFrameId
+
+    const animate = (timestamp) => {
+      if (!startTime) startTime = timestamp
+      const progress = Math.min((timestamp - startTime) / duration, 1)
+      const easedProgress = 1 - Math.pow(1 - progress, 3)
+      const current = Math.floor(easedProgress * targetNum)
+
+      setCurrentVal(current)
+
+      if (progress < 1) {
+        animationFrameId = requestAnimationFrame(animate)
+      } else {
+        setCurrentVal(targetNum)
+      }
+    }
+
+    animationFrameId = requestAnimationFrame(animate)
+    return () => cancelAnimationFrame(animationFrameId)
+  }, [hasAnimated, targetNum, duration])
+
+  const formattedNum = hasComma ? currentVal.toLocaleString('en-US') : currentVal
+
+  return (
+    <span ref={elementRef} className="inline-block transition-all duration-300">
+      {hasAnimated ? formattedNum : 0}
+      {hasPlus && '+'}
+    </span>
+  )
 }
 
 /**
@@ -64,21 +132,26 @@ function CountdownCard({ revealed = true }) {
   const cell = (v) => (ready ? v : '--')
 
   return (
-    <div className={`${revealed ? 'stagger-fade-up' : 'opacity-0'} mt-16 w-full max-w-4xl`} style={{ '--stagger': 4 }}>
-      <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 pb-6 mb-3 text-xs font-mono text-zinc-400">
-        <span className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.9)]"></span>
-          {hero.countdown.caption}
+    <div className={`${revealed ? 'stagger-fade-up' : 'opacity-0'} mt-14 sm:mt-16 w-full max-w-4xl flex flex-col items-center`} style={{ '--stagger': 4 }}>
+      {/* Top Glass Caption Badge */}
+      <div className="inline-flex flex-wrap items-center justify-center gap-2 sm:gap-3 px-4 py-2 rounded-full bg-[#070c18]/80 border border-cyan-500/25 backdrop-blur-md text-xs font-mono text-zinc-300 mb-6 shadow-[0_6px_24px_rgba(0,0,0,0.6)]">
+        <span className="flex items-center gap-2 font-semibold">
+          <span className="relative flex h-2 w-2">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.9)]"></span>
+          </span>
+          <span className="text-zinc-200 tracking-wider uppercase font-bold">{hero.countdown.caption}</span>
         </span>
-        <span className="hidden sm:inline text-zinc-600">•</span>
-        <span className="hidden sm:inline">{hero.countdown.dates}</span>
+        <span className="hidden sm:inline text-cyan-500/60">•</span>
+        <span className="hidden sm:inline text-cyan-300 font-bold tracking-wider">{hero.countdown.dates}</span>
       </div>
+
       <NeonCountdown
         cells={[
-          { value: cell(days), label: 'Days', tone: 'azure' },
-          { value: cell(hours), label: 'Hours', tone: 'glow' },
-          { value: cell(mins), label: 'Minutes', tone: 'cyan' },
-          { value: cell(secs), label: 'Seconds', tone: 'ice' },
+          { value: cell(days), label: 'Days' },
+          { value: cell(hours), label: 'Hours' },
+          { value: cell(mins), label: 'Minutes' },
+          { value: cell(secs), label: 'Seconds' },
         ]}
       />
     </div>
@@ -96,13 +169,13 @@ export function StatStrip() {
         <span className="text-[11px] sm:text-xs font-bold tracking-[0.3em] text-zinc-300 uppercase whitespace-nowrap">
           Previous Year Stats
         </span>
-        <span className="h-px flex-1 bg-gradient-to-r from-white/25 to-transparent" />
+        <span className="h-px flex-1 bg-gradient-to-r from-cyan-400/40 via-cyan-400/15 to-transparent" />
       </div>
       <div className="grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-[38px]">
-        {site.stats.map((stat) => (
+        {site.stats.map((stat, idx) => (
           <div
             key={stat.label}
-            className={`hud-stat relative mx-auto flex h-[135px] sm:h-[155px] md:h-[175px] w-full max-w-[293px] flex-col items-center justify-center bg-obsidian-900/80 px-3 sm:px-5 text-center ${
+            className={`hud-stat relative mx-auto flex h-[135px] sm:h-[155px] md:h-[175px] w-full max-w-[293px] flex-col items-center justify-center bg-obsidian-900/80 px-3 sm:px-5 text-center transition-all duration-300 hover:border-cyan-400/40 hover:shadow-[0_0_24px_rgba(0,240,255,0.25)] ${
               stat.highlight ? 'hud-stat-highlight' : ''
             }`}
           >
@@ -111,7 +184,7 @@ export function StatStrip() {
             <span aria-hidden="true" className="hud-corner hud-corner-bl" />
             <span aria-hidden="true" className="hud-corner hud-corner-br" />
             <div className={`text-2xl sm:text-3xl md:text-[42px] font-extrabold tracking-tight leading-none ${stat.highlight ? 'text-cyan-300 drop-shadow-[0_0_18px_rgba(103,232,249,0.55)]' : 'text-white'}`}>
-              {stat.value}
+              <CountUpNumber targetValue={stat.value} duration={1600 + idx * 200} />
             </div>
             <div className="mt-2 sm:mt-2.5 flex items-center justify-center gap-1.5">
               <span aria-hidden="true" className="h-1 w-1 rounded-full bg-cyan-400/90 shadow-[0_0_8px_rgba(34,211,238,0.9)]" />
@@ -212,9 +285,9 @@ export default function Hero() {
           </div>
 
           {/* Headline */}
-          <h1 className={`${reveal(1)} text-titanium text-4xl sm:text-6xl md:text-7xl lg:text-[5rem] font-extrabold tracking-tight max-w-5xl leading-[1.04]`} style={{ '--stagger': 1 }}>
+          <h1 className={`${reveal(1)} font-serif font-light text-titanium text-4xl sm:text-6xl md:text-7xl lg:text-[5.25rem] tracking-tight max-w-5xl leading-[1.04]`} style={{ '--stagger': 1 }}>
             {hero.headlineA}{' '}
-            <span className="bg-gradient-to-r from-brand-cyan via-[#a5f3fc] to-brand-cyan bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-cyan-300 via-white to-brand-cyan bg-clip-text text-transparent italic font-serif">
               {hero.headlineB}
             </span>
           </h1>

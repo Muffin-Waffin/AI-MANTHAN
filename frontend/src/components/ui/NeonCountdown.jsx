@@ -1,84 +1,53 @@
 import * as React from 'react'
-import { cva } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
 /**
- * NeonTimeCell — countdown.png ke exact jaisa glowing tile.
- * Dark glass tile, hair-thin cyan→cyan→cyan neon ring (mask composite),
- * soft outer bloom, glossy top-left highlight, floor reflection,
- * extrabold glowing digits + spaced uppercase label.
- *
- * Per-tile glow shift via --tile-glow (days → seconds, cyan family).
+ * High-End Cyber Glass Countdown Tile
+ * Features crisp pure WHITE digits, glowing cyan micro accents,
+ * dark glass cards with cyan rim highlights and hover response.
  */
 
-const neonTileVariants = cva(
-  'relative flex flex-col items-center justify-center select-none',
-  {
-    variants: {
-      tone: {
-        cyan: '[--tw-glow:56,189,248]',
-        azure: '[--tw-glow:0,168,255]',
-        glow: '[--tw-glow:0,240,255]',
-        ice: '[--tw-glow:103,232,249]',
-      },
-      size: {
-        default: 'rounded-2xl sm:rounded-[24px]',
-        sm: 'rounded-xl sm:rounded-2xl',
-      },
-    },
-    defaultVariants: {
-      tone: 'glow',
-      size: 'default',
-    },
-  }
-)
-
-function NeonTimeCell({ className, tone, size, value, label, style, ...props }) {
-  const glow = {
-    cyan: 'rgba(56,189,248,0.6)',
-    azure: 'rgba(0,168,255,0.65)',
-    glow: 'rgba(0,240,255,0.65)',
-    ice: 'rgba(165,243,252,0.7)',
-  }[tone] || 'rgba(0,240,255,0.65)'
-
+function NeonTimeCell({ className, value, label, ...props }) {
   return (
     <div
-      className={cn(neonTileVariants({ tone, size }), 'neon-tile', className)}
-      style={{ '--tile-glow': glow, ...style }}
+      className={cn(
+        'group relative flex flex-col items-center justify-center select-none rounded-2xl sm:rounded-3xl p-3 sm:p-5 md:p-6 min-w-[75px] sm:min-w-[130px] md:min-w-[160px] bg-[#070d18]/80 border border-cyan-500/30 backdrop-blur-xl shadow-[0_12px_35px_rgba(0,0,0,0.7),inset_0_1px_0_rgba(255,255,255,0.12),0_0_20px_rgba(0,240,255,0.12)] transition-all duration-300 hover:border-cyan-400/70 hover:shadow-[0_0_35px_rgba(0,240,255,0.35)] hover:-translate-y-1',
+        className
+      )}
       {...props}
     >
-      {/* glossy top-left highlight */}
+      {/* Top subtle cyan accent bar */}
       <span
         aria-hidden="true"
-        className="absolute top-[5%] left-[10%] right-[36%] h-[28%] rounded-full bg-white/[0.10] blur-[7px] pointer-events-none"
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-10 sm:w-16 h-[2px] rounded-full bg-gradient-to-r from-transparent via-cyan-400/80 to-transparent transition-all duration-300 group-hover:w-24 group-hover:via-cyan-300"
       />
-      {/* floor reflection beneath the tile */}
-      <span
-        aria-hidden="true"
-        className="absolute -bottom-3 left-[12%] right-[12%] h-3 rounded-[50%] opacity-75 blur-[7px] pointer-events-none"
-        style={{
-          background: `radial-gradient(ellipse at center, ${glow}, transparent 72%)`,
-        }}
-      />
-      {/* digits */}
-      <div className="neon-digit relative text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-none font-extrabold font-mono tracking-tight tabular-nums">
+
+      {/* Pure WHITE Digits */}
+      <div className="relative text-4xl sm:text-6xl md:text-7xl lg:text-8xl leading-none font-extrabold font-mono tracking-tight tabular-nums text-white drop-shadow-[0_0_22px_rgba(255,255,255,0.75)] group-hover:scale-105 transition-transform duration-300">
         {value}
       </div>
-      {/* label */}
-      <div className="relative mt-3 sm:mt-4 text-[9px] sm:text-[11px] font-mono font-semibold uppercase tracking-[0.3em] text-zinc-300/90">
+
+      {/* Spaced Label */}
+      <div className="relative mt-2 sm:mt-3.5 text-[9px] sm:text-xs font-mono font-bold uppercase tracking-[0.28em] text-cyan-300 drop-shadow-[0_0_8px_rgba(0,240,255,0.6)]">
         {label}
       </div>
+
+      {/* Subtle bottom glow indicator */}
+      <span
+        aria-hidden="true"
+        className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 h-1 rounded-full bg-cyan-400/30 blur-sm group-hover:bg-cyan-400/60 transition-all duration-300"
+      />
     </div>
   )
 }
 
-/* Neon colon separator — two glowing dots stacked (countdown.png jaisa) */
+/* Glowing Colon Separator */
 function NeonColon({ className, ...props }) {
   return (
     <div
       aria-hidden="true"
       className={cn(
-        'flex flex-col items-center justify-center gap-2.5 self-center',
+        'flex flex-col items-center justify-center gap-2 sm:gap-3.5 self-center px-0.5 sm:px-2',
         className
       )}
       {...props}
@@ -86,19 +55,19 @@ function NeonColon({ className, ...props }) {
       {[0, 1].map((i) => (
         <span
           key={i}
-          className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-cyan-300 shadow-[0_0_10px_2px_rgba(103,232,249,0.85)]"
+          className="w-1.5 h-1.5 sm:w-2.5 sm:h-2.5 rounded-full bg-cyan-300 shadow-[0_0_12px_2px_rgba(0,240,255,0.9)] animate-pulse"
         />
       ))}
     </div>
   )
 }
 
-/* Full countdown row — 4 tiles + 3 colons */
+/* Full Countdown Container */
 function NeonCountdown({ className, cells = [], ...props }) {
   return (
     <div
       className={cn(
-        'flex items-stretch justify-center gap-2 sm:gap-3.5 w-full',
+        'flex items-center justify-center gap-1.5 sm:gap-3 lg:gap-4 w-full',
         className
       )}
       {...props}
@@ -109,8 +78,7 @@ function NeonCountdown({ className, cells = [], ...props }) {
           <NeonTimeCell
             value={cell.value}
             label={cell.label}
-            tone={cell.tone}
-            className="flex-1 max-w-[170px] sm:max-w-[230px] aspect-square"
+            className="flex-1 max-w-[130px] sm:max-w-[200px] aspect-square"
           />
         </React.Fragment>
       ))}
@@ -118,4 +86,4 @@ function NeonCountdown({ className, cells = [], ...props }) {
   )
 }
 
-export { NeonTimeCell, NeonColon, NeonCountdown, neonTileVariants }
+export { NeonTimeCell, NeonColon, NeonCountdown }

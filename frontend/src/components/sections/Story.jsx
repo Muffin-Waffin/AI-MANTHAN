@@ -1,3 +1,6 @@
+'use client'
+
+import { useEffect, useRef, useState } from 'react'
 import Icon from '../ui/Icon'
 import Section from '../ui/Section'
 import SectionBackdrop from '../ui/SectionBackdrop'
@@ -11,12 +14,84 @@ const textTone = {
   pink: 'text-pink-400',
 }
 
-function PillarCard({ pillar }) {
+/**
+ * 3D Tilt Image Component
+ * Tilts dynamically with 3D perspective based on mouse cursor position
+ * and renders a realistic ambient glare follow effect.
+ */
+function TiltImage({ src, alt, width, height, className }) {
+  const cardRef = useRef(null)
+  const [transform, setTransform] = useState('perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)')
+  const [glarePos, setGlarePos] = useState({ x: 50, y: 50, opacity: 0 })
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return
+    const rect = cardRef.current.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    const centerX = rect.width / 2
+    const centerY = rect.height / 2
+
+    const rotateX = -((y - centerY) / centerY) * 18
+    const rotateY = ((x - centerX) / centerX) * 18
+
+    setTransform(`perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.05, 1.05, 1.05)`)
+    setGlarePos({
+      x: (x / rect.width) * 100,
+      y: (y / rect.height) * 100,
+      opacity: 0.4,
+    })
+  }
+
+  const handleMouseLeave = () => {
+    setTransform('perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)')
+    setGlarePos((prev) => ({ ...prev, opacity: 0 }))
+  }
+
   return (
-    <div className="glass glass-hover sheen p-4 sm:p-5 md:p-6 rounded-2xl flex flex-col justify-between group/pillar">
+    <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="relative cursor-pointer transition-transform duration-200 ease-out"
+      style={{ transform, transformStyle: 'preserve-3d' }}
+    >
+      {/* Ambient glowing aura behind logo */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-4 bg-cyan-500/25 blur-[65px] rounded-full pointer-events-none"
+      />
+      {/* Dynamic 3D glare shine */}
+      <div
+        className="pointer-events-none absolute inset-0 rounded-full transition-opacity duration-300 z-20"
+        style={{
+          background: `radial-gradient(circle at ${glarePos.x}% ${glarePos.y}%, rgba(0, 240, 255, ${glarePos.opacity}), transparent 65%)`,
+        }}
+      />
+      <img
+        src={src}
+        alt={alt}
+        width={width}
+        height={height}
+        className={className}
+      />
+    </div>
+  )
+}
+
+function PillarCard({ pillar, index, isVisible }) {
+  return (
+    <div
+      className={`glass glass-hover sheen p-4 sm:p-5 md:p-6 rounded-2xl flex flex-col justify-between group/pillar transition-all duration-700 ease-out ${
+        isVisible
+          ? 'opacity-100 translate-y-0 filter-none'
+          : 'opacity-0 translate-y-12 blur-sm'
+      }`}
+      style={{ transitionDelay: `${250 + index * 120}ms` }}
+    >
       <div>
         <div
-          className={`w-8 sm:w-10 h-8 sm:h-10 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center mb-2.5 sm:mb-4 transition-all duration-650 group-hover/pillar:scale-110 group-hover/pillar:border-white/20 ${
+          className={`w-8 sm:w-10 h-8 sm:h-10 rounded-xl bg-white/[0.05] border border-white/[0.08] flex items-center justify-center mb-2.5 sm:mb-4 transition-all duration-500 group-hover/pillar:scale-110 group-hover/pillar:border-cyan-400/40 ${
             textTone[pillar.color] || 'text-brand-cyan'
           }`}
         >
@@ -33,11 +108,38 @@ function PillarCard({ pillar }) {
 }
 
 export default function Story() {
+  const sectionRef = useRef(null)
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    const node = sectionRef.current
+    if (!node) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setIsVisible(true)
+        }
+      },
+      { threshold: 0.15 }
+    )
+
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <Section id="story" className="!py-10 sm:!py-12">
+    <Section id="story" className="!py-10 sm:!py-12 overflow-hidden" ref={sectionRef}>
       <SectionBackdrop variant="churn" />
-      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,500px)] lg:items-start gap-6 sm:gap-8 lg:gap-8 mb-6 sm:mb-8">
-        <div className="max-w-2xl pl-[3%]">
+      <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,500px)] lg:items-start gap-6 sm:gap-8 lg:gap-8 mb-8 sm:mb-10">
+        {/* Left Text Column — Reveal from Left */}
+        <div
+          className={`max-w-2xl pl-[3%] transition-all duration-900 ease-out ${
+            isVisible
+              ? 'opacity-100 translate-x-0 filter-none'
+              : 'opacity-0 -translate-x-16 blur-sm'
+          }`}
+        >
           <span className="text-[10px] sm:text-xs font-mono font-medium tracking-wider text-brand-cyan uppercase">
             {story.eyebrow}
           </span>
@@ -46,21 +148,23 @@ export default function Story() {
           </h2>
           <p className="text-xs sm:text-sm md:text-base text-zinc-400 mt-2 sm:mt-3 leading-relaxed">{story.body}</p>
         </div>
-        {/* Right rail — official AI MANTHAN 2.0 logo key-visual + quote
-            beneath it. No frame/border — the emblem floats free with a
-            soft glow. Subtle float only — the logo is never morphed. */}
-        <div className="w-full flex flex-col gap-3 sm:gap-4">
-          <div className="story-video relative w-full flex items-center justify-center">
-            <div
-              aria-hidden="true"
-              className="absolute inset-8 bg-cyan-600/20 blur-[70px] rounded-full pointer-events-none"
-            />
-            <img
+
+        {/* Right Rail — Center Zoom Reveal + 3D Cursor Tilt Parallax */}
+        <div
+          className={`w-full flex flex-col gap-3 sm:gap-4 transition-all duration-1000 ease-out ${
+            isVisible
+              ? 'opacity-100 scale-100 filter-none'
+              : 'opacity-0 scale-75 blur-md'
+          }`}
+          style={{ transitionDelay: '150ms' }}
+        >
+          <div className="relative w-full flex items-center justify-center">
+            <TiltImage
               src="/logos/aimathan-logo.png"
               alt="AI Manthan 2.0 — official event logo"
               width={1599}
               height={966}
-              className="relative w-full max-w-[460px] h-auto object-contain animate-logo-float drop-shadow-[0_0_50px_rgba(0,240,255,0.5)]"
+              className="relative w-full max-w-[460px] h-auto object-contain drop-shadow-[0_0_50px_rgba(0,240,255,0.5)]"
             />
           </div>
           <div className="glass p-3 sm:p-3.5 rounded-xl text-[10px] sm:text-xs font-mono text-zinc-400">
@@ -70,9 +174,10 @@ export default function Story() {
         </div>
       </div>
 
+      {/* Bottom 4 Pillar Cards — Reveal from Bottom with Stagger */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-        {story.pillars.map((pillar) => (
-          <PillarCard key={pillar.title} pillar={pillar} />
+        {story.pillars.map((pillar, idx) => (
+          <PillarCard key={pillar.title} pillar={pillar} index={idx} isVisible={isVisible} />
         ))}
       </div>
     </Section>

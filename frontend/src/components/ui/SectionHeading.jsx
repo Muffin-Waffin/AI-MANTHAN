@@ -5,7 +5,7 @@ export default function SectionHeading({ eyebrow, title, body, align = 'left', c
       <span className="text-xs font-mono font-medium tracking-wider text-brand-cyan uppercase">
         {eyebrow}
       </span>
-      <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-white mt-2">{title}</h2>
+      <h2 className="text-3xl sm:text-4xl font-light font-serif tracking-wide text-white mt-2">{title}</h2>
       {body && <p className="text-zinc-400 text-sm mt-2 leading-relaxed">{body}</p>}
     </div>
   )

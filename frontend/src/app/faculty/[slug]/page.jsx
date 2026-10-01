@@ -7,6 +7,13 @@ import SmartBack from '@/components/ui/SmartBack'
 import { peopleDirectory, getPersonBySlug } from '@/data/facultyDirectory'
 
 const groupAccents = {
+  guest: {
+    text: 'text-amber-400',
+    chip: 'bg-amber-500/15 border-amber-500/40 text-amber-400',
+    mono: 'text-amber-400',
+    zone: 'from-amber-500/30 via-orange-600/15 to-transparent text-amber-400',
+    icon: 'workspace_premium',
+  },
   jury: {
     text: 'text-pink-400',
     chip: 'bg-pink-500/15 border-pink-500/40 text-pink-400',
@@ -69,7 +76,8 @@ export default async function ProfilePage({ params }) {
   const member = getPersonBySlug(slug)
   if (!member) notFound()
 
-  const accent = groupAccents[member.group]
+  const accent = groupAccents[member.group] || groupAccents.mentors
+  const motto = member.motto || ['Innovate', 'Build', 'Deliver']
   const idx = peopleDirectory.findIndex((f) => f.slug === member.slug)
   const prev = peopleDirectory[(idx - 1 + peopleDirectory.length) % peopleDirectory.length]
   const next = peopleDirectory[(idx + 1) % peopleDirectory.length]
@@ -127,10 +135,10 @@ export default async function ProfilePage({ params }) {
                 )}
                 <div className="absolute right-3 top-1/2 -translate-y-8 z-10 select-none pointer-events-none text-right">
                   <div className={`font-script text-xl leading-tight -rotate-12 ${accent.text}`}>
-                    {member.motto.map((line, i) => (
+                    {motto.map((line, i) => (
                       <span key={line} className="block">
                         {line}
-                        {i < member.motto.length - 1 && <br />}
+                        {i < motto.length - 1 && <br />}
                       </span>
                     ))}
                   </div>
@@ -193,18 +201,20 @@ export default async function ProfilePage({ params }) {
             </div>
 
             {/* Quote */}
-            <div className="rounded-2xl bg-brand-cyan/[0.07] border border-brand-cyan/25 p-6 relative">
-              <div className="text-brand-cyan mb-2">
-                <Icon name="format_quote" className="text-[32px] opacity-70" />
+            {member.quote && (
+              <div className="rounded-2xl bg-brand-cyan/[0.07] border border-brand-cyan/25 p-6 relative">
+                <div className="text-brand-cyan mb-2">
+                  <Icon name="format_quote" className="text-[32px] opacity-70" />
+                </div>
+                <blockquote className="text-zinc-300 italic text-sm leading-relaxed mb-4">
+                  {member.quote}
+                </blockquote>
+                <div className="text-xs font-semibold text-zinc-400 flex items-center gap-2 font-mono">
+                  <span className="w-4 h-0.5 bg-zinc-600"></span>
+                  {member.name}
+                </div>
               </div>
-              <blockquote className="text-zinc-300 italic text-sm leading-relaxed mb-4">
-                {member.quote}
-              </blockquote>
-              <div className="text-xs font-semibold text-zinc-400 flex items-center gap-2 font-mono">
-                <span className="w-4 h-0.5 bg-zinc-600"></span>
-                {member.name}
-              </div>
-            </div>
+            )}
 
             {/* Watermark */}
             <div className="pt-4 px-2 select-none opacity-40">

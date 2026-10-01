@@ -58,9 +58,9 @@ export const hero = {
   ],
   countdown: {
     caption: 'APPLICATION WINDOW CLOSING',
-    dates: 'OCTOBER 14-16, 2026 • ACROPOLIS, INDORE',
+    dates: 'OCTOBER 31 - NOVEMBER 1, 2026 • 09:00 AM • ACROPOLIS, INDORE',
     /** Real event start — countdown derives remaining time from this. */
-    target: '2026-10-14T09:00:00+05:30',
+    target: '2026-10-31T09:00:00+05:30',
   },
 }
 

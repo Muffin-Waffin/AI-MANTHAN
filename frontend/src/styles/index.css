@@ -2,10 +2,12 @@
 @import 'tw-animate-css';
 
 @theme {
-  /* Fonts — exact match with code.html (+ Caveat for handwritten accents) */
+  /* Fonts — exact match with code.html (+ Caveat for handwritten accents & Cormorant for Editorial Display) */
   --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'Space Mono', monospace;
   --font-script: 'Caveat', cursive;
+  --font-serif: var(--font-serif), 'Cormorant Garamond', Georgia, serif;
+  --font-display: var(--font-serif), 'Cormorant Garamond', Georgia, serif;
 
   /* xs breakpoint — small phones (<400px) jahan default sm: too bada hai */
   --breakpoint-xs: 400px;
@@ -85,7 +87,25 @@
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
     overflow-x: clip;
+    font-family: var(--font-sans);
   }
+
+  /* ── Editorial Serif Display Typography ("The Invisible Rules of Wealth" style) ── */
+  h1, h2, h3, .font-serif, .font-display, .text-titanium {
+    font-family: var(--font-serif), 'Cormorant Garamond', Georgia, serif;
+    letter-spacing: 0.02em;
+  }
+  
+  /* Enforce slim light/medium serif weight (300/400) for luxury high-contrast look */
+  h1, h2, h3 {
+    font-weight: 300 !important;
+  }
+
+  h4, h5, h6 {
+    font-family: var(--font-serif), 'Cormorant Garamond', Georgia, serif;
+    font-weight: 400 !important;
+  }
+
   * {
     @apply border-border outline-ring/50;
   }
@@ -859,30 +879,9 @@ optgroup {
    composite trick keeps the ring crisp at any radius), soft outer
    bloom + glossy top highlight + floor reflection via --tile-glow. */
 @utility neon-tile {
-  background:
-    radial-gradient(120% 90% at 50% 112%, rgba(0, 120, 168, 0.4), transparent 62%),
-    linear-gradient(160deg, rgba(16, 34, 56, 0.85), rgba(6, 10, 18, 0.92));
-  box-shadow:
-    0 0 26px -4px var(--tile-glow, rgba(0, 240, 255, 0.55)),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 1.5px;
-    background: linear-gradient(
-      135deg,
-      rgba(125, 244, 255, 0.9),
-      rgba(0, 240, 255, 0.95) 45%,
-      rgba(0, 168, 255, 0.85)
-    );
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    mask-composite: exclude;
-    pointer-events: none;
-  }
+  background: transparent;
+  box-shadow: none;
+  border: none;
 }
 /* Slow breathing of the tile bloom — makes the row feel alive */
 @keyframes neon-breathe {

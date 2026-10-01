@@ -1,4 +1,4 @@
-import { Plus_Jakarta_Sans, Space_Mono, Caveat } from 'next/font/google'
+import { Plus_Jakarta_Sans, Space_Mono, Caveat, Cormorant_Garamond } from 'next/font/google'
 import '@/styles/index.css'
 import '@/styles/vertical-timeline.css'
 import AppShell from '@/components/layout/AppShell'
@@ -22,6 +22,12 @@ const caveat = Caveat({
   subsets: ['latin'],
   weight: ['600', '700'],
   variable: '--font-caveat',
+  display: 'swap',
+})
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
+  variable: '--font-serif',
   display: 'swap',
 })
 
@@ -102,8 +108,9 @@ export default function RootLayout({ children }) {
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       data-scroll-behavior="smooth"
-      className={`dark scroll-smooth ${jakarta.variable} ${spaceMono.variable} ${caveat.variable}`}
+      className={`dark scroll-smooth ${jakarta.variable} ${spaceMono.variable} ${caveat.variable} ${cormorant.variable}`}
     >
       <head>
         <link
@@ -111,7 +118,7 @@ export default function RootLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         {children}
         <Analytics />
       </body>
