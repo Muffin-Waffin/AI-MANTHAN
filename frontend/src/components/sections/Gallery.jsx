@@ -1,13 +1,85 @@
 'use client'
 
+import { useRef, useState } from 'react'
 import Section from '../ui/Section'
 import { memories } from '../../data/memories'
 
 /**
- * PAST AI MANTHAN — UNIFIED EVENT MEMORIES SHOWCASE
- * All 9 past photos fitted inside a single clean container box grid.
- * Small thumbnail sizes, non-clickable with smooth zoom hover effect (`cursor-zoom-in`).
+ * Interactive Magnifier Lens Zoom Image Card
+ * Recreates exact E-Commerce / Rollover HD Zoom Magnifier lens (like product detail pages).
+ * Follows mouse position & magnifies image in-place at cursor location with lens square.
  */
+function MagnifierImageCard({ item }) {
+  const [hovered, setHovered] = useState(false)
+  const [pos, setPos] = useState({ x: 50, y: 50, px: 0, py: 0 })
+  const containerRef = useRef(null)
+
+  const handleMouseMove = (e) => {
+    if (!containerRef.current) return
+    const rect = containerRef.current.getBoundingClientRect()
+    const px = e.clientX - rect.left
+    const py = e.clientY - rect.top
+    const xPercent = (px / rect.width) * 100
+    const yPercent = (py / rect.height) * 100
+
+    setPos({
+      x: Math.max(0, Math.min(100, xPercent)),
+      y: Math.max(0, Math.min(100, yPercent)),
+      px,
+      py,
+    })
+  }
+
+  return (
+    <div
+      ref={containerRef}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onMouseMove={handleMouseMove}
+      className="group relative aspect-[4/3] w-full overflow-hidden rounded-xl border border-white/10 bg-[#090d16] cursor-crosshair select-none transition-all duration-300 hover:border-cyan-400/80 hover:shadow-[0_12px_30px_rgba(0,240,255,0.25)]"
+    >
+      {/* Background Image - Magnifies dynamically at mouse position */}
+      <img
+        src={item.img}
+        alt={item.title}
+        style={{
+          transformOrigin: `${pos.x}% ${pos.y}%`,
+          transform: hovered ? 'scale(2.8)' : 'scale(1)',
+        }}
+        className="absolute inset-0 h-full w-full object-cover transition-transform duration-150 ease-out pointer-events-none"
+        loading="lazy"
+      />
+
+      {/* Floating Magnifier Blue Lens Box (follows mouse) */}
+      {hovered && (
+        <div
+          style={{
+            left: `${pos.px - 36}px`,
+            top: `${pos.py - 36}px`,
+          }}
+          className="absolute w-18 h-18 border-2 border-cyan-400 bg-cyan-400/25 rounded-lg shadow-[0_0_20px_rgba(0,240,255,0.6)] pointer-events-none z-20 backdrop-blur-[1px] animate-fade-in"
+        />
+      )}
+
+      {/* Hover Lens Indicator Badge */}
+      {hovered && (
+        <div className="absolute top-2.5 right-2.5 z-30 px-2 py-0.5 rounded border border-cyan-400/50 bg-black/80 font-mono text-[9px] uppercase tracking-[0.14em] font-bold text-cyan-300 backdrop-blur-md shadow-lg pointer-events-none">
+          2.8X HD LENS
+        </div>
+      )}
+
+      {/* Gradient & Title overlay at bottom */}
+      <div className="absolute inset-x-0 bottom-0 z-20 p-2.5 sm:p-3 bg-gradient-to-t from-black/95 via-black/40 to-transparent pointer-events-none transition-opacity duration-300">
+        <h4 className="text-[11px] sm:text-xs font-bold text-white tracking-tight truncate group-hover:text-cyan-300 transition-colors">
+          {item.title}
+        </h4>
+        <p className="text-[9px] text-zinc-400 line-clamp-1 hidden sm:block mt-0.5">
+          {item.body}
+        </p>
+      </div>
+    </div>
+  )
+}
 
 export default function Gallery() {
   const allMedia = memories.allPhotos || []
@@ -40,41 +112,16 @@ export default function Gallery() {
               Acropolis Arena • Indore
             </span>
           </div>
-          <span className="text-[11px] font-mono text-cyan-400/90 flex items-center gap-1.5">
-            <span className="material-symbols-outlined text-[15px]">zoom_in</span>
-            Hover to zoom • {allMedia.length} Photos
+          <span className="text-[11px] font-mono text-cyan-300 font-semibold flex items-center gap-1.5 bg-cyan-500/10 px-3 py-1 rounded-full border border-cyan-400/30">
+            <span className="material-symbols-outlined text-[15px] text-cyan-400">search</span>
+            Roll over image to zoom in (2.8X HD Resolution)
           </span>
         </div>
 
-        {/* Compact Image Grid inside the Single Box (Non-clickable, Cursor Zoom-in) */}
+        {/* Compact Image Grid with Interactive Magnifier Lens Zoom */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
           {allMedia.map((item, idx) => (
-            <div
-              key={`${item.title}-${idx}`}
-              className="group relative block aspect-[4/3] w-full overflow-hidden rounded-xl border border-white/10 bg-obsidian-900 cursor-zoom-in transition-all duration-300 hover:border-cyan-400/70 hover:shadow-[0_10px_25px_rgba(0,240,255,0.2)]"
-            >
-              {/* Image with rich smooth hover zoom effect */}
-              <img
-                src={item.img}
-                alt={item.title}
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-125 pointer-events-none"
-                loading="lazy"
-              />
-
-              {/* Hover gradient overlay & Title */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/25 to-transparent opacity-80 group-hover:opacity-95 transition-opacity pointer-events-none" />
-              
-              <div className="absolute inset-x-0 bottom-0 p-2.5 sm:p-3 flex items-end justify-between gap-2 pointer-events-none">
-                <div className="min-w-0">
-                  <h4 className="text-[11px] sm:text-xs font-bold text-white tracking-tight truncate group-hover:text-cyan-300 transition-colors">
-                    {item.title}
-                  </h4>
-                  <p className="text-[9px] text-zinc-400 line-clamp-1 hidden sm:block">
-                    {item.body}
-                  </p>
-                </div>
-              </div>
-            </div>
+            <MagnifierImageCard key={`${item.title}-${idx}`} item={item} />
           ))}
         </div>
       </div>
