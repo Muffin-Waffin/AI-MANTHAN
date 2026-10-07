@@ -60,16 +60,16 @@ export const mentors = {
 export const faculty = {
   eyebrow: 'Academic Stewardship',
   heading: 'Faculty Advisory & Leadership',
-  body: 'Distinguished educators and researchers from Acropolis Institute of Technology & Research steering innovation, governance, and academic rigor.',
-  aside: 'Acropolis • AITR',
+  body: 'Distinguished educators and researchers from Acropolis Institute of Technology and Research steering innovation, governance, and academic rigor.',
+  aside: 'AITR • AITR',
   members: [
     {
       initials: 'AR',
       role: 'Chief Patron',
       roleColor: 'azure',
       name: 'Cdr. (Dr.) Anil Rana',
-      title: 'Director, Acropolis Institute of Technology & Research',
-      bio: 'Championing cutting-edge research incubations, industry partnerships, and engineering excellence across the Acropolis Group of Institutions.',
+      title: 'Director, Acropolis Institute of Technology and Research',
+      bio: 'Championing cutting-edge research incubations, industry partnerships, and engineering excellence across the AITR Group of Institutions.',
       bullets: ['Former Indian Navy Commander', 'Senior Member IEEE'],
       footer: ['DIRECTORATE', 'ACROPOLIS INDORE'],
     },
@@ -88,7 +88,7 @@ export const faculty = {
       role: 'Staff Advisor, AI Manthan',
       roleColor: 'emerald',
       name: 'Dr. Balakrishna Maddodi',
-      title: 'Associate Professor, Acropolis Institute of Technology & Research',
+      title: 'Associate Professor, Acropolis Institute of Technology and Research',
       bio: 'Overseeing institutional protocols, inter-collegiate logistics, national accreditation standards, and campus hospitality safety frameworks.',
       bullets: ['Convenor: AI Manthan Technical Fest', 'Student Affairs & Welfare Directorate'],
       footer: ['STUDENT WELFARE', "AI MANTHAN '26"],
@@ -99,7 +99,7 @@ export const faculty = {
 export const team = {
   eyebrow: 'The Team Behind AI Manthan 2.0',
   heading: 'Core Organizing Committee',
-  body: 'Engineered with devotion by Acropolis, the developer collective at Acropolis Institute of Technology & Research, alongside AI Manthan Category Heads.',
+  body: 'Engineered with devotion by AITR, the developer collective at Acropolis Institute of Technology and Research, alongside AI Manthan Category Heads.',
   aside: 'Built by Builders, for Builders',
   members: [
     {
@@ -108,7 +108,7 @@ export const team = {
       role: 'Lead Convener',
       roleColor: 'azure',
       bio: 'Oversees competition operations, national outreach, and partnership roadmaps across 100+ institutions.',
-      tag: 'Acropolis Lead',
+      tag: 'AITR Lead',
       gradient: 'from-brand-cyan to-sky-600',
       hover: 'hover:border-brand-cyan/40',
     },
@@ -127,7 +127,7 @@ export const team = {
       name: 'Tanvi Nair',
       role: 'Head of Experience',
       roleColor: 'emerald',
-      bio: 'Curating finalist travel coordination, catering regimes, 24/7 rest pods, and sensory comfort inside Acropolis Arena.',
+      bio: 'Curating finalist travel coordination, catering regimes, 24/7 rest pods, and sensory comfort inside AITR Arena.',
       tag: 'Hospitality & Ops',
       gradient: 'from-emerald-500 to-teal-700',
       hover: 'hover:border-emerald-500/40',

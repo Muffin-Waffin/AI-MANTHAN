@@ -183,7 +183,7 @@ export default async function ProfilePage({ params }) {
               {/* Metadata */}
               <div className="space-y-4">
                 <MetadataRow icon="location_on">{member.location}</MetadataRow>
-                <MetadataRow icon="account_balance">Acropolis, Indore</MetadataRow>
+                <MetadataRow icon="account_balance">AITR, Indore</MetadataRow>
                 <MetadataRow icon="workspace_premium">{member.badge}</MetadataRow>
                 <MetadataRow icon="military_tech">{member.hackathons}</MetadataRow>
               </div>

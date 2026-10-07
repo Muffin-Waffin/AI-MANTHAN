@@ -126,7 +126,7 @@ export default function Story() {
             </div>
             <div className="flex items-center gap-2 bg-[#090d14] border border-white/10 px-3.5 py-2 rounded-lg">
               <Icon name="location_on" className="text-sm text-white" />
-              <span>Acropolis Indore</span>
+              <span>AITR Indore</span>
             </div>
           </div>
         </div>

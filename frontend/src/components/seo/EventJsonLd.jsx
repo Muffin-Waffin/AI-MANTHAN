@@ -10,14 +10,14 @@ export default function EventJsonLd() {
     '@type': 'Event',
     name: 'AI MANTHAN 2.0 — National-Level AI Hackathon',
     description:
-      'A 24-hour offline hackathon at Acropolis, Indore across 12 AI challenge domains, with a ₹1,00,000+ prize pool.',
+      'A 24-hour offline hackathon at AITR, Indore across 12 AI challenge domains, with a ₹1,00,000+ prize pool.',
     startDate: '2026-10-14T09:00+05:30',
     endDate: '2026-10-16T21:00+05:30',
     eventStatus: 'https://schema.org/EventScheduled',
     eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
     location: {
       '@type': 'Place',
-      name: 'Acropolis Arena, Bypass Road, Mangliya Sadak, Indore',
+      name: 'AITR Arena, Bypass Road, Mangliya Sadak, Indore',
       address: {
         '@type': 'PostalAddress',
         streetAddress: 'Bypass Road, Mangliya Sadak',
@@ -34,7 +34,7 @@ export default function EventJsonLd() {
     },
     organizer: {
       '@type': 'Organization',
-      name: 'Acropolis Institute of Technology & Research, Indore',
+      name: 'Acropolis Institute of Technology and Research, Indore',
       url: process.env.NEXT_PUBLIC_WEBSITE_URL || 'https://www.acropolis.in/',
     },
     offers: {

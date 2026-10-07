@@ -1,5 +1,6 @@
 'use client'
 
+import { useRef, useState, useEffect } from 'react'
 import SmartImage from '../ui/SmartImage'
 import Icon from '../ui/Icon'
 import Section, { SectionHeaderRow } from '../ui/Section'
@@ -179,7 +180,7 @@ function ConvenerCard({ member }) {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none" />
             <span className="absolute bottom-2 inset-x-2 text-center text-[10px] font-mono uppercase tracking-[0.16em] font-bold text-cyan-300 bg-black/85 py-1 rounded backdrop-blur-sm border border-cyan-400/30">
-              FACULTY CONVENER
+              CONVENER
             </span>
           </div>
         </div>
@@ -189,7 +190,7 @@ function ConvenerCard({ member }) {
           <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2">
             <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-mono font-bold tracking-wider uppercase bg-cyan-500/15 border border-cyan-400/40 text-cyan-300 shadow-md">
               <Icon name="stars" className="text-sm text-cyan-400" />
-              CONVENER & HOD
+              CONVENER and HOD
             </span>
             <span className="text-xs font-mono text-zinc-400">AI Manthan 2.0</span>
           </div>
@@ -245,7 +246,7 @@ function ConvenerCard({ member }) {
               </div>
               <div className="p-2.5 rounded-xl border border-white/10 bg-white/[0.03]">
                 <div className="text-[10px] font-mono text-zinc-400 uppercase">Institution</div>
-                <div className="text-xs font-bold text-white mt-0.5">Acropolis AITR</div>
+                <div className="text-xs font-bold text-white mt-0.5">AITR</div>
               </div>
             </div>
           </div>
@@ -255,13 +256,36 @@ function ConvenerCard({ member }) {
   )
 }
 
-function MemberGridGroup({ title, members }) {
-  const convener = members.find((m) => m.isConvener)
-  const regularMembers = members.filter((m) => !m.isConvener)
+function ScrollableCardGroup({ title, members }) {
+  const scrollRef = useRef(null)
+  const [scrollPos, setScrollPos] = useState(0)
+  const [canScrollLeft, setCanScrollLeft] = useState(false)
+  const [canScrollRight, setCanScrollRight] = useState(true)
+
+  const checkScroll = () => {
+    if (!scrollRef.current) return
+    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current
+    setCanScrollLeft(scrollLeft > 10)
+    setCanScrollRight(scrollLeft + clientWidth < scrollWidth - 10)
+    setScrollPos(scrollLeft)
+  }
+
+  useEffect(() => {
+    checkScroll()
+    window.addEventListener('resize', checkScroll)
+    return () => window.removeEventListener('resize', checkScroll)
+  }, [])
+
+  const scrollLeft = () => {
+    scrollRef.current?.scrollBy({ left: -320, behavior: 'smooth' })
+  }
+  const scrollRight = () => {
+    scrollRef.current?.scrollBy({ left: 320, behavior: 'smooth' })
+  }
 
   return (
     <div className="mb-12 sm:mb-14 last:mb-0">
-      {/* Group heading */}
+      {/* Group heading with scroll controls */}
       <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
         <h3 className="text-xs font-mono font-bold tracking-[0.25em] text-zinc-400 uppercase shrink-0">
           {title}
@@ -270,29 +294,90 @@ function MemberGridGroup({ title, members }) {
         <span className="text-[11px] font-mono text-zinc-500 shrink-0">
           {members.length} MEMBERS
         </span>
+        <div className="flex items-center gap-1.5 ml-auto">
+          <button
+            onClick={scrollLeft}
+            disabled={!canScrollLeft}
+            className="p-1.5 rounded-lg bg-white/[0.05] border border-white/[0.1] text-zinc-400 hover:text-white hover:bg-white/[0.1] disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
+            aria-label="Scroll left"
+          >
+            <Icon name="chevron_left" className="text-[16px]" />
+          </button>
+          <button
+            onClick={scrollRight}
+            disabled={!canScrollRight}
+            className="p-1.5 rounded-lg bg-white/[0.05] border border-white/[0.1] text-zinc-400 hover:text-white hover:bg-white/[0.1] disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200"
+            aria-label="Scroll right"
+          >
+            <Icon name="chevron_right" className="text-[16px]" />
+          </button>
+        </div>
       </div>
 
-      {/* Render Convener card first if exists */}
-      {convener && <ConvenerCard member={convener} />}
-
-      {/* Grid track for regular members */}
-      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-        {regularMembers.map((member) => (
-          <PeopleCard key={member.slug} member={member} />
+      {/* Horizontal scrollable track */}
+      <div
+        ref={scrollRef}
+        onScroll={checkScroll}
+        className="flex gap-4 sm:gap-6 pb-4 overflow-x-auto snap-x snap-mandatory no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0"
+        style={{ scrollSnapType: 'x mandatory' }}
+      >
+        {members.map((member) => (
+          <div
+            key={member.slug}
+            className="snap-start shrink-0 w-[280px] sm:w-[300px] lg:w-[320px]"
+          >
+            <PeopleCard member={member} />
+          </div>
         ))}
       </div>
+
+      {/* Scroll indicator dots */}
+      {members.length > 4 && (
+        <div className="flex items-center justify-center gap-1.5 mt-3">
+          {Array.from({ length: Math.ceil(members.length / 4) }).map((_, i) => (
+            <button
+              key={i}
+              onClick={() => scrollRef.current?.scrollTo({ left: i * 1280, behavior: 'smooth' })}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                scrollPos >= i * 1280 - 160 && scrollPos < (i + 1) * 1280 - 160
+                  ? 'bg-brand-cyan w-6'
+                  : 'bg-white/[0.15] hover:bg-white/[0.3]'
+              }`}
+              aria-label={`Go to page ${i + 1}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function ConvenerGroup({ title, members }) {
+  const convener = members.find((m) => m.isConvener)
+
+  if (!convener) return null
+
+  return (
+    <div className="mb-12 sm:mb-14 last:mb-0">
+      <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+        <h3 className="text-xs font-mono font-bold tracking-[0.25em] text-zinc-400 uppercase shrink-0">
+          {title}
+        </h3>
+        <span className="h-px flex-1 bg-white/[0.06]" />
+      </div>
+      <ConvenerCard member={convener} />
     </div>
   )
 }
 
 /* ---------- Section ---------- */
 
-const groups = [
+const scrollableGroups = [
   { id: 'guest', title: 'Guests of Honor' },
-  { id: 'jury', title: 'Industry Jury' },
-  { id: 'mentors', title: 'Hackathon Mentors' },
-  { id: 'faculty', title: 'Convener' },
+  { id: 'mentors', title: 'Mentors' },
 ]
+
+const convenerGroup = { id: 'faculty', title: 'Convener' }
 
 export default function Mentors() {
   return (
@@ -301,15 +386,16 @@ export default function Mentors() {
         heading={
           <SectionHeading
             eyebrow="Evaluated & Guided by Leaders"
-            title="Guests of Honor, Jury & Mentors"
+            title="Guests of Honor & Mentors"
           />
         }
-        aside="Frontier AI • Systems • Web3"
       />
 
-      {groups.map((group) => (
-        <MemberGridGroup key={group.id} title={group.title} members={peopleByGroup(group.id)} />
+      {scrollableGroups.map((group) => (
+        <ScrollableCardGroup key={group.id} title={group.title} members={peopleByGroup(group.id)} />
       ))}
+
+      <ConvenerGroup key={convenerGroup.id} title={convenerGroup.title} members={peopleByGroup(convenerGroup.id)} />
     </Section>
   )
 }

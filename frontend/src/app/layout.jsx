@@ -36,15 +36,15 @@ export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://ai-manthan.
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'AI MANTHAN 2.0 — 24-Hour National AI Hackathon at Acropolis Indore',
+    default: 'AI MANTHAN 2.0 — 24-Hour National AI Hackathon at AITR Indore',
     template: '%s | AI MANTHAN 2.0',
   },
   description:
-    "AI MANTHAN 2.0 — the national-level AI hackathon at Acropolis Institute of Technology & Research, Indore. A 24-hour offline hackathon across 12 AI challenge domains and a ₹1,00,000+ prize pool. October 14–16, 2026.",
+    "AI MANTHAN 2.0 — the national-level AI hackathon at Acropolis Institute of Technology and Research, Indore. A 24-hour offline hackathon across 12 AI challenge domains and a ₹1,00,000+ prize pool. October 14–16, 2026.",
   keywords: [
     'AI Manthan 2.0',
     'AI Manthan hackathon',
-    'Acropolis Indore hackathon',
+    'AITR Indore hackathon',
     'AI Manthan 2K26',
     'national AI hackathon India',
     '24 hour hackathon',
@@ -57,8 +57,8 @@ export const metadata = {
     'IIT NIT BITS hackathon',
   ],
   authors: [{ name: 'Acropolis — AI MANTHAN 2.0' }],
-  creator: 'Acropolis Institute of Technology & Research',
-  publisher: 'Acropolis Institute of Technology & Research, Indore',
+  creator: 'Acropolis Institute of Technology and Research',
+  publisher: 'Acropolis Institute of Technology and Research, Indore',
 
   // Canonical + URL
   alternates: { canonical: '/' },
@@ -68,16 +68,16 @@ export const metadata = {
     type: 'website',
     locale: 'en_IN',
     url: SITE_URL,
-    siteName: 'AI MANTHAN 2.0 — Acropolis Indore',
-    title: 'AI MANTHAN 2.0 — National AI Hackathon at Acropolis Indore | Oct 14–16, 2026',
+    siteName: 'AI MANTHAN 2.0 — AITR Indore',
+    title: 'AI MANTHAN 2.0 — National AI Hackathon at AITR Indore | Oct 14–16, 2026',
     description:
-      '12 AI challenge domains, 24-hour offline finale, ₹1,00,000+ prize pool. Acropolis flagship AI hackathon, October 14–16, 2026.',
+      '12 AI challenge domains, 24-hour offline finale, ₹1,00,000+ prize pool. AITR flagship AI hackathon, October 14–16, 2026.',
   },
 
   // Twitter/X card — image is auto-wired by app/opengraph-image.jsx
   twitter: {
     card: 'summary_large_image',
-    title: 'AI MANTHAN 2.0 — National AI Hackathon at Acropolis Indore | Oct 14–16, 2026',
+    title: 'AI MANTHAN 2.0 — National AI Hackathon at AITR Indore | Oct 14–16, 2026',
     description:
       '12 AI challenge domains, 24-hour offline finale, ₹1,00,000+ prize pool. October 14–16, 2026.',
   },

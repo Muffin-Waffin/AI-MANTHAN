@@ -48,12 +48,7 @@ function PoolCard() {
           ))}
         </div>
 
-        {/* Bottom Perk Banner */}
-        <div className="w-full py-3.5 px-4 rounded-xl bg-white/[0.05] border border-white/10 text-xs font-mono tracking-widest text-white font-bold uppercase flex items-center justify-center gap-2">
-          <Icon name="stars" className="text-base text-amber-400" />
-          <span>{pool.perk}</span>
         </div>
-      </div>
     </div>
   )
 }
@@ -83,7 +78,6 @@ function BountyCard({ bounty }) {
         <span className="px-2.5 py-1 rounded-lg bg-white/[0.05] border border-white/10 text-[10px] sm:text-xs font-mono font-bold text-white truncate max-w-[85%]">
           {bounty.amount}
         </span>
-        <Icon name="arrow_forward" className="text-xs text-zinc-400 group-hover:text-white transition-colors shrink-0" />
       </div>
     </div>
   )
