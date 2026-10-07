@@ -11,13 +11,10 @@ import Prizes from '@/components/sections/Prizes'
 import Mentors from '@/components/sections/Mentors'
 import Partners from '@/components/sections/Partners'
 import VenueFaq from '@/components/sections/VenueFaq'
-import ScrollRocket from '@/components/ui/ScrollRocket'
-
 export default function Home() {
   return (
     <AppShell>
       <EventJsonLd />
-      <ScrollRocket />
       <Hero />
       <div className="relative w-full bg-logo-blue-light transition-colors duration-700">
         <div className="bg-logo-blue-light-glow" aria-hidden="true" />

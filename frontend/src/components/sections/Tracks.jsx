@@ -67,9 +67,8 @@ function DomainCard({ domain, index, inView }) {
   const typedLabel = useTypingEffect(domain.label, typingTrigger, 65)
 
   return (
-    <Link
+    <div
       ref={cardRef}
-      href={`/problem-statements#${domain.id}`}
       className={`group relative flex flex-col rounded-2xl border border-white/10 bg-[#090d14] p-3.5 sm:p-6
         transition-all duration-700 ease-out
         hover:-translate-y-1.5 hover:bg-[#0e1420] hover:border-cyan-400/40
@@ -104,14 +103,14 @@ function DomainCard({ domain, index, inView }) {
         <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.16em] text-zinc-500 truncate">
           {psCount > 0 ? `${psCount} Problem${psCount > 1 ? 's' : ''}` : 'Domain'}
         </span>
-        <span
+        {/* <span
           className="material-symbols-outlined text-[14px] sm:text-[16px] text-zinc-500 transition-all duration-300 group-hover:translate-x-1 group-hover:text-white shrink-0"
           aria-hidden="true"
         >
           arrow_forward
-        </span>
+        </span> */}
       </div>
-    </Link>
+    </div>
   )
 }
 
@@ -163,7 +162,7 @@ export default function Tracks() {
       </div>
 
       {/* ── View All CTA ── */}
-      <div className={`mt-12 flex justify-center transition-all duration-700 delay-500 ${gridInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+      <div className={`mt-12 flex justify-center gap-4 transition-all duration-700 delay-500 ${gridInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
         <Link
           href="/problem-statements"
           className="group inline-flex items-center gap-2.5 rounded-full border border-white/20 bg-white/5 px-6 sm:px-8 py-3 sm:py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:border-cyan-400/50 hover:bg-cyan-500/10 hover:shadow-[0_0_24px_rgba(0,240,255,0.25)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400"
@@ -177,6 +176,15 @@ export default function Tracks() {
             north_east
           </span>
         </Link>
+        <a
+          href="https://www.canva.com/design/DAHWqmQgHnk/VyQbY2E0FinWzoYJsCHvFg/edit"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group inline-flex items-center gap-2.5 rounded-full border border-white/20 bg-white/5 px-6 sm:px-8 py-3 sm:py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:border-emerald-400/50 hover:bg-emerald-500/10 hover:shadow-[0_0_24px_rgba(16,185,129,0.25)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+        >
+          <span className="material-symbols-outlined text-[18px]">open_in_new</span>
+          PPT Format
+        </a>
       </div>
     </Section>
   )

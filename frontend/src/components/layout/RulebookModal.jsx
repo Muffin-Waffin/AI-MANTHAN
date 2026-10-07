@@ -83,7 +83,9 @@ export default function RulebookModal({ open, onClose }) {
           </p>
           <a
             className="inline-flex items-center gap-1.5 text-[11px] text-brand-cyan hover:text-white font-medium transition-colors shrink-0"
-            href={site.email ? `mailto:${site.email}` : '#'}
+            href={`https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`}
+            target="_blank"
+            rel="noopener noreferrer"
           >
             <Icon name="mail" className="text-[14px]" />
             Questions? Email the desk

@@ -19,7 +19,7 @@ import { timeline } from '../../data/timeline'
 
 /* Fraction of the section (0..1) at which each node sits along the rail.
    Evenly spread from 8% to 92% of the measured stage. */
-const NODE_FRACTIONS = [0.04, 0.27, 0.5, 0.73, 0.96]
+const NODE_FRACTIONS = [0.08, 0.33, 0.66, 0.92]
 
 function PhaseCard({ phase, index, active }) {
   return (

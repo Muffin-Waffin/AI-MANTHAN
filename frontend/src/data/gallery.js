@@ -3,14 +3,14 @@ const img = (id) => `https://lh3.googleusercontent.com/aida-public/${id}`
 export const gallery = {
   eyebrow: 'Echoes of Past Sprints',
   heading: 'Through the Lens of AI Manthan',
-  body: '3 AM architecture breakthroughs, unhinged whiteboard proofs, high-pressure founder critiques, and triumphant demo triumphs at Acropolis Arena.',
-  badge: 'Archives 2023–2025',
+  body: '3 AM architecture breakthroughs, unhinged whiteboard proofs, high-pressure founder critiques, and triumphant demo triumphs at AITR Arena.',
+  badge: 'Archives 2025',
   spotlight: {
     img: img(
       'AB6AXuBh2sxBLmj6p-8_beZR5950QQCjOnwwaMqU3D6_PJ9MZektX3Lj_Vgc6efINjsv9tnhAjZoUqh1adsH1vWp7poUscds9aFCsXfdpe-u7wddlPn8Fdf_SmBYZ7hkEMH84F5jD7DhHdwpxSgVYIF_de8slL8ifcDHbCtkXiMRObCHHswzBFNK7F5eYS4NZ4HAz04dqvS-voOG0Z9BSxvecPck5b1-8Oi2MSe1JYjvuD8GufR-2iuTcQmp',
     ),
     tag: 'T-minus 08 Hours',
-    meta: '03:42 AM • Acropolis Arena Floor',
+    meta: '03:42 AM • AITR Arena Floor',
     title: 'The 3 AM Architecture Breakthrough',
     body: "When the primary consensus RPC faltered, squad 'Rustaceans' refactored the entire gossip mesh on local bare metal within ninety minutes.",
   },
@@ -32,7 +32,7 @@ export const gallery = {
       kicker: 'PROTOTYPING BAY',
       kickerColor: 'amber',
       title: 'Embedded & LoRa Prototyping',
-      body: "Oscilloscopes, custom ESP32 boards, and field antennas tested across the Acropolis campus grounds.",
+      body: "Oscilloscopes, custom ESP32 boards, and field antennas tested across the AITR campus grounds.",
     },
     {
       img: img(

@@ -174,7 +174,7 @@ export default function Navbar() {
             aria-label="Open support"
             title="Support"
           >
-            <span className="material-symbols-outlined text-[19px] select-none text-cyan-400">headset_mic</span>
+            <span className="material-symbols-outlined text-[19px] select-none text-cyan-400">mail</span>
           </button>
 
           {/* Registration CTA button */}
@@ -260,7 +260,7 @@ export default function Navbar() {
                 aria-label="Open support"
                 title="Support"
               >
-                <span className="material-symbols-outlined text-[18px]">headset_mic</span>
+                <span className="material-symbols-outlined text-[18px]">mail</span>
               </button>
               <button
                 className="inline-flex flex-1 items-center justify-center gap-2 py-2.5 rounded-xl text-zinc-100 text-xs sm:text-sm font-semibold bg-white/[0.06] border border-white/[0.14] hover:bg-white/[0.12] transition-all"

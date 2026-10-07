@@ -7,7 +7,7 @@ import TeamRoster from './TeamRoster'
 export const metadata = {
   title: 'Meet the Team — Community Organizing Crew',
   description:
-    'The community organizing team behind AI Manthan 2.0 — core leads, technical crew, SMGD, outreach and volunteers at Acropolis Institute of Technology & Research, Indore.',
+    'The community organizing team behind AI Manthan 2.0 — core leads, technical crew, SMGD, outreach and volunteers at Acropolis Institute of Technology and Research, Indore.',
 }
 
 export default function TeamPage() {

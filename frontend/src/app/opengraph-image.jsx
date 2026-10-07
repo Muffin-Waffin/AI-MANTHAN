@@ -5,7 +5,7 @@ import { ImageResponse } from 'next/og'
  * references it in meta tags automatically. Branded card matching
  * the Titanium Cyber Lumina design system (obsidian + electric cyan).
  */
-export const alt = 'AI MANTHAN 2.0 — National-Level AI Hackathon, Acropolis Indore'
+export const alt = 'AI MANTHAN 2.0 — National-Level AI Hackathon, AITR Indore'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -47,7 +47,7 @@ export default function OpengraphImage() {
               textTransform: 'uppercase',
             }}
           >
-            Acropolis • Indore
+            AITR • Indore
           </div>
         </div>
         <div

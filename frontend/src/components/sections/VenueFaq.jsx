@@ -41,7 +41,7 @@ function FindUsCard() {
       <div className="mt-5 overflow-hidden rounded-xl border border-white/[0.1] relative">
         <iframe
           src={venue.mapEmbedSrc}
-          title="Map preview — Acropolis Institute of Technology & Research, Mangliya Sadak, Indore"
+          title="Map preview — Acropolis Institute of Technology and Research, Mangliya Sadak, Indore"
           loading="lazy"
           allowFullScreen
           referrerPolicy="no-referrer-when-downgrade"

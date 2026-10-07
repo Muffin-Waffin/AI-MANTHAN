@@ -4,7 +4,7 @@ import VisitorCounter from './VisitorCounter'
 import Icon from '../ui/Icon'
 
 /* ── Sleek Action Button ──── */
-function FooterAction({ icon, children, href, external = false, onClick }) {
+function FooterAction({ icon, children, href, external = false, onClick, download }) {
   const cls =
     'group inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-2.5 text-xs sm:text-sm font-semibold text-zinc-200 transition-all duration-300 hover:border-white/20 hover:bg-white/[0.08] hover:text-white hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-white/40'
 
@@ -20,6 +20,18 @@ function FooterAction({ icon, children, href, external = false, onClick }) {
       <button className={cls} onClick={onClick}>
         {inner}
       </button>
+    )
+  }
+
+  if (download) {
+    return (
+      <a
+        className={cls}
+        href={href}
+        download={download}
+      >
+        {inner}
+      </a>
     )
   }
 
@@ -94,8 +106,10 @@ export default function Footer() {
             {/* Social & Contact */}
             <div className="flex flex-wrap items-center gap-3 pt-2">
               <a
-                href={`mailto:${site.email}`}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 bg-white/[0.03] text-xs font-mono text-zinc-300 hover:text-cyan-300 hover:border-cyan-400/40 transition-colors"
+                href={`https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/10 bg-white/[0.03] text-xs font-sans text-zinc-300 hover:text-cyan-300 hover:border-cyan-400/40 transition-colors"
               >
                 <Icon name="mail" className="text-sm text-cyan-400" />
                 {site.email}
@@ -143,7 +157,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
-                12 AI Domains
+                9 AI Domains
               </li>
               <li className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
@@ -151,7 +165,7 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
-                Acropolis Indore
+                AITR Indore
               </li>
             </ul>
           </div>
@@ -162,7 +176,7 @@ export default function Footer() {
               Quick Actions & Venue
             </h4>
             <div className="flex flex-wrap gap-2.5">
-              <FooterAction icon="download" onClick={openRulebook}>
+              <FooterAction icon="download" href="/RuleBook/AI_Manthan_2.0_Round1_Rulebook.pdf" download="AI-Manthan-2.0-Round1-Rulebook.pdf">
                 Rulebook
               </FooterAction>
               <FooterAction icon="group" href="/team">

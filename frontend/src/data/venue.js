@@ -12,11 +12,11 @@ export const venue = {
      coordinates; Google resolves the place). Clicking the preview opens the
      full external navigation. */
   mapEmbedSrc:
-    'https://www.google.com/maps?q=Acropolis+Institute+of+Technology+and+Research+Bypass+Road+Mangliya+Sadak+Indore&output=embed',
+    'https://www.google.com/maps?q=AITR+Institute+of+Technology+and+Research+Bypass+Road+Mangliya+Sadak+Indore&output=embed',
   mapsHref:
-    'https://maps.google.com/?q=Acropolis+Institute+of+Technology+and+Research+Bypass+Road+Mangliya+Sadak+Indore',
+    'https://maps.google.com/?q=AITR+Institute+of+Technology+and+Research+Bypass+Road+Mangliya+Sadak+Indore',
   address:
-    'Acropolis Institute of Technology & Research, Bypass Road, Mangliya Sadak, Indore, Madhya Pradesh 453771',
+    'Acroplis Institute of Technology & Research, Bypass Road, Mangliya Sadak, Indore, Madhya Pradesh 453771',
   access: [
     'Airport Access: Devi Ahilyabai Holkar Airport (IDR) — 30 mins drive',
     'Train Access: Indore Railway Station (INDB) — 25 mins',
@@ -29,24 +29,24 @@ export const faq = {
   sub: 'Quick answers to the things participants usually want to know.',
   items: [
     {
-      q: 'Is there any registration fee for participants?',
-      a: 'No. Phase 1 (technical ideation deck and prototype submission) is 100% free for every squad nationwide. Only shortlisted teams selected for the offline Grand Finale at Acropolis, Indore are hosted on campus with lodging and meals provided.',
+      q: 'Who can participate in AI-Manthan 2.0?',
+      a: 'AI-Manthan 2.0 is open to students, developers, and change-makers from across India. Participants can register individually or form a team of 1 to 4 members.',
     },
     {
-      q: 'What compute resources and sandbox environments are provided?',
-      a: 'Finalists receive dedicated cloud GPU compute credits through our sponsor alliance (AWS, Pinecone, and Anthropic). Acropolis Arena also provides redundant 1Gbps wired backbones and high-density power at every team table.',
+      q: 'What is the format of the hackathon?',
+      a: 'The hackathon consists of two rounds. Round 1 is an online PPT/idea submission round. Shortlisted teams will advance to the 24-hour offline finale at Acropolis Institute of Technology and Research, Indore, where they will develop their proposed solutions into working prototypes.',
     },
     {
-      q: 'Who owns the intellectual property built during the hackathon?',
-      a: 'You retain 100% ownership of your intellectual property, code, repositories, and models. Neither Acropolis Institute of Technology & Research nor the sponsors take any equity, claim, or proprietary license over your inventions.',
+      q: 'What technologies or domains can we build our solution in?',
+      a: 'The central theme is Artificial Intelligence & Emerging Technologies. Participants can build solutions across domains such as Healthcare, Women Safety, Smart Governance, Agriculture, Rural Education, Disaster Management, Smart Cities, Clean India, Career Development, Tourism, Food Redistribution, and Urban Monitoring.',
     },
     {
-      q: 'Is accommodation arranged for outstation teams?',
-      a: 'Yes. Acropolis provides clean hostel rooms, cafeteria dining, 24/7 security, and medical support on campus for all verified outstation finalist participants throughout October 14–16.',
+      q: 'What should shortlisted teams bring to the offline hackathon?',
+      a: 'Participants must bring their own laptops and any required hardware. Any coding platform or development environment can be used, including tools such as VS Code, Sublime Text, and GitHub. Participants are also responsible for arranging their own travel.',
     },
     {
-      q: 'What is the team size policy? Can we participate across universities?',
-      a: 'Teams can consist of 2 to 4 members. Inter-college and multidisciplinary collaborations (e.g. computer science combined with industrial design or biotechnology) are warmly encouraged.',
+      q: 'Is accommodation and food provided during the 24-hour hackathon?',
+      a: 'Yes. After paying the Round 2 participation fee, shortlisted teams will receive free accommodation, locker facilities, and meals including breakfast, lunch, and dinner throughout the hackathon. Participants only need to pay the Round 2 fee; there are no additional accommodation or food charges.',
     },
   ],
 }
@@ -58,31 +58,17 @@ export const phoneDirectory = {
   heading: 'Phone Directory',
   groups: [
     {
-      title: 'Student Council',
+      title: 'Student Coordinator',
       members: [
-        { name: 'Student Council Lead', phone: '+91 98765 43210' },
-        { name: 'Volunteer Desk', phone: '+91 98765 54321' },
+        { name: 'Adarsh Shrivastava', phone: '+91 8962457313' },
+        { name: 'Urvashi Soni', phone: '+91 9406727779' },
       ],
     },
     {
-      title: 'Dev Team',
+      title: 'Sponsor Lead',
       members: [
-        { name: 'Dev Team Lead', phone: '+91 98765 65432' },
-        { name: 'Platform Support', phone: '+91 98765 76543' },
-      ],
-    },
-    {
-      title: 'PR & Admin',
-      members: [
-        { name: 'PR & Admin Lead', phone: '+91 98765 87654' },
-        { name: 'Media Desk', phone: '+91 98765 98765' },
-      ],
-    },
-    {
-      title: 'Sponsorship',
-      members: [
-        { name: 'Sponsorship Lead', phone: '+91 98765 12345' },
-        { name: 'Partnerships Desk', phone: '+91 98765 23456' },
+        { name: 'Sponsor Lead', phone: '+91 XXXXXXXXXX' },
+        { name: 'Partnerships Desk', phone: '+91 XXXXXXXXXX' },
       ],
     },
   ],

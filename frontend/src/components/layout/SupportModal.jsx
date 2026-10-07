@@ -91,7 +91,7 @@ export default function SupportModal({ open, onClose }) {
         <DialogHeader className="sr-only">
           <DialogTitle>Participant Command &amp; Support</DialogTitle>
           <DialogDescription>
-            Contact the Acropolis organizing desk for travel, problem-statement or sponsorship
+            Contact the AITR organizing desk for travel, problem-statement or sponsorship
             support.
           </DialogDescription>
         </DialogHeader>
@@ -100,13 +100,13 @@ export default function SupportModal({ open, onClose }) {
         <div className="flex items-center justify-between pb-4 border-b border-white/[0.08] mb-5">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-brand-cyan/20 border border-brand-cyan/40 flex items-center justify-center text-brand-cyan">
-              <Icon name="headset_mic" className="text-[18px]" />
+              <Icon name="mail" className="text-[18px]" />
             </div>
             <div>
               <h3 className="text-sm font-bold text-white tracking-tight">
                 Participant Command &amp; Support
               </h3>
-              <p className="text-[11px] font-mono text-zinc-400">Acropolis Organizing Desk</p>
+              <p className="text-[11px] font-mono text-zinc-400">AITR Organizing Desk</p>
             </div>
           </div>
           <button
@@ -122,14 +122,16 @@ export default function SupportModal({ open, onClose }) {
         <div className="grid grid-cols-2 gap-2.5 mb-5 text-xs">
           <div className="glass p-3 rounded-xl flex flex-col justify-between transition-all duration-300 hover:border-brand-cyan/30">
             <div className="text-[10px] font-mono text-zinc-400 uppercase">OFFICIAL EMAIL</div>
-            <div className="font-mono text-zinc-200 text-xs mt-1 truncate">{site.email}</div>
-            <button
+            <div className="font-sans text-zinc-200 text-xs mt-1 truncate">{site.email}</div>
+            <a
               className="mt-2 text-[11px] text-brand-cyan hover:text-white flex items-center gap-1 font-medium transition-colors"
-              onClick={copyEmail}
+              href={`https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`}
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <Icon name="content_copy" className="text-[14px]" />
-              {copied ? 'Copied!' : 'Copy Email'}
-            </button>
+              <Icon name="mail" className="text-[14px]" />
+              Open in Gmail
+            </a>
           </div>
           <div className="glass p-3 rounded-xl flex flex-col justify-between transition-all duration-300 hover:border-brand-cyan/30">
             <div className="text-[10px] font-mono text-zinc-400 uppercase">

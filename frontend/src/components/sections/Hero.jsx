@@ -203,7 +203,6 @@ export function StatStrip() {
               <span className="font-medium tracking-wide text-zinc-200 group-hover:text-white transition-colors truncate">
                 {stat.label}
               </span>
-              <Icon name="arrow_forward_ios" className="text-[9px] sm:text-[10px] text-cyan-400/60 group-hover:translate-x-1 transition-transform duration-300 shrink-0" />
             </div>
           </div>
         ))}

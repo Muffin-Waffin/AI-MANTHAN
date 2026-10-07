@@ -11,8 +11,11 @@ backend/dist/
 # Env & secrets
 .env
 .env*.local
+.env.example
 backend/.env
 frontend/.env*.local
+frontend/.env.example
+.netlify/
 
 # Logs
 *.log

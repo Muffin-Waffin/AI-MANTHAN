@@ -1,15 +1,15 @@
 export const memories = {
-  eyebrow: 'Legacy • 2023 → 2025',
+  eyebrow: 'Legacy • 2025',
   heading: 'PAST AI MANTHAN',
   subheading: 'Event Memories & Glimpses',
-  body: 'Unforgettable moments, high-voltage pitches, midnight hacking, and grand prize ceremonies from previous editions at Acropolis, Indore.',
+  body: 'Unforgettable moments, high-voltage pitches, midnight hacking, and grand prize ceremonies from previous editions at AITR, Indore.',
 
   /* Featured memory (hero slot) */
   featured: {
     img: '/pastaimathan/image.png',
     video: '',
     tag: 'Grand Finale & Hackathon Arena',
-    meta: 'Acropolis Arena • Indore',
+    meta: 'AITR Arena • Indore',
     title: 'Where Churning Meets Innovation',
     body: 'Hundreds of passionate builders, founders, and AI enthusiasts coming together in the grand arena.',
   },
@@ -17,49 +17,49 @@ export const memories = {
   /* Unified photo list of all 9 past event images */
   allPhotos: [
     {
-      img: '/pastaimathan/image.png',
-      title: 'Grand Finale & Arena',
-      body: 'Opening keynote and national hackathon arena at Acropolis, Indore.',
+      img: '/pastaimathan/Winner.jpg',
+      title: 'Winner',
+      body: 'Where bold ideas became a winning reality.',
     },
     {
-      img: '/pastaimathan/image copy.png',
-      title: 'Hackathon Coding Floor',
-      body: 'Teams collaborating and coding late into the night.',
+      img: '/pastaimathan/1st Runner Up.jpg',
+      title: '1st Runner up',
+      body: 'Innovation that came remarkably close to the top.',
     },
     {
-      img: '/pastaimathan/image copy 2.png',
-      title: 'Live AI Model Demonstration',
-      body: 'Presenting cutting-edge AI & deeptech prototypes to domain experts.',
+      img: '/pastaimathan/2nd Runner Up.jpg',
+      title: '2nd Runner up',
+      body: 'A brilliant idea that stood among the best.',
     },
     {
       img: '/pastaimathan/image copy 3.png',
-      title: 'Jury Evaluation & Pitching',
-      body: 'Defending system architecture and algorithm design.',
-    },
-    {
-      img: '/pastaimathan/image copy 4.png',
-      title: 'Squad Brainstorming Session',
-      body: 'Rapid prototyping and solution architecting.',
+      title: 'Celebrating Excellence',
+      body: 'Honoring outstanding teams for their remarkable achievements.',
     },
     {
       img: '/pastaimathan/image copy 5.png',
-      title: 'Midnight Debugging Squads',
-      body: 'Fixing bugs and optimizing throughput before final submission.',
+      title: 'The Hackathon Community',
+      body: 'Innovators come together to learn, collaborate, and creat.',
+    },
+    {
+      img: '/pastaimathan/image copy 2.png',
+      title: 'Innovation in Action',
+      body: 'Teams turn innovative ideas into live technology solutions.',
     },
     {
       img: '/pastaimathan/image copy 6.png',
-      title: 'Winners Cheque Presentation',
-      body: 'Honoring top innovators and cash prize distribution.',
+      title: 'Recognizing Impactful Solutions',
+      body: 'Celebrating teams with creative and impactful ideas.',
     },
     {
-      img: '/pastaimathan/image copy 7.png',
-      title: 'Trophy & Excellence Awards',
-      body: 'Recognizing outstanding achievements in AI engineering.',
+      img: '/pastaimathan/Mentots and guides.jpg',
+      title: 'Guidance & Mentorship',
+      body: 'Mentors engage with participants, sharing valuable insights and guidance.',
     },
     {
-      img: '/pastaimathan/IMG_20251109_173152427 (1).jpg.jpeg',
-      title: 'Memorable Valedictory Moments',
-      body: 'Celebrating successful completion of AI Manthan.',
+      img: '/pastaimathan/image.png',
+      title: 'Ideas, Collaboration & Mentorship',
+      body: 'Teams and mentors connect, share ideas, and grow together.',
     },
   ],
 
