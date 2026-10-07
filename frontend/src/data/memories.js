@@ -17,17 +17,17 @@ export const memories = {
   /* Unified photo list of all 9 past event images */
   allPhotos: [
     {
-      img: '/pastaimathan/Winner.jpg',
+      img: '/pastaimathan/Winner.JPG',
       title: 'Winner',
       body: 'Where bold ideas became a winning reality.',
     },
     {
-      img: '/pastaimathan/1st Runner Up.jpg',
+      img: '/pastaimathan/1st Runner Up.JPG',
       title: '1st Runner up',
       body: 'Innovation that came remarkably close to the top.',
     },
     {
-      img: '/pastaimathan/2nd Runner Up.jpg',
+      img: '/pastaimathan/2nd Runner Up.JPG',
       title: '2nd Runner up',
       body: 'A brilliant idea that stood among the best.',
     },
@@ -52,7 +52,7 @@ export const memories = {
       body: 'Celebrating teams with creative and impactful ideas.',
     },
     {
-      img: '/pastaimathan/Mentots and guides.jpg',
+      img: '/pastaimathan/Mentots and guides.JPG',
       title: 'Guidance & Mentorship',
       body: 'Mentors engage with participants, sharing valuable insights and guidance.',
     },
