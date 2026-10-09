@@ -10,16 +10,14 @@ import PhoneDirectoryModal from './PhoneDirectoryModal'
 import UnstopEventModal from './UnstopEventModal'
 import SmoothScroll from './SmoothScroll'
 import Preloader from './Preloader'
+import PwaManager from '@/components/pwa/PwaManager'
+import InstallAppPrompt from '@/components/pwa/InstallAppPrompt'
+import MobileBottomNav from '@/components/pwa/MobileBottomNav'
 
 /**
  * Global shell + shared state for page-level interactions.
- * Any component can open the support modal by dispatching
- * the 'open-support-modal' window event (same contract as before).
- * Rulebook modal follows the same pattern via 'open-rulebook-modal',
- * phone directory via 'open-phone-directory-modal'.
- *
- * Global background = sparkles + shooting stars + aurora orbs.
- * The binary video is scoped inside the Hero (overview) section itself.
+ * Includes PWA service worker lifecycle manager, install prompt,
+ * and mobile bottom navigation with safe-area spacing.
  */
 export default function AppShell({ children }) {
   const [supportOpen, setSupportOpen] = useState(false)
@@ -42,12 +40,33 @@ export default function AppShell({ children }) {
 
   return (
     <div className="relative min-h-screen bg-obsidian-950 font-sans text-zinc-100 selection:bg-brand-cyan/30 selection:text-white">
+      {/* Accessible skip link */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 z-[100] px-4 py-2 bg-cyan-400 text-[#06080d] font-bold rounded-lg shadow-xl"
+      >
+        Skip to main content
+      </a>
+
+      {/* PWA Lifecycle and Install Promotion */}
+      <PwaManager />
+      <InstallAppPrompt />
+
       <Preloader />
       <SmoothScroll />
       <ParticleBackground />
       <Navbar />
-      <main className="relative z-10 pt-28 sm:pt-36">{children}</main>
+
+      <main id="main-content" className="relative z-10 pt-28 sm:pt-36 pb-20 md:pb-0">
+        {children}
+      </main>
+
       <Footer />
+
+      {/* Mobile-first bottom app navigation */}
+      <MobileBottomNav />
+
+      {/* Modals */}
       <SupportModal open={supportOpen} onClose={() => setSupportOpen(false)} />
       <RulebookModal open={rulebookOpen} onClose={() => setRulebookOpen(false)} />
       <PhoneDirectoryModal open={directoryOpen} onClose={() => setDirectoryOpen(false)} />

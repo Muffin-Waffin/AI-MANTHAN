@@ -182,6 +182,9 @@ export default function Footer() {
               <FooterAction icon="group" href="/team">
                 Meet Team
               </FooterAction>
+              <FooterAction icon="install_mobile" onClick={() => window.dispatchEvent(new Event('open-install-prompt'))}>
+                Install App
+              </FooterAction>
             </div>
             <div className="flex items-start gap-2 text-xs text-zinc-400 leading-relaxed pt-1">
               <Icon name="location_on" className="text-base text-cyan-400 shrink-0 mt-0.5" />

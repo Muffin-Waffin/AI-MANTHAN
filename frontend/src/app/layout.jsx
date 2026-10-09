@@ -95,12 +95,34 @@ export const metadata = {
 
   category: 'technology',
 
-  icons: { icon: '/favicon.png', type: 'image/png' },
+  manifest: '/manifest.webmanifest',
+
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'AI Manthan 2.0',
+  },
+
+  formatDetection: {
+    telephone: false,
+  },
+
+  icons: {
+    icon: [
+      { url: '/favicon.png' },
+      { url: '/icons/icon-192x192.png', sizes: '192x192', type: 'image/png' },
+      { url: '/icons/icon-512x512.png', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/icons/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
 }
 
 export const viewport = {
   width: 'device-width',
   initialScale: 1,
+  viewportFit: 'cover',
   themeColor: '#06080d',
 }
 
@@ -113,6 +135,10 @@ export default function RootLayout({ children }) {
       className={`dark scroll-smooth ${jakarta.variable} ${spaceMono.variable} ${caveat.variable} ${cormorant.variable}`}
     >
       <head>
+        <link rel="manifest" href="/manifest.json" />
+        <meta name="mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <link
           href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
           rel="stylesheet"

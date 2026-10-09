@@ -6,14 +6,15 @@ import Icon from '@/components/ui/Icon'
 import AppShell from '@/components/layout/AppShell'
 import SmartBack from '@/components/ui/SmartBack'
 import { submitSupportInquiry } from '@/lib/supabase'
+import { enqueueOfflineInquiry } from '@/lib/offlineQueue'
 import { site } from '@/data/site'
 
 /**
  * SUPPORT TICKET — dedicated contact page (opened from "Email us").
  * Design: the site's obsidian + cyan system, deliberately restrained —
  * one soft cyan aura behind the card, hairline borders, mono eyebrow.
- * Submits straight to Supabase (RLS-guarded insert into "Inquiry");
- * a DB trigger auto-assigns the routing coordinator on file.
+ * Submits straight to Neon PostgreSQL / Supabase, or safely enqueues into
+ * IndexedDB when offline, auto-synchronizing on connection restoration.
  */
 
 const inputCls =
@@ -23,7 +24,7 @@ const labelCls =
   'block text-[10px] font-mono font-medium tracking-[0.18em] text-zinc-500 uppercase mb-2'
 
 export default function SupportPage() {
-  const [status, setStatus] = useState('idle') // idle | sending | sent | error
+  const [status, setStatus] = useState('idle') // idle | sending | sent | queued | error
   const [error, setError] = useState('')
 
   const handleSubmit = async (e) => {
@@ -31,35 +32,47 @@ export default function SupportPage() {
     const form = e.currentTarget
     const data = new FormData(form)
 
+    const payload = {
+      name: data.get('name'),
+      email: data.get('email'),
+      phone: data.get('phone'),
+      message: data.get('message'),
+      category: 'General',
+    }
+
     setStatus('sending')
     setError('')
+
+    // 1. If currently offline, queue into IndexedDB immediately
+    if (typeof navigator !== 'undefined' && !navigator.onLine) {
+      const qRes = await enqueueOfflineInquiry(payload)
+      if (qRes.ok) {
+        setStatus('queued')
+        form.reset()
+        return
+      }
+    }
+
     try {
-      const res = await submitSupportInquiry({
-        name: data.get('name'),
-        email: data.get('email'),
-        phone: data.get('phone'),
-        message: data.get('message'),
-      })
-      // SMTP dispatch (Edge Function) live hai — coordinator ko ticket
-      // email jaata hai aur participant ko confirmation receipt.
+      await submitSupportInquiry(payload)
       setStatus('sent')
       form.reset()
     } catch (err) {
-      /* Network-level failure (backend down / unreachable) — gracefully
-         degrade to the participant's email client instead of a dead end. */
-      const offline =
+      // 2. If network request failed (connection dropped), queue for sync
+      const isNetworkFail =
+        !navigator.onLine ||
         err instanceof TypeError ||
         /failed to fetch|networkerror|load failed/i.test(err?.message || '')
-      if (offline) {
-        const subject = encodeURIComponent(`AI Manthan Support — ${data.get('name') || ''}`)
-        const body = encodeURIComponent(
-          `${data.get('message') || ''}\n\n— ${data.get('name') || ''} (${data.get('email') || ''})`,
-        )
-        window.location.href = `mailto:${site.email}?subject=${subject}&body=${body}`
-        setError('Desk API unreachable — opened your email app with the message pre-filled. Hit send there.')
-        setStatus('error')
-        return
+
+      if (isNetworkFail) {
+        const qRes = await enqueueOfflineInquiry(payload)
+        if (qRes.ok) {
+          setStatus('queued')
+          form.reset()
+          return
+        }
       }
+
       setError(err.message || 'Something went wrong — try again in a moment.')
       setStatus('error')
     }
@@ -99,7 +112,31 @@ export default function SupportPage() {
 
             {/* Card */}
             <div className="relative rounded-2xl border border-white/[0.08] bg-obsidian-900/60 backdrop-blur-sm p-5 sm:p-6">
-              {status === 'sent' ? (
+              {status === 'queued' ? (
+                <div className="py-10 text-center">
+                  <div className="mx-auto w-12 h-12 rounded-full border border-amber-500/40 bg-amber-500/10 text-amber-400 flex items-center justify-center mb-5">
+                    <Icon name="cloud_sync" className="text-[22px] animate-pulse" />
+                  </div>
+                  <h2 className="text-lg font-bold text-white">Saved for Auto-Sync</h2>
+                  <p className="mt-2 text-sm text-zinc-400 leading-relaxed max-w-sm mx-auto">
+                    You are currently offline. Your inquiry has been securely stored on your device
+                    and will automatically transmit to the organizing desk as soon as your internet reconnects.
+                  </p>
+                  <div className="mt-4 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-500/30 text-amber-300 text-xs font-mono">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                    Status: Pending Background Sync
+                  </div>
+                  <div className="mt-7">
+                    <Link
+                      href="/"
+                      className="inline-flex items-center gap-2 rounded-xl border border-white/[0.12] bg-white/[0.04] px-5 py-2.5 text-xs font-semibold text-zinc-200 transition-all duration-300 hover:border-brand-cyan/50 hover:text-white"
+                    >
+                      Back to home
+                      <Icon name="arrow_forward" className="text-[14px]" />
+                    </Link>
+                  </div>
+                </div>
+              ) : status === 'sent' ? (
                 <div className="py-10 text-center">
                   <div className="mx-auto w-12 h-12 rounded-full border border-emerald-500/40 bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-5">
                     <Icon name="check" className="text-[22px]" />

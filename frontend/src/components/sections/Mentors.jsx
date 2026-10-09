@@ -62,12 +62,24 @@ const initialsOf = (name) =>
     .toUpperCase()
 
 function PeopleCard({ member }) {
+  const [active, setActive] = useState(false)
   const accent = groupAccents[member.group] || groupAccents.mentors
   const zoneTone = member.group === 'guest' ? 'amber' : member.group === 'jury' ? 'pink' : member.group === 'faculty' ? 'emerald' : 'cyan'
 
   return (
     <div
-      className={`relative h-[260px] sm:h-[380px] w-full rounded-2xl overflow-hidden group block transition-all duration-300 border border-white/[0.08] bg-[#090d14] ${accent.hover}`}
+      onClick={() => setActive((v) => !v)}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault()
+          setActive((v) => !v)
+        }
+      }}
+      tabIndex={0}
+      role="button"
+      aria-expanded={active}
+      aria-label={`${member.name}, ${member.role}. Tap to view bio.`}
+      className={`relative h-[260px] sm:h-[380px] w-full rounded-2xl overflow-hidden group block transition-all duration-300 border border-white/[0.08] bg-[#090d14] cursor-pointer focus-visible:outline-2 focus-visible:outline-cyan-400 ${accent.hover}`}
     >
       {/* Background Visual Zone — Full Card Image / Monogram */}
       <div
@@ -100,8 +112,10 @@ function PeopleCard({ member }) {
         <div className="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-obsidian-950/20 to-transparent"></div>
       </div>
 
-      {/* Default Card Front Overlay (visible when NOT hovered) */}
-      <div className="absolute inset-0 p-3 sm:p-5 flex flex-col justify-between z-10 transition-opacity duration-300 group-hover:opacity-0 pointer-events-none">
+      {/* Default Card Front Overlay (visible when NOT hovered and NOT active) */}
+      <div className={`absolute inset-0 p-3 sm:p-5 flex flex-col justify-between z-10 transition-opacity duration-300 pointer-events-none ${
+        active ? 'opacity-0' : 'group-hover:opacity-0'
+      }`}>
         {/* Top Role Badge */}
         <div>
           <span
@@ -125,8 +139,10 @@ function PeopleCard({ member }) {
         </div>
       </div>
 
-      {/* Hover Top Slider Overlay — Slides down from top of card on hover */}
-      <div className="absolute inset-0 bg-[#06080d]/92 backdrop-blur-xl p-3.5 sm:p-5 flex flex-col justify-between transform -translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-out z-20 border-b-2 border-brand-cyan/50 shadow-2xl">
+      {/* Hover & Touch Slider Overlay — Slides down from top of card on hover or tap */}
+      <div className={`absolute inset-0 bg-[#06080d]/95 backdrop-blur-xl p-3.5 sm:p-5 flex flex-col justify-between transform transition-transform duration-500 ease-out z-20 border-b-2 border-brand-cyan/50 shadow-2xl ${
+        active ? 'translate-y-0' : '-translate-y-full group-hover:translate-y-0'
+      }`}>
         <div className="space-y-2 sm:space-y-3 overflow-y-auto no-scrollbar">
           {/* Header pill */}
           <div className="flex items-center justify-between">
@@ -135,6 +151,9 @@ function PeopleCard({ member }) {
             >
               <Icon name={accent.icon} className="text-[11px] sm:text-[13px]" />
               {member.role}
+            </span>
+            <span className="text-[9px] font-mono text-zinc-400 sm:hidden">
+              Tap to close ✕
             </span>
           </div>
 
@@ -212,41 +231,64 @@ function ConvenerCard({ member }) {
           </p>
 
           <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2 pt-1">
-            <span className="px-2.5 py-1 rounded-md bg-cyan-500/10 border border-cyan-400/30 text-[11px] font-mono font-semibold text-cyan-300">
+            {/* <span className="px-2.5 py-1 rounded-md bg-cyan-500/10 border border-cyan-400/30 text-[11px] font-mono font-semibold text-cyan-300">
               HOD: IT & Data Science
             </span>
             <span className="px-2.5 py-1 rounded-md bg-white/[0.05] border border-white/10 text-[11px] font-mono text-zinc-300">
               Convener: AI Manthan 2.0
-            </span>
+            </span> */}
           </div>
         </div>
 
-        {/* Right Side: Quote & Leadership Highlights Box */}
+        {/* Right Side: Converging the Future Card */}
         <div className="lg:col-span-4 w-full">
-          <div className="relative rounded-2xl border border-cyan-400/30 bg-[#060a12]/80 p-5 backdrop-blur-md shadow-xl space-y-4">
-            {/* Quote Icon */}
-            <div className="flex items-center justify-between border-b border-white/10 pb-3">
-              <span className="flex items-center gap-2 text-xs font-mono font-bold tracking-wider text-cyan-300 uppercase">
-                <Icon name="format_quote" className="text-lg text-cyan-400" />
-                Leadership Message
-              </span>
-              <span className="h-2 w-2 rounded-full bg-cyan-400 animate-pulse" />
+          <div className="relative rounded-2xl border border-cyan-500/30 bg-[#080e18]/80 p-4 sm:p-5 backdrop-blur-md shadow-xl space-y-3">
+            {/* Header with icon and status dot */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-1.5">
+                <Icon name="psychology" className="text-base text-cyan-400" />
+                <span className="text-[10px] sm:text-xs font-mono font-bold tracking-wider text-cyan-400 uppercase">
+                  CONVENING THE FUTURE
+                </span>
+              </div>
+              <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse" />
             </div>
 
-            {/* Quote Text */}
-            <p className="text-xs text-zinc-300 italic leading-relaxed">
-              "{member.quote || 'Transforming curiosity into innovation through AI & Data Science excellence.'}"
+            {/* Divider */}
+            <div className="border-t border-cyan-500/20" />
+
+            {/* Tagline */}
+            <p className="text-xs sm:text-sm font-semibold text-white tracking-tight">
+              Where Ideas Meet Innovation.
             </p>
 
-            {/* Department Pillars & Stats Grid */}
-            <div className="grid grid-cols-2 gap-2 pt-1">
-              <div className="p-2.5 rounded-xl border border-white/10 bg-white/[0.03]">
-                <div className="text-[10px] font-mono text-zinc-400 uppercase">Department</div>
-                <div className="text-xs font-bold text-cyan-300 mt-0.5">IT & Data Science</div>
-              </div>
-              <div className="p-2.5 rounded-xl border border-white/10 bg-white/[0.03]">
-                <div className="text-[10px] font-mono text-zinc-400 uppercase">Institution</div>
-                <div className="text-xs font-bold text-white mt-0.5">AITR</div>
+            {/* Description */}
+            <p className="text-[10px] sm:text-xs text-zinc-400 leading-snug">
+              Bringing together bright minds to explore Artificial Intelligence, emerging technologies, and solutions for real-world challenges.
+            </p>
+
+            {/* Feature rows in inset panel */}
+            <div className="rounded-xl bg-[#101a27]/80 p-3 space-y-2 border border-cyan-500/10">
+              {/* Feature rows */}
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-2">
+                  <div className="flex-shrink-0 w-6 h-6 rounded-lg bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center">
+                    <Icon name="psychology" className="text-[10px] text-cyan-400" />
+                  </div>
+                  <span className="text-[10px] sm:text-xs text-zinc-300 font-medium">Artificial Intelligence</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="flex-shrink-0 w-6 h-6 rounded-lg bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center">
+                    <Icon name="groups" className="text-[10px] text-cyan-400" />
+                  </div>
+                  <span className="text-[10px] sm:text-xs text-zinc-300 font-medium">Collaborative Innovation</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="flex-shrink-0 w-6 h-6 rounded-lg bg-cyan-500/15 border border-cyan-500/30 flex items-center justify-center">
+                    <Icon name="rocket_launch" className="text-[10px] text-cyan-400" />
+                  </div>
+                  <span className="text-[10px] sm:text-xs text-zinc-300 font-medium">Ideas into Impact</span>
+                </div>
               </div>
             </div>
           </div>

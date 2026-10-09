@@ -11,6 +11,7 @@ import {
 import Icon from '../ui/Icon'
 import { site } from '../../data/site'
 import { submitSupportInquiry } from '@/lib/supabase'
+import { enqueueOfflineInquiry } from '@/lib/offlineQueue'
 
 function Field({ label, children }) {
   return (
@@ -27,6 +28,7 @@ const inputCls =
 /**
  * Support modal — Radix Dialog under the hood: focus is trapped while open,
  * ESC closes it, background scroll locks, and screen readers announce it.
+ * Supports offline queueing into IndexedDB with automatic background synchronization.
  */
 const QUERY_CATEGORIES = [
   'Travel Assistance & Hostel Booking',
@@ -38,7 +40,7 @@ const FEEDBACK_CATEGORIES = ['General', 'Venue & Logistics', 'Judging & Rounds',
 
 export default function SupportModal({ open, onClose }) {
   const [copied, setCopied] = useState(false)
-  const [status, setStatus] = useState('idle') // idle | sending | sent | error
+  const [status, setStatus] = useState('idle') // idle | sending | sent | queued | error
   const [error, setError] = useState('')
   /** tab: 'query' = talk to a coordinator, 'feedback' = rate the experience */
   const [tab, setTab] = useState('query')
@@ -61,21 +63,50 @@ export default function SupportModal({ open, onClose }) {
     const form = e.currentTarget
     const data = new FormData(form)
 
+    const payload = {
+      email: data.get('email'),
+      category: data.get('category'),
+      message: data.get('message'),
+      kind: tab,
+      ...(tab === 'feedback' && rating ? { rating } : {}),
+    }
+
     setStatus('sending')
     setError('')
+
+    // Offline check
+    if (typeof navigator !== 'undefined' && !navigator.onLine) {
+      const q = await enqueueOfflineInquiry(payload)
+      if (q.ok) {
+        setStatus('queued')
+        form.reset()
+        setRating(0)
+        return
+      }
+    }
+
     try {
-      await submitSupportInquiry({
-        email: data.get('email'),
-        category: data.get('category'),
-        message: data.get('message'),
-        kind: tab,
-        ...(tab === 'feedback' && rating ? { rating } : {}),
-      })
+      await submitSupportInquiry(payload)
       setStatus('sent')
       window.dispatchEvent(new Event('support-submitted'))
       form.reset()
       setRating(0)
     } catch (err) {
+      const isNetworkFail =
+        !navigator.onLine ||
+        err instanceof TypeError ||
+        /failed to fetch|networkerror|load failed/i.test(err?.message || '')
+
+      if (isNetworkFail) {
+        const q = await enqueueOfflineInquiry(payload)
+        if (q.ok) {
+          setStatus('queued')
+          form.reset()
+          setRating(0)
+          return
+        }
+      }
+
       setError(err.message || 'Something went wrong. Try the WhatsApp community.')
       setStatus('error')
     }
@@ -150,8 +181,17 @@ export default function SupportModal({ open, onClose }) {
           </div>
         </div>
 
-        {/* Inquiry form — RLS-guarded insert into Supabase "Inquiry" */}
-        {status === 'sent' ? (
+        {/* Inquiry form — RLS-guarded insert into Neon / Supabase "Inquiry" or IndexedDB queue */}
+        {status === 'queued' ? (
+          <div className="text-center py-6 space-y-2">
+            <div className="text-xs font-mono text-amber-400">
+              ⚡ Saved offline. Automatically queued for background sync.
+            </div>
+            <p className="text-[11px] text-zinc-400 max-w-xs mx-auto">
+              Your inquiry will be sent to our coordinators as soon as your device reconnects to the network.
+            </p>
+          </div>
+        ) : status === 'sent' ? (
           <div className="text-center text-xs font-mono text-emerald-400 py-6">
             {tab === 'feedback'
               ? '✓ Feedback logged. Thank you — this shapes the next edition.'

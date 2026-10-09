@@ -1454,3 +1454,35 @@ section#overview .hero-video {
   background-clip: text;
   color: transparent;
 }
+
+/* ─── PWA & Mobile Safe Area Inset Support ─────────────────────── */
+:root {
+  --sat: env(safe-area-inset-top, 0px);
+  --sar: env(safe-area-inset-right, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left, 0px);
+}
+
+.safe-top {
+  padding-top: max(1rem, env(safe-area-inset-top, 0px));
+}
+
+.safe-bottom {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+}
+
+.safe-bottom-margin {
+  margin-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+}
+
+/* Prevent text size adjustment on mobile orientation change */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Smooth tap highlights on mobile devices */
+* {
+  -webkit-tap-highlight-color: rgba(0, 240, 255, 0.15);
+}
+

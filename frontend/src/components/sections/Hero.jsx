@@ -171,15 +171,18 @@ export function StatStrip() {
         {site.stats.map((stat, idx) => (
           <div
             key={stat.label}
-            className="group relative p-3.5 sm:p-6 rounded-2xl flex flex-col justify-between overflow-hidden bg-[#090d14]"
+            className="group relative p-3.5 sm:p-6 rounded-2xl flex flex-col justify-between overflow-hidden bg-gradient-to-br from-[#0a0f1a] to-[#090d14] border border-white/10 hover:border-cyan-500/30 hover:shadow-[0_0_30px_rgba(0,240,255,0.15)] transition-all duration-300"
           >
 
             {/* Subtle background icon watermark */}
             {stat.icon && (
-              <div className="absolute -right-3 -bottom-3 opacity-[0.06] group-hover:opacity-[0.14] transition-opacity duration-500 pointer-events-none text-white">
+              <div className="absolute -right-3 -bottom-3 opacity-[0.08] group-hover:opacity-[0.18] transition-opacity duration-500 pointer-events-none text-white">
                 <Icon name={stat.icon} className="text-6xl sm:text-8xl" />
               </div>
             )}
+            
+            {/* Top highlight bar */}
+            <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
             {/* Header: Icon + Sublabel Badge */}
             <div className="flex items-center justify-between mb-3 sm:mb-4">

@@ -1,0 +1,110 @@
+export default function manifest() {
+  return {
+    name: 'AI MANTHAN 2.0 — National AI Hackathon',
+    short_name: 'AI Manthan',
+    description:
+      'AI MANTHAN 2.0 — The flagship 24-hour national AI hackathon at Acropolis Institute of Technology and Research, Indore. October 14–16, 2026.',
+    start_url: '/',
+    id: '/',
+    display: 'standalone',
+    display_override: ['standalone', 'window-controls-overlay', 'minimal-ui'],
+    background_color: '#06080d',
+    theme_color: '#06080d',
+    orientation: 'portrait-primary',
+    lang: 'en',
+    dir: 'ltr',
+    categories: ['education', 'events', 'technology'],
+    icons: [
+      {
+        src: '/icons/icon-72x72.png',
+        sizes: '72x72',
+        type: 'image/png',
+        purpose: 'any',
+      },
+      {
+        src: '/icons/icon-96x96.png',
+        sizes: '96x96',
+        type: 'image/png',
+        purpose: 'any',
+      },
+      {
+        src: '/icons/icon-128x128.png',
+        sizes: '128x128',
+        type: 'image/png',
+        purpose: 'any',
+      },
+      {
+        src: '/icons/icon-144x144.png',
+        sizes: '144x144',
+        type: 'image/png',
+        purpose: 'any',
+      },
+      {
+        src: '/icons/icon-152x152.png',
+        sizes: '152x152',
+        type: 'image/png',
+        purpose: 'any',
+      },
+      {
+        src: '/icons/icon-192x192.png',
+        sizes: '192x192',
+        type: 'image/png',
+        purpose: 'any',
+      },
+      {
+        src: '/icons/icon-384x384.png',
+        sizes: '384x384',
+        type: 'image/png',
+        purpose: 'any',
+      },
+      {
+        src: '/icons/icon-512x512.png',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'any',
+      },
+      {
+        src: '/icons/icon-maskable-192x192.png',
+        sizes: '192x192',
+        type: 'image/png',
+        purpose: 'maskable',
+      },
+      {
+        src: '/icons/icon-maskable-512x512.png',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'maskable',
+      },
+    ],
+    shortcuts: [
+      {
+        name: 'Problem Statements',
+        short_name: 'Problems',
+        description: 'Explore confirmed challenge tracks and statements',
+        url: '/problem-statements',
+        icons: [{ src: '/icons/icon-96x96.png', sizes: '96x96' }],
+      },
+      {
+        name: 'Support & Inquiries',
+        short_name: 'Support',
+        description: 'Send inquiries or feedback to organizers',
+        url: '/support',
+        icons: [{ src: '/icons/icon-96x96.png', sizes: '96x96' }],
+      },
+      {
+        name: 'Meet the Team',
+        short_name: 'Team',
+        description: 'Meet student coordinators & crew',
+        url: '/team',
+        icons: [{ src: '/icons/icon-96x96.png', sizes: '96x96' }],
+      },
+      {
+        name: 'Tracks & Domains',
+        short_name: 'Tracks',
+        description: 'Jump to hackathon problem domains',
+        url: '/#tracks',
+        icons: [{ src: '/icons/icon-96x96.png', sizes: '96x96' }],
+      },
+    ],
+  }
+}
