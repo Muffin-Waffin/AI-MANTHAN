@@ -67,8 +67,8 @@ function BountyCard({ bounty }) {
           </span>
         </div>
 
-        {/* Title */}
-        <h4 className="text-xs sm:text-sm font-bold text-white tracking-tight leading-snug pt-1 line-clamp-2">
+        {/* Title — blurred */}
+        <h4 className="text-xs sm:text-sm font-bold tracking-tight leading-snug pt-1 line-clamp-2 filter blur-[2.5px] text-white/50 select-none">
           {bounty.title}
         </h4>
       </div>
@@ -106,10 +106,15 @@ export default function Prizes() {
       </div>
 
       {/* Special Bounties Grid — 10 Grant Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-4 max-w-7xl mx-auto">
-        {prizes.bounties.map((bounty) => (
-          <BountyCard key={bounty.title} bounty={bounty} />
-        ))}
+      <div className="space-y-4">
+        <p className="text-xs font-mono uppercase tracking-[0.2em] text-zinc-500 text-center">
+          Announcing soon
+        </p>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-4 max-w-7xl mx-auto">
+          {prizes.bounties.map((bounty) => (
+            <BountyCard key={bounty.title} bounty={bounty} />
+          ))}
+        </div>
       </div>
     </Section>
   )

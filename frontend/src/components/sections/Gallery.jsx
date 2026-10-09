@@ -3,9 +3,17 @@
 import Section from '../ui/Section'
 import { memories } from '../../data/memories'
 
-function GalleryImageCard({ item }) {
+function GalleryImageCard({ item, idx }) {
+  // Define medal colors for first 3 images
+  const medalStyles = [
+    { border: 'hover:border-amber-400/80', shadow: 'hover:shadow-[0_0_30px_rgba(251,191,36,0.5),0_8px_30px_rgba(251,191,36,0.3)]' }, // Gold
+    { border: 'hover:border-gray-300/80', shadow: 'hover:shadow-[0_0_30px_rgba(192,192,192,0.5),0_8px_30px_rgba(192,192,192,0.3)]' }, // Silver
+    { border: 'hover:border-amber-700/80', shadow: 'hover:shadow-[0_0_30px_rgba(205,127,50,0.5),0_8px_30px_rgba(205,127,50,0.3)]' }, // Bronze
+  ];
+  const style = medalStyles[idx] || { border: 'hover:border-cyan-400/80', shadow: 'hover:shadow-[0_0_30px_rgba(0,240,255,0.5),0_8px_30px_rgba(0,240,255,0.3)]' };
+  
   return (
-    <div className="group relative aspect-[4/3] w-full rounded-2xl border border-white/10 bg-[#090d16] overflow-hidden transition-all duration-300 hover:border-cyan-400/50 hover:shadow-[0_8px_25px_rgba(0,240,255,0.15)]">
+    <div className={`group relative aspect-[4/3] w-full rounded-2xl border border-white/10 bg-[#090d16] overflow-hidden transition-all duration-300 ${style.border} ${style.shadow}`}>
       <img
         src={item.img}
         alt={item.title}
@@ -66,7 +74,7 @@ export default function Gallery() {
         {/* Compact Image Grid - Static Images */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
           {allMedia.map((item, idx) => (
-            <GalleryImageCard key={`${item.title}-${idx}`} item={item} />
+            <GalleryImageCard key={`${item.title}-${idx}`} item={item} idx={idx} />
           ))}
         </div>
       </div>

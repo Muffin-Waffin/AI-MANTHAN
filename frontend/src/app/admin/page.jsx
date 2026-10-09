@@ -167,9 +167,9 @@ function VisitsPanel({ visits }) {
             {trend > 0 ? '▲' : trend < 0 ? '▼' : '—'} {Math.abs(trend).toLocaleString('en-IN')} vs prev week
           </span>
         </div>
-        <div className="flex items-end gap-1.5 h-24">
+        <div className="flex items-end gap-1.5 h-24 overflow-x-auto pb-1">
           {visits.daily.map((d) => (
-            <div key={d.date} className="flex-1 flex flex-col items-center gap-1 group relative">
+            <div key={d.date} className="flex-1 min-w-[14px] flex flex-col items-center gap-1 group relative">
               {/* tooltip */}
               <div className="pointer-events-none absolute bottom-full mb-1 hidden group-hover:block z-10 px-2 py-1 rounded-lg bg-obsidian-900 border border-white/[0.12] text-[9px] font-mono text-zinc-200 whitespace-nowrap">
                 {d.date}: {d.total} visits · {d.unique} unique
@@ -209,8 +209,8 @@ function Ticket({ t, onAdvance }) {
         <span className="text-[10px] font-mono text-zinc-500 shrink-0">{timeAgo(t.createdAt)}</span>
       </div>
       <p className="text-xs text-zinc-300 leading-relaxed">{t.message}</p>
-      <div className="flex items-center justify-between gap-3 mt-3 pt-3 border-t border-white/[0.06]">
-        <div className="text-[11px] font-mono text-zinc-500 truncate">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3 mt-3 pt-3 border-t border-white/[0.06]">
+        <div className="text-[11px] font-mono text-zinc-500 truncate max-w-full">
           <a href={`mailto:${t.email}`} className="text-brand-cyan hover:text-white transition-colors">
             {t.email}
           </a>
@@ -223,7 +223,7 @@ function Ticket({ t, onAdvance }) {
         {t.status !== 'resolved' && (
           <button
             onClick={() => onAdvance(t)}
-            className="shrink-0 text-[11px] font-mono px-3 py-1.5 rounded-lg bg-white/[0.05] border border-white/[0.1] text-zinc-300 hover:text-white hover:border-brand-cyan/50 transition-all"
+            className="self-end sm:self-auto shrink-0 text-[11px] font-mono px-3.5 py-1.5 rounded-lg bg-white/[0.05] border border-white/[0.1] text-zinc-300 hover:text-white hover:border-brand-cyan/50 transition-all min-h-[36px]"
           >
             → {NEXT_STATUS[t.status]}
           </button>

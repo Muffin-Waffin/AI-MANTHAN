@@ -255,7 +255,7 @@ export default function Navbar() {
 
             <div className="flex items-center gap-2 pt-2 border-t border-white/[0.08]">
               <button
-                className="inline-flex items-center justify-center w-10 py-2.5 rounded-xl text-cyan-300 border border-white/10 bg-white/[0.04] hover:bg-white/[0.1] transition-colors"
+                className="inline-flex items-center justify-center min-w-[42px] min-h-[42px] py-2.5 rounded-xl text-cyan-300 border border-white/10 bg-white/[0.04] hover:bg-white/[0.1] transition-colors"
                 onClick={openSupport}
                 aria-label="Open support"
                 title="Support"
@@ -263,7 +263,7 @@ export default function Navbar() {
                 <span className="material-symbols-outlined text-[18px]">mail</span>
               </button>
               <button
-                className="inline-flex flex-1 items-center justify-center gap-2 py-2.5 rounded-xl text-zinc-100 text-xs sm:text-sm font-semibold bg-white/[0.06] border border-white/[0.14] hover:bg-white/[0.12] transition-all"
+                className="inline-flex flex-1 items-center justify-center gap-2 min-h-[42px] py-2.5 rounded-xl text-zinc-100 text-xs sm:text-sm font-semibold bg-white/[0.06] border border-white/[0.14] hover:bg-white/[0.12] transition-all"
                 onClick={openRulebook}
               >
                 <span className="material-symbols-outlined text-[16px] text-cyan-300">menu_book</span>
@@ -273,12 +273,23 @@ export default function Navbar() {
                 href={site.links.register}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex-1 inline-flex items-center justify-center gap-1.5 py-2.5 rounded-xl text-zinc-950 text-xs sm:text-sm font-bold bg-cyan-400 hover:bg-cyan-300 transition-colors"
+                className="flex-1 inline-flex items-center justify-center gap-1.5 min-h-[42px] py-2.5 rounded-xl text-zinc-950 text-xs sm:text-sm font-bold bg-cyan-400 hover:bg-cyan-300 transition-colors"
               >
                 Registration
                 <span className="material-symbols-outlined text-[15px]">north_east</span>
               </a>
             </div>
+
+            <button
+              onClick={() => {
+                setMenuOpen(false)
+                window.dispatchEvent(new Event('open-install-prompt'))
+              }}
+              className="w-full mt-2 inline-flex items-center justify-center gap-2 min-h-[42px] py-2.5 rounded-xl text-cyan-300 border border-cyan-500/30 bg-cyan-500/10 hover:bg-cyan-500/20 text-xs font-mono font-bold transition-all"
+            >
+              <span className="material-symbols-outlined text-[16px]">download</span>
+              Install AI Manthan PWA
+            </button>
           </div>
         </>
       )}

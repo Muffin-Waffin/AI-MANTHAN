@@ -45,8 +45,8 @@ export const faq = {
       a: 'Participants must bring their own laptops and any required hardware. Any coding platform or development environment can be used, including tools such as VS Code, Sublime Text, and GitHub. Participants are also responsible for arranging their own travel.',
     },
     {
-      q: 'Is accommodation and food provided during the 24-hour hackathon?',
-      a: 'Yes. After paying the Round 2 participation fee, shortlisted teams will receive free accommodation, locker facilities, and meals including breakfast, lunch, and dinner throughout the hackathon. Participants only need to pay the Round 2 fee; there are no additional accommodation or food charges.',
+      q: 'Is accommodation and food provided during the 24 hour hackathon?',
+      a: 'Yes. After paying the Round 2 participation fee, shortlisted teams will receive free accommodation, locker facilities, and meals, including breakfast, lunch, and dinner, only during the 24 hour hackathon event. No additional charges apply for these amenities during the event period.',
     },
   ],
 }
@@ -67,8 +67,7 @@ export const phoneDirectory = {
     {
       title: 'Sponsor Lead',
       members: [
-        { name: 'Sponsor Lead', phone: '+91 XXXXXXXXXX' },
-        { name: 'Partnerships Desk', phone: '+91 XXXXXXXXXX' },
+        { name: 'Sanyam Jain', phone: '+91 6232651488' },
       ],
     },
   ],

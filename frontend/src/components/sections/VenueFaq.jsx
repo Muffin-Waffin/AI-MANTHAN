@@ -81,7 +81,7 @@ function TalkToUsCard() {
         Talk to Us
       </h3>
 
-      <div className="mt-4 rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 font-mono text-xs sm:text-sm text-zinc-300">
+      <div className="mt-4 rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 font-sans text-xs sm:text-sm text-zinc-300">
         {site.email}
       </div>
 

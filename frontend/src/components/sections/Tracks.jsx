@@ -154,7 +154,7 @@ export default function Tracks() {
       {/* ── 9-domain grid ── */}
       <div
         ref={gridRef}
-        className="tracks-grid grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5"
+        className="tracks-grid grid grid-cols-1 min-[460px]:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-5"
       >
         {domains.map((domain, i) => (
           <DomainCard key={domain.id} domain={domain} index={i} inView={gridInView} />
@@ -162,10 +162,10 @@ export default function Tracks() {
       </div>
 
       {/* ── View All CTA ── */}
-      <div className={`mt-12 flex justify-center gap-4 transition-all duration-700 delay-500 ${gridInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+      <div className={`mt-10 sm:mt-12 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-4 transition-all duration-700 delay-500 ${gridInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
         <Link
           href="/problem-statements"
-          className="group inline-flex items-center gap-2.5 rounded-full border border-white/20 bg-white/5 px-6 sm:px-8 py-3 sm:py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:border-cyan-400/50 hover:bg-cyan-500/10 hover:shadow-[0_0_24px_rgba(0,240,255,0.25)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400"
+          className="group inline-flex items-center justify-center gap-2.5 rounded-full border border-white/20 bg-white/5 px-6 sm:px-8 py-3 sm:py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:border-cyan-400/50 hover:bg-cyan-500/10 hover:shadow-[0_0_24px_rgba(0,240,255,0.25)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400"
         >
           <span className="material-symbols-outlined text-[18px]">description</span>
           View All Problem Statements
@@ -180,7 +180,7 @@ export default function Tracks() {
           href="https://www.canva.com/design/DAHWqmQgHnk/VyQbY2E0FinWzoYJsCHvFg/edit"
           target="_blank"
           rel="noopener noreferrer"
-          className="group inline-flex items-center gap-2.5 rounded-full border border-white/20 bg-white/5 px-6 sm:px-8 py-3 sm:py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:border-emerald-400/50 hover:bg-emerald-500/10 hover:shadow-[0_0_24px_rgba(16,185,129,0.25)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+          className="group inline-flex items-center justify-center gap-2.5 rounded-full border border-white/20 bg-white/5 px-6 sm:px-8 py-3 sm:py-3.5 text-sm font-semibold text-white transition-all duration-300 hover:border-emerald-400/50 hover:bg-emerald-500/10 hover:shadow-[0_0_24px_rgba(16,185,129,0.25)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
         >
           <span className="material-symbols-outlined text-[18px]">open_in_new</span>
           PPT Format
